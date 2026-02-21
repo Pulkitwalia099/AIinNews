@@ -1,6 +1,7 @@
 {
   "newsletter_title": "AI in News",
   "articles_per_feed": 5,
+  "recipient_email": "pulkitwalia099@gmail.com",
   "feeds": [
     {
       "name": "TechCrunch AI",

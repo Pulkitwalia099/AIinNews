@@ -3,6 +3,7 @@ import os
 from datetime import date
 from fetch import fetch_articles
 from process import process_articles
+from email_sender import send_newsletter
 
 def generate_newsletter():
     print("=== AI in News — Newsletter Generator ===\n")
@@ -43,6 +44,10 @@ def generate_newsletter():
     print(f"Total articles: {len(processed)}")
     for section, count in sections.items():
         print(f"  {section}: {count}")
+
+    # Step 4: Send email
+    print("\nSending email...")
+    send_newsletter(newsletter)
 
 
 if __name__ == "__main__":

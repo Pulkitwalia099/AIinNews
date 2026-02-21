@@ -98,6 +98,16 @@ def build_html(newsletter):
                      text-transform:uppercase;">{date_str}</span>
     </div>
 
+    <div style="padding:20px 0 24px; border-bottom:1px solid #ebebea; margin-bottom:8px;">
+        <p style="margin:0 0 6px; font-size:1rem; font-weight:600; color:#1d1d1f;">
+            The daily AI briefing for founders.
+        </p>
+        <p style="margin:0; font-size:0.86rem; color:#6b6b6b; line-height:1.65;">
+            Pulled from 12 sources — TechCrunch, MIT Tech Review, HuggingFace, The Batch and more.
+            Scored by HackerNews community signal, deduplicated, and filtered to what actually matters for building a company.
+        </p>
+    </div>
+
     {articles_html}
 
     <div style="margin-top:40px; padding-top:16px; border-top:1px solid #ebebea;

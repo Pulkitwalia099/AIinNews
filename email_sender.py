@@ -1,5 +1,6 @@
 import os
 import json
+import sqlite3
 import resend
 from datetime import date
 
@@ -118,20 +119,30 @@ def build_html(newsletter):
 </html>"""
 
 
+def get_subscribers():
+    db_path = "subscribers.db"
+    if not os.path.exists(db_path):
+        return [config["recipient_email"]]
+    with sqlite3.connect(db_path) as con:
+        rows = con.execute("SELECT email FROM subscribers").fetchall()
+    emails = [row[0] for row in rows]
+    return emails if emails else [config["recipient_email"]]
+
+
 def send_newsletter(newsletter):
     html = build_html(newsletter)
     date_str = newsletter["date"]
-    recipient = config["recipient_email"]
+    recipients = get_subscribers()
 
     params: resend.Emails.SendParams = {
         "from": "AI in News <onboarding@resend.dev>",
-        "to": [recipient],
+        "to": recipients,
         "subject": f"AI in News — {date_str}",
         "html": html,
     }
 
     response = resend.Emails.send(params)
-    print(f"Email sent to {recipient} (id: {response['id']})")
+    print(f"Email sent to {len(recipients)} subscriber(s) (id: {response['id']})")
 
 
 if __name__ == "__main__":

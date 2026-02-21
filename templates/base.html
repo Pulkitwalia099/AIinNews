@@ -92,20 +92,98 @@
       line-height: 1.65;
     }
 
-    /* Subscribe box */
-    .subscribe-box {
+    /* Subscribe bar (compact inline strip) */
+    .subscribe-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
       background: #fff;
       border-radius: 10px;
       border: 1px solid #ebebea;
-      padding: 24px;
-      margin-top: 20px;
+      padding: 14px 20px;
+      margin-top: 16px;
     }
 
-    .subscribe-label {
+    .subscribe-bar-text {
       font-size: 0.88rem;
+      color: #6b6b6b;
+    }
+
+    .subscribe-trigger {
+      background: #1d1d1f;
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: inherit;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .subscribe-trigger:hover { background: #3a3a3c; }
+
+    .subscribe-success {
+      font-size: 0.9rem;
+      color: #156038;
+      font-weight: 500;
+    }
+
+    /* Modal overlay */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal-box {
+      background: #fff;
+      border-radius: 14px;
+      padding: 32px;
+      width: 100%;
+      max-width: 400px;
+      margin: 16px;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.16);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      color: #9b9a97;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px;
+    }
+    .modal-close:hover { color: #1d1d1f; }
+
+    .step-progress {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #9b9a97;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .step-question {
+      font-size: 1.05rem;
       font-weight: 600;
       color: #1d1d1f;
-      margin-bottom: 12px;
+      margin-bottom: 18px;
+      line-height: 1.4;
     }
 
     .subscribe-input {
@@ -121,15 +199,6 @@
     }
     .subscribe-input:focus { border-color: #7b78e8; }
 
-    .field-group { margin-bottom: 16px; }
-
-    .field-label {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #37352f;
-      margin-bottom: 8px;
-    }
-
     .radio-group, .checkbox-group {
       display: flex;
       flex-wrap: wrap;
@@ -143,9 +212,15 @@
       font-size: 0.82rem;
       color: #37352f;
       background: #f4f4f2;
-      padding: 5px 12px;
+      padding: 6px 14px;
       border-radius: 20px;
       cursor: pointer;
+      transition: background 0.1s;
+    }
+    .radio-group label:has(input:checked),
+    .checkbox-group label:has(input:checked) {
+      background: #eceafb;
+      color: #4240b8;
     }
 
     .subscribe-btn {
@@ -158,17 +233,10 @@
       font-weight: 600;
       cursor: pointer;
       width: 100%;
-      margin-top: 4px;
       font-family: inherit;
       transition: background 0.15s;
     }
     .subscribe-btn:hover { background: #3a3a3c; }
-
-    .subscribe-success {
-      font-size: 0.9rem;
-      color: #156038;
-      font-weight: 500;
-    }
 
     /* Collapsible section */
     .section-details { margin-top: 36px; }
@@ -360,5 +428,56 @@
   <footer>
     Curated daily for founders &middot; Powered by Claude
   </footer>
+
+<script>
+  function openModal() {
+    document.getElementById('subscribe-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('email-input').focus(), 50);
+  }
+
+  function closeModal() {
+    document.getElementById('subscribe-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('subscribe-modal')) closeModal();
+  }
+
+  function nextStep(current) {
+    if (current === 1) {
+      const email = document.getElementById('email-input').value;
+      if (!email || !email.includes('@')) {
+        document.getElementById('email-input').focus();
+        return;
+      }
+    }
+    document.getElementById('step-' + current).style.display = 'none';
+    document.getElementById('step-' + (current + 1)).style.display = 'block';
+  }
+
+  function submitSubscribe() {
+    const email = document.getElementById('email-input').value;
+    const technical = document.querySelector('input[name="is_technical"]:checked');
+    const goals = [...document.querySelectorAll('input[name="goals"]:checked')].map(el => el.value);
+
+    const form = document.getElementById('subscribe-form');
+    form.querySelector('#form-email').value = email;
+    form.querySelector('#form-technical').value = technical ? technical.value : '';
+
+    // Remove any old goals inputs, add fresh ones
+    form.querySelectorAll('input[name="goals"]').forEach(el => el.remove());
+    goals.forEach(g => {
+      const inp = document.createElement('input');
+      inp.type = 'hidden';
+      inp.name = 'goals';
+      inp.value = g;
+      form.appendChild(inp);
+    });
+
+    form.submit();
+  }
+</script>
 </body>
 </html>

@@ -6,38 +6,63 @@
   <p class="intro-desc">Pulled from 12 sources — TechCrunch, MIT Tech Review, HuggingFace, The Batch and more. Scored by HackerNews community signal, deduplicated, and filtered to what actually matters for building in AI.</p>
 </div>
 
-<div class="subscribe-box">
+<div class="subscribe-bar">
   {% if status == "subscribed" %}
     <p class="subscribe-success">You're in! First issue arrives tomorrow morning.</p>
   {% elif status == "exists" %}
     <p class="subscribe-success" style="color:#6b6b6b;">You're already subscribed.</p>
   {% else %}
-  <form action="/subscribe" method="POST" class="subscribe-form">
-    <p class="subscribe-label">Get it in your inbox every morning</p>
+    <p class="subscribe-bar-text">Get the daily briefing in your inbox.</p>
+    <button class="subscribe-trigger" onclick="openModal()">Subscribe — it's free</button>
+  {% endif %}
+</div>
 
-    <input type="email" name="email" placeholder="your@email.com" required class="subscribe-input">
+<!-- Subscribe modal -->
+<div id="subscribe-modal" class="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">&#x2715;</button>
 
-    <div class="field-group">
-      <p class="field-label">Your background</p>
+    <!-- Step 1: Email -->
+    <div class="modal-step" id="step-1">
+      <p class="step-progress">1 / 3</p>
+      <p class="step-question">What's your email?</p>
+      <input type="email" id="email-input" placeholder="your@email.com" class="subscribe-input"
+             onkeydown="if(event.key==='Enter') nextStep(1)">
+      <button class="subscribe-btn" onclick="nextStep(1)">Next &rarr;</button>
+    </div>
+
+    <!-- Step 2: Background -->
+    <div class="modal-step" id="step-2" style="display:none">
+      <p class="step-progress">2 / 3</p>
+      <p class="step-question">Your background?</p>
       <div class="radio-group">
         <label><input type="radio" name="is_technical" value="yes"> Technical</label>
         <label><input type="radio" name="is_technical" value="somewhat"> Somewhat</label>
         <label><input type="radio" name="is_technical" value="no"> Non-technical</label>
       </div>
+      <button class="subscribe-btn" style="margin-top:20px" onclick="nextStep(2)">Next &rarr;</button>
     </div>
 
-    <div class="field-group">
-      <p class="field-label">What brings you here? <span style="font-weight:400;">(pick all that apply)</span></p>
+    <!-- Step 3: Goals -->
+    <div class="modal-step" id="step-3" style="display:none">
+      <p class="step-progress">3 / 3</p>
+      <p class="step-question">What brings you here?</p>
+      <p style="font-size:0.78rem; color:#9b9a97; margin-bottom:12px;">Pick all that apply</p>
       <div class="checkbox-group">
         <label><input type="checkbox" name="goals" value="build"> Build a product or startup</label>
         <label><input type="checkbox" name="goals" value="curious"> Stay curious / follow trends</label>
         <label><input type="checkbox" name="goals" value="invest"> Invest in AI companies</label>
       </div>
+      <button class="subscribe-btn" style="margin-top:20px" onclick="submitSubscribe()">Subscribe &rarr;</button>
     </div>
 
-    <button type="submit" class="subscribe-btn">Subscribe — it's free</button>
-  </form>
-  {% endif %}
+    <!-- Hidden form for actual submission -->
+    <form id="subscribe-form" action="/subscribe" method="POST" style="display:none">
+      <input type="hidden" name="email" id="form-email">
+      <input type="hidden" name="is_technical" id="form-technical">
+      <input type="hidden" name="goals" id="form-goals">
+    </form>
+  </div>
 </div>
 
 <p class="date">{{ newsletter.date }}</p>

@@ -3,32 +3,55 @@
 {% block content %}
 <p class="date">{{ newsletter.date }}</p>
 
-{% set sections = ["Foundational", "Infra", "Application", "Research"] %}
+{% set sections = [
+  ("Foundation Layer",     "foundation",    "Core model research, breakthroughs & new capabilities"),
+  ("Infrastructure Layer", "infra",         "Tools, APIs, compute & platforms builders rely on"),
+  ("Application Layer",    "application",   "Real-world products, deployments & company moves")
+] %}
 
-{% for section in sections %}
-  {% set section_articles = newsletter.articles | selectattr("section", "equalto", section) | list %}
+{% for section_name, section_class, section_desc in sections %}
+  {% set section_articles = newsletter.articles | selectattr("section", "equalto", section_name) | list %}
   {% if section_articles %}
-    <div class="section-label">{{ section }}</div>
-    {% for article in section_articles %}
-    <div class="article">
-      <h2><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></h2>
-      <div class="meta">{{ article.source }}</div>
-
-      <div class="tags">
-        {% for tag in article.signal_tags %}
-          <span class="tag">{{ tag }}</span>
-        {% endfor %}
-        <span class="tag maturity">{{ article.maturity_tag }}</span>
+  <details class="section-details {{ section_class }}" open>
+    <summary class="section-summary">
+      <div class="section-summary-inner">
+        <span class="section-label {{ section_class }}">{{ section_name }}</span>
+        <span class="section-desc">{{ section_desc }}</span>
       </div>
+      <span class="section-count">{{ section_articles | length }}</span>
+    </summary>
 
-      <p class="summary">{{ article.summary }}</p>
+    <div class="section-articles">
+      {% for article in section_articles %}
+      <div class="article">
+        <h2><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></h2>
 
-      <div class="so-what">
-        <strong>So what?</strong>
-        {{ article.so_what }}
+        <div class="meta">
+          <span>{{ article.source }}</span>
+          {% if article.hn_score and article.hn_score >= 10 %}
+            <span class="hype-badge">🔥 {{ article.hn_score }}</span>
+          {% endif %}
+        </div>
+
+        <div class="tags">
+          {% for tag in article.signal_tags %}
+            <span class="tag signal">{{ tag }}</span>
+          {% endfor %}
+          <span class="tag maturity">{{ article.maturity_tag }}</span>
+        </div>
+
+        <p class="summary">{{ article.summary }}</p>
+
+        {% if article.founders_lens %}
+        <div class="founders-lens">
+          <span class="lens-label">Founder's Lens</span>
+          {{ article.founders_lens }}
+        </div>
+        {% endif %}
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
+  </details>
   {% endif %}
 {% endfor %}
 {% endblock %}

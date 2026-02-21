@@ -5,88 +5,249 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI in News</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f9f9f7;
-      color: #1a1a1a;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      background: #FAFAF9;
+      color: #37352f;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid #ebebea;
+    }
+
+    header .inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .wordmark {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #1d1d1f;
+      text-decoration: none;
+    }
+
+    nav { display: flex; gap: 4px; }
+
+    nav a {
+      font-size: 0.82rem;
+      color: #6b6b6b;
+      text-decoration: none;
+      padding: 5px 12px;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    nav a:hover { background: #f4f4f2; color: #1d1d1f; }
+
+    /* Main content */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* Date */
+    .date {
+      font-size: 0.8rem;
+      color: #9b9a97;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+
+    /* Collapsible section */
+    .section-details { margin-top: 36px; }
+
+    .section-details > summary { list-style: none; }
+    .section-details > summary::-webkit-details-marker { display: none; }
+
+    .section-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 18px;
+      cursor: pointer;
+      border-radius: 10px;
+      user-select: none;
+      transition: filter 0.15s;
+    }
+    .section-details[open] > .section-summary {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    .section-summary:hover { filter: brightness(0.96); }
+
+    .section-details.foundation  > .section-summary { background: #eceafb; border-left: 3px solid #7b78e8; }
+    .section-details.infra       > .section-summary { background: #e6f7ed; border-left: 3px solid #3db87a; }
+    .section-details.application > .section-summary { background: #e3eefe; border-left: 3px solid #4a97f0; }
+
+    /* Chevron */
+    .section-summary::after {
+      content: "⌄";
+      font-size: 1.1rem;
+      color: #b0aeab;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .section-details[open] > .section-summary::after { transform: rotate(180deg); }
+
+    .section-summary-inner { display: flex; flex-direction: column; gap: 3px; flex: 1; }
+
+    /* Section label — plain bold text, no pill (header bg is already the color cue) */
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: block;
+    }
+    .section-details.foundation  .section-label { color: #4240b8; }
+    .section-details.infra       .section-label { color: #156038; }
+    .section-details.application .section-label { color: #0050b3; }
+
+    .section-desc {
+      font-size: 0.78rem;
+      color: #6b6b6b;
+      font-weight: 400;
+    }
+
+    .section-count {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #9b9a97;
+      background: rgba(0,0,0,0.07);
+      padding: 2px 9px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Articles area — flush below header, same left accent */
+    .section-articles {
+      padding: 10px 14px 4px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+    .section-details.foundation  .section-articles { background: #f7f6ff; border-left: 3px solid #7b78e8; }
+    .section-details.infra       .section-articles { background: #f2fbf5; border-left: 3px solid #3db87a; }
+    .section-details.application .section-articles { background: #f1f6ff; border-left: 3px solid #4a97f0; }
+
+    /* Article card */
+    .article {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      padding: 22px 24px;
+      margin-bottom: 12px;
+    }
+
+    .article h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1d1d1f;
+      margin-bottom: 5px;
+      line-height: 1.4;
+    }
+
+    .article h2 a { color: inherit; text-decoration: none; }
+    .article h2 a:hover { text-decoration: underline; text-decoration-color: #ccc; }
+
+    /* Meta row */
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.76rem;
+      color: #9b9a97;
+      margin-bottom: 10px;
+    }
+
+    .hype-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #c4680a;
+      background: #fff4e5;
+      padding: 1px 7px;
+      border-radius: 10px;
+    }
+
+    /* Tags */
+    .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+
+    .tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 2px 9px;
+      border-radius: 20px;
+    }
+
+    .tag.signal   { background: #e8f1ff; color: #0060d1; }
+    .tag.maturity { background: #f4f4f2; color: #6b6b6b; }
+
+    /* Summary */
+    .summary {
+      font-size: 0.9rem;
+      color: #37352f;
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    /* Founder's Lens */
+    .founders-lens {
+      background: #f0fdf4;
+      border-left: 3px solid #34C759;
+      border-radius: 0 6px 6px 0;
+      padding: 10px 14px;
+      font-size: 0.86rem;
+      color: #1a4731;
       line-height: 1.6;
     }
 
-    header {
-      border-bottom: 2px solid #1a1a1a;
-      padding: 20px 0;
-      margin-bottom: 40px;
-    }
-
-    .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
-
-    header .container { display: flex; justify-content: space-between; align-items: center; }
-
-    header h1 { font-size: 1.4rem; letter-spacing: 0.05em; text-transform: uppercase; }
-
-    nav a { color: #1a1a1a; text-decoration: none; margin-left: 20px; font-size: 0.9rem; }
-    nav a:hover { text-decoration: underline; }
-
-    .date { font-size: 0.85rem; color: #666; margin-bottom: 40px; }
-
-    .section-label {
-      font-size: 0.7rem;
+    .founders-lens .lens-label {
+      display: block;
+      font-size: 0.65rem;
       font-weight: 700;
-      text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: #fff;
-      background: #1a1a1a;
-      padding: 3px 8px;
-      border-radius: 3px;
-      display: inline-block;
-      margin-bottom: 20px;
-      margin-top: 40px;
+      text-transform: uppercase;
+      color: #1a7f4e;
+      margin-bottom: 4px;
     }
 
-    .article { border-bottom: 1px solid #e0e0e0; padding: 24px 0; }
-    .article:last-child { border-bottom: none; }
-
-    .article h2 { font-size: 1.1rem; margin-bottom: 6px; }
-    .article h2 a { color: #1a1a1a; text-decoration: none; }
-    .article h2 a:hover { text-decoration: underline; }
-
-    .meta { font-size: 0.78rem; color: #888; margin-bottom: 10px; }
-
-    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-
-    .tag {
-      font-size: 0.72rem;
-      padding: 2px 8px;
-      border-radius: 20px;
-      border: 1px solid #ccc;
-      color: #555;
+    /* Footer */
+    footer {
+      border-top: 1px solid #ebebea;
+      padding: 28px 0;
+      text-align: center;
+      font-size: 0.76rem;
+      color: #b0aeab;
     }
-
-    .tag.maturity { background: #f0f0f0; }
-
-    .summary { font-size: 0.92rem; color: #333; margin-bottom: 12px; }
-
-    .so-what {
-      background: #f0f4ff;
-      border-left: 3px solid #4a6cf7;
-      padding: 12px 16px;
-      font-size: 0.88rem;
-      border-radius: 0 4px 4px 0;
-    }
-
-    .so-what strong { display: block; font-size: 0.72rem; text-transform: uppercase;
-      letter-spacing: 0.08em; color: #4a6cf7; margin-bottom: 4px; }
-
-    footer { border-top: 1px solid #e0e0e0; padding: 30px 0; margin-top: 60px;
-      font-size: 0.8rem; color: #999; text-align: center; }
   </style>
 </head>
 <body>
   <header>
-    <div class="container">
-      <h1>AI in News</h1>
+    <div class="inner">
+      <a class="wordmark" href="/">AI in News</a>
       <nav>
         <a href="/">Latest</a>
         <a href="/archive">Archive</a>
@@ -99,9 +260,7 @@
   </div>
 
   <footer>
-    <div class="container">
-      Curated daily for founders · Powered by Claude
-    </div>
+    Curated daily for founders &middot; Powered by Claude
   </footer>
 </body>
 </html>

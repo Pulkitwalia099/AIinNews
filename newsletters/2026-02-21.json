@@ -3,114 +3,118 @@
   "title": "AI in News",
   "articles": [
     {
-      "title": "OpenAI sidesteps Nvidia with unusually fast coding model on plate-sized chips",
-      "url": "https://arstechnica.com/ai/2026/02/openai-sidesteps-nvidia-with-unusually-fast-coding-model-on-plate-sized-chips/",
-      "source": "Ars Technica",
-      "section": "Foundational",
+      "title": "Google VP warns that two types of AI startups may not survive",
+      "url": "https://techcrunch.com/2026/02/21/google-vp-warns-that-two-types-of-ai-startups-may-not-survive/",
+      "source": "TechCrunch AI",
+      "hn_score": 31,
+      "section": "Application Layer",
       "signal_tags": [
-        "Platform Shift",
         "Disruption",
-        "Enabler"
+        "Opportunity"
       ],
       "maturity_tag": "Emerging",
-      "summary": "OpenAI has released GPT-5.3-Codex-Spark, a coding model that runs on custom plate-sized chips rather than Nvidia GPUs, achieving 15x faster coding performance than its predecessor. The move signals OpenAI's serious push toward chip independence from Nvidia. This is both a hardware and model milestone happening simultaneously.",
-      "so_what": "If OpenAI can deliver dramatically faster coding models on proprietary silicon, inference costs and latency curves will shift in ways that open new product categories \u2014 think real-time pair programming, instant CI/CD pipelines, or autonomous dev loops that were previously too slow to be viable. Founders building on top of OpenAI APIs should watch how this affects pricing and throughput; and those building developer tooling should prepare for a world where AI-assisted coding is 15x faster than current baselines, changing user expectations overnight."
+      "summary": "A Google VP is warning that AI startups built primarily as thin wrappers around large language models, or as aggregators of AI tools, face an increasingly precarious future. As the underlying AI platforms improve and expand their own feature sets, these businesses find their margins squeezed and their differentiation eroded. The message is clear: surface-level AI products without defensible moats are at serious risk.",
+      "founders_lens": "If your product is mainly a prettier interface on top of ChatGPT or Claude, that's a warning sign \u2014 the AI companies are coming for your lane. The winners will be startups that own proprietary data, deep customer workflows, or distribution that the big labs can't easily replicate."
     },
     {
-      "title": "Railway secures $100 million to challenge AWS with AI-native cloud infrastructure",
-      "url": "https://venturebeat.com/infrastructure/railway-secures-usd100-million-to-challenge-aws-with-ai-native-cloud",
-      "source": "VentureBeat AI",
-      "section": "Infra",
+      "title": "Google's Gemini 3.1 Pro Preview tops Artificial Analysis Intelligence Index at less than half the cost of its rivals",
+      "url": "https://the-decoder.com/googles-gemini-3-1-pro-preview-tops-artificial-analysis-intelligence-index-at-less-than-half-the-cost-of-its-rivals/",
+      "source": "The Decoder",
+      "hn_score": 253,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Platform Shift",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Google's Gemini 3.1 Pro has taken the top spot on the Artificial Analysis Intelligence Index, which ranks AI models on overall capability, while costing less than half what competing top-tier models charge. This combination of leading performance and dramatically lower pricing signals a major shift in the economics of building AI-powered products. Benchmarks don't tell the whole story, but the price gap is hard to ignore.",
+      "founders_lens": "Better and cheaper AI infrastructure directly lowers the cost of building and running your product, which means the economics of AI-powered businesses are getting more favorable faster than most people expected. If you've been holding off on AI features because of API costs, now is a good time to re-run those numbers."
+    },
+    {
+      "title": "Microsoft has a new plan to prove what's real and what's AI online",
+      "url": "https://www.technologyreview.com/2026/02/19/1133360/microsoft-has-a-new-plan-to-prove-whats-real-and-whats-ai-online/",
+      "source": "MIT Technology Review",
+      "hn_score": 331,
+      "section": "Infrastructure Layer",
       "signal_tags": [
         "Platform Shift",
         "Enabler",
-        "Disruption"
-      ],
-      "maturity_tag": "Production-Ready",
-      "summary": "Railway, a San Francisco cloud platform with 2 million developers acquired entirely through word-of-mouth, raised a $100M Series B led by TQ Ventures. The company is positioning itself as an AI-native alternative to AWS, arguing that legacy cloud infrastructure wasn't designed for the demands of modern AI applications. The zero-marketing growth story underscores genuine developer demand.",
-      "so_what": "Railway's traction without a marketing budget is a strong signal that the developer infrastructure market is hungry for something simpler and AI-first. For founders building AI apps, this is worth a serious look as an infrastructure layer \u2014 especially if AWS complexity is slowing you down. More broadly, it's a reminder that bottom-up, developer-led growth still works as a go-to-market wedge, and that 'AI-native' is becoming a meaningful differentiator even in infra, not just at the application layer."
-    },
-    {
-      "title": "Anthropic launches Cowork, a Claude Desktop agent that works in your files \u2014 no coding required",
-      "url": "https://venturebeat.com/technology/anthropic-launches-cowork-a-claude-desktop-agent-that-works-in-your-files-no",
-      "source": "VentureBeat AI",
-      "section": "Application",
-      "signal_tags": [
-        "Platform Shift",
-        "New Market",
-        "Enabler"
+        "New Market"
       ],
       "maturity_tag": "Emerging",
-      "summary": "Anthropic launched Cowork, an AI agent built into Claude Desktop that can autonomously work across a user's local files without requiring any coding knowledge. It extends the capabilities of Claude Code \u2014 previously only accessible to developers \u2014 to non-technical users. Notably, the feature was built by the team in about ten days using Claude Code itself.",
-      "so_what": "This is a significant expansion of who can use agentic AI in their daily work. For founders, it signals that the 'agents for non-technical users' category is now a serious battleground \u2014 Anthropic is moving fast to own that surface area. If you're building productivity or workflow tools for business users, you now have a well-funded, brand-name competitor closing in. But it also validates the market: if Anthropic sees it as a priority, the demand is real. The ten-day build time is also a powerful proof point for what's now possible with AI-assisted development."
+      "summary": "Microsoft is developing a system to help people verify whether online content is real or AI-generated, responding to the growing problem of AI-enabled deception spreading through social media and news feeds. The initiative reflects a broader industry acknowledgment that provenance and authenticity verification are becoming critical infrastructure needs. As AI-generated content becomes indistinguishable from real content, trust in digital media is eroding.",
+      "founders_lens": "There's a real and growing market for tools that help businesses and consumers verify the authenticity of digital content \u2014 from images and video to documents and reviews. If your customers rely on trust and credibility (media, legal, HR, finance), building or integrating content verification could become a meaningful differentiator."
     },
     {
-      "title": "Claude Code costs up to $200 a month. Goose does the same thing for free.",
-      "url": "https://venturebeat.com/infrastructure/claude-code-costs-up-to-usd200-a-month-goose-does-the-same-thing-for-free",
-      "source": "VentureBeat AI",
-      "section": "Infra",
+      "title": "Anthropic's new AI security tool sends cybersecurity stocks tumbling",
+      "url": "https://the-decoder.com/anthropics-new-ai-security-tool-sends-cybersecurity-stocks-tumbling/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Anthropic has launched Claude Code Security, a tool that identifies software security vulnerabilities that traditional scanners miss. The announcement was significant enough to trigger an immediate sell-off in cybersecurity company stocks, signaling that investors see AI as a genuine threat to established players in the sector. This is a concrete example of AI moving from assistant to competitor in a high-value professional domain.",
+      "founders_lens": "When an AI product launch literally moves the stock prices of an entire industry, that's a signal that real disruption is underway \u2014 not just hype. If you're building in or adjacent to cybersecurity, compliance, or any field where legacy software tools dominate, AI-native competitors are arriving faster than incumbents can respond."
+    },
+    {
+      "title": "Some \"Summarize with AI\" buttons are secretly injecting ads into your chatbot's memory",
+      "url": "https://the-decoder.com/some-summarize-with-ai-buttons-are-secretly-injecting-ads-into-your-chatbots-memory/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Research",
+      "signal_tags": [
+        "Disruption",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Microsoft security researchers have uncovered a new attack method where seemingly innocent 'Summarize with AI' buttons are being used to inject hidden instructions into AI assistants, permanently biasing their future recommendations in favor of advertisers. This type of attack \u2014 known as prompt injection \u2014 exploits the way AI models process and store context. It's a growing security threat as AI assistants become embedded in browsers and productivity tools.",
+      "founders_lens": "As AI assistants become part of how people shop, research, and make decisions, the attack surface for manipulation grows with them \u2014 and so does the demand for security and transparency tools. Founders building AI-powered products that handle sensitive recommendations or decisions should treat prompt injection as a real threat to user trust, not a theoretical concern."
+    },
+    {
+      "title": "OpenAI adds $111 billion to its cash burn forecast as AI costs spiral beyond projections",
+      "url": "https://the-decoder.com/openai-adds-111-billion-to-its-cash-burn-forecast-as-ai-costs-spiral-beyond-projections/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
       "signal_tags": [
         "Cost Driver",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI has dramatically revised its financial outlook, adding $111 billion to its projected cash burn as the cost of training and running AI models outpaces revenue growth. While revenue forecasts are also rising, the gap between spending and income is widening at a scale that would be existential for almost any other company. This reveals just how capital-intensive frontier AI development has become.",
+      "founders_lens": "The eye-watering cost of building at the frontier actually works in favor of startups \u2014 it means only a handful of companies can afford to compete at that level, while everyone else can focus on applying those models to solve specific problems. The real opportunity is in the application layer, not trying to out-spend OpenAI on model training."
+    },
+    {
+      "title": "Nvidia reportedly set to invest $30 billion in OpenAI",
+      "url": "https://the-decoder.com/nvidia-reportedly-set-to-invest-30-billion-in-openai/",
+      "source": "The Decoder",
+      "hn_score": 1,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Nvidia is reportedly preparing to invest $30 billion in OpenAI, according to Reuters sources familiar with the matter. This would be one of the largest single investments in AI history and would deepen the already significant relationship between the dominant AI chip maker and the dominant AI model company. The deal signals that both companies are betting heavily on a future where AI compute demand continues to grow exponentially.",
+      "founders_lens": "When the company that makes the picks and shovels invests $30 billion in the company digging the mine, it's a clear signal that both sides see AI infrastructure demand accelerating for years to come \u2014 not slowing down. For founders, this is a reminder that the AI platform you're building on today is likely to get significantly more powerful and capable over the next few years."
+    },
+    {
+      "title": "OpenAI staff debated alerting Canadian police about violent ChatGPT logs months before a deadly school shooting",
+      "url": "https://the-decoder.com/openai-staff-debated-alerting-canadian-police-about-violent-chatgpt-logs-months-before-a-deadly-school-shooting/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
         "Disruption",
         "Opportunity"
       ],
       "maturity_tag": "Production-Ready",
-      "summary": "Claude Code, Anthropic's autonomous coding agent, costs between $20\u2013$200/month depending on usage, prompting developers to seek free alternatives like Goose. The article highlights growing tension between the value AI coding tools provide and their cost structures. Open-source and free alternatives are gaining traction as a direct result.",
-      "so_what": "Pricing pressure in AI developer tooling is real and accelerating. If you're building in this space, the race to the bottom on cost is already underway \u2014 which means your moat can't just be 'does the same thing.' Founders should think hard about where the durable value sits: is it integrations, enterprise security, workflow orchestration, or model quality? For founders who are buyers of these tools, it's worth evaluating open alternatives seriously \u2014 the cost savings at scale are meaningful and Goose's emergence shows the open-source ecosystem is catching up fast."
-    },
-    {
-      "title": "Anthropic-funded group backs candidate attacked by rival AI super PAC",
-      "url": "https://techcrunch.com/2026/02/20/anthropic-funded-group-backs-candidate-attacked-by-rival-ai-super-pac/",
-      "source": "TechCrunch AI",
-      "section": "Foundational",
-      "signal_tags": [
-        "Disruption",
-        "Platform Shift"
-      ],
-      "maturity_tag": "Emerging",
-      "summary": "Two competing AI-focused super PACs are now directly battling over a New York congressional race centered on Alex Bores, whose RAISE Act would require AI developers to disclose safety protocols and report serious misuse incidents. Anthropic-funded interests are backing Bores, while a rival AI PAC is working against him. This marks a new phase of AI companies directly shaping AI legislation through political spending.",
-      "so_what": "AI regulation is no longer an abstract future concern \u2014 it's being actively shaped right now through direct political spending by the companies building the technology. For founders, the RAISE Act's disclosure and reporting requirements could become compliance obligations in the near term. More strategically, this signals that large AI labs are treating policy as a competitive arena, which means the regulatory environment you build your company in may increasingly reflect the lobbying priorities of incumbents. Staying informed on this legislation isn't optional anymore."
-    },
-    {
-      "title": "Listen Labs raises $69M after viral billboard hiring stunt to scale AI customer interviews",
-      "url": "https://venturebeat.com/technology/listen-labs-raises-usd69m-after-viral-billboard-hiring-stunt-to-scale-ai",
-      "source": "VentureBeat AI",
-      "section": "Application",
-      "signal_tags": [
-        "New Market",
-        "Opportunity",
-        "Enabler"
-      ],
-      "maturity_tag": "Emerging",
-      "summary": "Listen Labs raised $69M to build AI-powered customer interview and research tooling, competing against the enormous salaries big tech is offering AI engineers by getting creative with recruitment \u2014 including a viral $5,000 billboard stunt. The company is focused on replacing or augmenting traditional user research with AI-conducted interviews at scale. The raise signals strong investor appetite for AI applied to qualitative research.",
-      "so_what": "Customer discovery and user research are perennial bottlenecks for founders \u2014 expensive, slow, and hard to scale. Listen Labs is betting that AI can conduct high-quality interviews at a fraction of the cost, which could democratize continuous user research for startups that can't afford a full research team. For founders, this is both a tool worth watching and a signal that 'AI for insights' is a hot category right now. The billboard story is also a useful reminder that creative, low-cost marketing can still punch above its weight even in a market dominated by deep-pocketed competitors."
-    },
-    {
-      "title": "Attackers prompted Gemini over 100,000 times while trying to clone it, Google says",
-      "url": "https://arstechnica.com/ai/2026/02/attackers-prompted-gemini-over-100000-times-while-trying-to-clone-it-google-says/",
-      "source": "Ars Technica",
-      "section": "Research",
-      "signal_tags": [
-        "Disruption",
-        "Cost Driver"
-      ],
-      "maturity_tag": "Emerging",
-      "summary": "Google disclosed that attackers sent over 100,000 prompts to Gemini in a systematic attempt to clone the model using a technique called model distillation, which lets bad actors replicate a frontier model's behavior at a fraction of the development cost. The attack highlights a growing threat vector where proprietary AI models can be approximated cheaply through adversarial querying. Google detected and responded to the attempt.",
-      "so_what": "Model distillation attacks are a material risk for any startup whose core IP is a fine-tuned or proprietary model. If your competitive moat is 'our model behaves uniquely,' that moat is now actively being tested by adversaries with relatively modest resources. Founders building AI products should think about rate limiting, behavioral fingerprinting, and anomaly detection on API usage \u2014 not just as security hygiene, but as IP protection. This also raises questions for the broader ecosystem: if even Gemini is a target, what does that mean for smaller models with less monitoring infrastructure?"
-    },
-    {
-      "title": "India's Sarvam launches Indus AI chat app as competition heats up",
-      "url": "https://techcrunch.com/2026/02/20/indias-sarvam-launches-indus-ai-chat-app-as-competition-heats-up/",
-      "source": "TechCrunch AI",
-      "section": "Application",
-      "signal_tags": [
-        "New Market",
-        "Opportunity",
-        "Platform Shift"
-      ],
-      "maturity_tag": "Emerging",
-      "summary": "Indian AI startup Sarvam has launched Indus, a chat app currently in beta, aimed at competing in the rapidly growing Indian AI consumer market. Sarvam has been building AI models tailored for Indian languages and contexts, and Indus appears to be their consumer-facing product. The launch reflects intensifying competition in the India AI space as both local and global players race for market share.",
-      "so_what": "India represents one of the largest and fastest-growing markets for AI adoption, and the competitive dynamics there are playing out differently than in the West \u2014 with local language models, government ambitions, and price-sensitive users creating distinct opportunities. For founders thinking about global expansion or building for emerging markets, watching how Sarvam competes with global players like OpenAI and Google is instructive. There's also a broader signal here: localized, culturally and linguistically adapted AI products are becoming a genuine category, not just a feature \u2014 and that's a real opportunity for founders willing to go deep on specific geographies."
+      "summary": "Internal OpenAI communications reveal that about a dozen employees debated whether to alert Canadian police after ChatGPT flagged violent content from a user who later carried out a deadly school shooting. Management ultimately decided against contacting authorities. The case raises urgent questions about AI companies' legal and ethical obligations when their systems detect potential real-world harm.",
+      "founders_lens": "If you're building any AI product where users share personal, sensitive, or potentially dangerous information, you need a clear policy for what your system does with that data \u2014 before a crisis forces the question. This story will accelerate regulatory pressure on AI companies of all sizes to define and document their duty-of-care responsibilities."
     }
   ]
 }

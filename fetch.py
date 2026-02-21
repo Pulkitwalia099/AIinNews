@@ -1,13 +1,16 @@
 import json
 import feedparser
+from datetime import datetime, timedelta
 
 # Load config file
 with open("config.json") as f:
     config = json.load(f)
 
+CUTOFF = datetime.utcnow() - timedelta(days=7)
+
 def fetch_articles():
     all_articles = []
-    log = {"fetched": 0, "failed": 0, "sources": []}
+    log = {"fetched": 0, "skipped": 0, "failed": 0, "sources": []}
 
     for feed in config["feeds"]:
         try:
@@ -15,6 +18,14 @@ def fetch_articles():
             articles_from_feed = []
 
             for entry in parsed.entries[:config["articles_per_feed"]]:
+                # 5-day freshness filter
+                pub = entry.get("published_parsed") or entry.get("updated_parsed")
+                if pub:
+                    pub_dt = datetime(*pub[:6])
+                    if pub_dt < CUTOFF:
+                        log["skipped"] += 1
+                        continue
+
                 articles_from_feed.append({
                     "title": entry.get("title", "No title"),
                     "url": entry.get("link", ""),
@@ -34,7 +45,7 @@ def fetch_articles():
     print("\n--- Fetch Summary ---")
     for line in log["sources"]:
         print(line)
-    print(f"\nTotal: {log['fetched']} articles fetched, {log['failed']} sources failed")
+    print(f"\nTotal: {log['fetched']} fetched, {log['skipped']} skipped (>5 days old), {log['failed']} sources failed")
     print("---------------------\n")
 
     return all_articles

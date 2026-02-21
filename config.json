@@ -1,6 +1,6 @@
 {
   "newsletter_title": "AI in News",
-  "articles_per_feed": 5,
+  "articles_per_feed": 15,
   "recipient_email": "pulkitwalia099@gmail.com",
   "feeds": [
     {
@@ -22,6 +22,34 @@
     {
       "name": "Ars Technica",
       "url": "https://feeds.arstechnica.com/arstechnica/technology-lab"
+    },
+    {
+      "name": "TLDR AI",
+      "url": "https://tldr.tech/ai/rss"
+    },
+    {
+      "name": "Import AI",
+      "url": "https://importai.substack.com/feed"
+    },
+    {
+      "name": "The Batch",
+      "url": "https://www.deeplearning.ai/the-batch/feed/"
+    },
+    {
+      "name": "Ahead of AI",
+      "url": "https://magazine.sebastianraschka.com/feed"
+    },
+    {
+      "name": "HuggingFace Blog",
+      "url": "https://huggingface.co/blog/feed.xml"
+    },
+    {
+      "name": "The Decoder",
+      "url": "https://the-decoder.com/feed/"
+    },
+    {
+      "name": "Wired AI",
+      "url": "https://www.wired.com/feed/tag/artificial-intelligence/latest/rss"
     }
   ]
 }

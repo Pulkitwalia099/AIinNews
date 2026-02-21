@@ -104,7 +104,7 @@ def build_html(newsletter):
         </p>
         <p style="margin:0; font-size:0.86rem; color:#6b6b6b; line-height:1.65;">
             Pulled from 12 sources — TechCrunch, MIT Tech Review, HuggingFace, The Batch and more.
-            Scored by HackerNews community signal, deduplicated, and filtered to what actually matters for building a company.
+            Scored by HackerNews community signal, deduplicated, and filtered to what actually matters for building in AI.
         </p>
     </div>
 

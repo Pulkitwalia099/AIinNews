@@ -1,6 +1,6 @@
 import os
 import json
-import sqlite3
+import psycopg2
 import resend
 from datetime import date
 
@@ -120,13 +120,20 @@ def build_html(newsletter):
 
 
 def get_subscribers():
-    db_path = "subscribers.db"
-    if not os.path.exists(db_path):
+    database_url = os.environ.get("DATABASE_URL")
+    if not database_url:
         return [config["recipient_email"]]
-    with sqlite3.connect(db_path) as con:
-        rows = con.execute("SELECT email FROM subscribers").fetchall()
-    emails = [row[0] for row in rows]
-    return emails if emails else [config["recipient_email"]]
+    try:
+        con = psycopg2.connect(database_url)
+        cur = con.cursor()
+        cur.execute("SELECT email FROM subscribers")
+        rows = cur.fetchall()
+        cur.close()
+        con.close()
+        emails = [row[0] for row in rows]
+        return emails if emails else [config["recipient_email"]]
+    except Exception:
+        return [config["recipient_email"]]
 
 
 def send_newsletter(newsletter):

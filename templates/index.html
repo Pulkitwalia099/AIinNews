@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p class="date">{{ newsletter.date }}</p>
+
+{% set sections = ["Foundational", "Infra", "Application", "Research"] %}
+
+{% for section in sections %}
+  {% set section_articles = newsletter.articles | selectattr("section", "equalto", section) | list %}
+  {% if section_articles %}
+    <div class="section-label">{{ section }}</div>
+    {% for article in section_articles %}
+    <div class="article">
+      <h2><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></h2>
+      <div class="meta">{{ article.source }}</div>
+
+      <div class="tags">
+        {% for tag in article.signal_tags %}
+          <span class="tag">{{ tag }}</span>
+        {% endfor %}
+        <span class="tag maturity">{{ article.maturity_tag }}</span>
+      </div>
+
+      <p class="summary">{{ article.summary }}</p>
+
+      <div class="so-what">
+        <strong>So what?</strong>
+        {{ article.so_what }}
+      </div>
+    </div>
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+{% endblock %}

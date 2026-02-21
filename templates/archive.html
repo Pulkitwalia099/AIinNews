@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 style="margin-bottom: 24px;">Archive</h2>
+
+{% if dates %}
+  {% for date in dates %}
+    <div style="padding: 12px 0; border-bottom: 1px solid #e0e0e0;">
+      <a href="/{{ date }}" style="color: #1a1a1a; text-decoration: none; font-size: 0.95rem;">
+        {{ date }}
+      </a>
+    </div>
+  {% endfor %}
+{% else %}
+  <p>No issues yet.</p>
+{% endif %}
+{% endblock %}

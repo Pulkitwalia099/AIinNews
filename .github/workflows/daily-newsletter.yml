@@ -1,0 +1,36 @@
+name: Daily Newsletter
+
+on:
+  schedule:
+    - cron: '30 2 * * *'  # 8:00am IST (UTC+5:30)
+  workflow_dispatch:  # allows manual trigger from GitHub UI
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate and email newsletter
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPICVSCODE }}
+          RESEND_API_KEY: ${{ secrets.RESENDKEYAINEWLETTER }}
+        run: python generate.py
+
+      - name: Commit new newsletter to repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add newsletters/
+          git diff --staged --quiet || git commit -m "Newsletter $(date +%Y-%m-%d)"
+          git push

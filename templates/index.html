@@ -66,6 +66,27 @@
   </div>
 </div>
 
+{% if upcoming_events %}
+<div class="events-strip">
+  <div class="events-strip-header">
+    <span class="events-strip-title">Upcoming Boston AI Events</span>
+    <a href="/events" class="events-strip-link">See all &rarr;</a>
+  </div>
+  {% for event in upcoming_events %}
+  <a href="{{ event.url }}" target="_blank" class="event-mini">
+    <div class="event-mini-date">
+      <span class="event-mini-month">{{ event.start_time.strftime('%b') if event.start_time else '—' }}</span>
+      <span class="event-mini-day">{{ event.start_time.strftime('%-d') if event.start_time else '—' }}</span>
+    </div>
+    <div class="event-mini-info">
+      <span class="event-mini-title">{{ event.title }}</span>
+      <span class="event-mini-loc">{{ event.location }}</span>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% endif %}
+
 <p class="date">{{ newsletter.date }}</p>
 
 {% set sections = [

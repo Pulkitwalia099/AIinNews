@@ -22,6 +22,18 @@ def init_db():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS events (
+            id SERIAL PRIMARY KEY,
+            title TEXT NOT NULL,
+            url TEXT UNIQUE NOT NULL,
+            source TEXT,
+            location TEXT,
+            start_time TIMESTAMPTZ,
+            description TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
     con.commit()
     cur.close()
     con.close()
@@ -45,6 +57,39 @@ def get_all_dates():
     return [f.replace(".json", "") for f in files if f.endswith(".json")]
 
 
+def get_events(limit=None):
+    try:
+        con = get_db()
+        cur = con.cursor()
+        if limit:
+            cur.execute("""
+                SELECT title, url, source, location, start_time, description
+                FROM events
+                WHERE start_time > NOW()
+                ORDER BY start_time ASC
+                LIMIT %s
+            """, (limit,))
+        else:
+            cur.execute("""
+                SELECT title, url, source, location, start_time, description
+                FROM events
+                WHERE start_time > NOW()
+                ORDER BY start_time ASC
+            """)
+        rows = cur.fetchall()
+        cur.close()
+        con.close()
+        return [
+            {
+                "title": r[0], "url": r[1], "source": r[2],
+                "location": r[3], "start_time": r[4], "description": r[5]
+            }
+            for r in rows
+        ]
+    except Exception:
+        return []
+
+
 @app.route("/")
 def index():
     dates = get_all_dates()
@@ -52,7 +97,8 @@ def index():
         return "No newsletters yet. Run generate.py first."
     newsletter = load_newsletter(dates[0])
     status = request.args.get("status")
-    return render_template("index.html", newsletter=newsletter, status=status)
+    upcoming_events = get_events(limit=3)
+    return render_template("index.html", newsletter=newsletter, status=status, upcoming_events=upcoming_events)
 
 
 @app.route("/subscribe", methods=["POST"])
@@ -79,6 +125,12 @@ def subscribe():
         return redirect("/?status=exists")
 
 
+@app.route("/events")
+def events():
+    all_events = get_events()
+    return render_template("events.html", events=all_events)
+
+
 @app.route("/archive")
 def archive():
     dates = get_all_dates()
@@ -90,7 +142,7 @@ def issue(date):
     newsletter = load_newsletter(date)
     if not newsletter:
         return f"No newsletter found for {date}.", 404
-    return render_template("index.html", newsletter=newsletter, status=None)
+    return render_template("index.html", newsletter=newsletter, status=None, upcoming_events=[])
 
 
 if __name__ == "__main__":

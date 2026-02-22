@@ -400,6 +400,160 @@
       margin-bottom: 4px;
     }
 
+    /* Events strip (homepage) */
+    .events-strip {
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid #ebebea;
+      padding: 14px 18px;
+      margin-bottom: 28px;
+    }
+
+    .events-strip-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .events-strip-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9b9a97;
+    }
+
+    .events-strip-link {
+      font-size: 0.78rem;
+      color: #6b6b6b;
+      text-decoration: none;
+    }
+    .events-strip-link:hover { color: #1d1d1f; }
+
+    .event-mini {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      border-top: 1px solid #f4f4f2;
+      text-decoration: none;
+      color: inherit;
+    }
+    .event-mini:hover .event-mini-title { text-decoration: underline; text-decoration-color: #ccc; }
+
+    .event-mini-date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 32px;
+    }
+
+    .event-mini-month {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #9b9a97;
+      letter-spacing: 0.04em;
+    }
+
+    .event-mini-day {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1d1d1f;
+      line-height: 1.1;
+    }
+
+    .event-mini-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .event-mini-title {
+      font-size: 0.86rem;
+      font-weight: 500;
+      color: #1d1d1f;
+    }
+
+    .event-mini-loc {
+      font-size: 0.75rem;
+      color: #9b9a97;
+    }
+
+    /* Events full page */
+    .event-card {
+      display: flex;
+      gap: 16px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      padding: 20px 22px;
+      margin-bottom: 12px;
+    }
+
+    .event-date-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 40px;
+      padding-top: 2px;
+    }
+
+    .event-month {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #9b9a97;
+      letter-spacing: 0.06em;
+    }
+
+    .event-day {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1d1d1f;
+      line-height: 1.1;
+    }
+
+    .event-body { flex: 1; }
+
+    .event-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1d1d1f;
+      margin-bottom: 5px;
+      line-height: 1.4;
+    }
+
+    .event-title a { color: inherit; text-decoration: none; }
+    .event-title a:hover { text-decoration: underline; text-decoration-color: #ccc; }
+
+    .event-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.76rem;
+      color: #9b9a97;
+      margin-bottom: 8px;
+    }
+
+    .event-source-badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      background: #f4f4f2;
+      color: #6b6b6b;
+      padding: 1px 8px;
+      border-radius: 10px;
+    }
+
+    .event-desc {
+      font-size: 0.86rem;
+      color: #6b6b6b;
+      line-height: 1.6;
+      margin: 0;
+    }
+
     /* Footer */
     footer {
       border-top: 1px solid #ebebea;
@@ -417,6 +571,7 @@
       <nav>
         <a href="/">Latest</a>
         <a href="/archive">Archive</a>
+        <a href="/events">Events</a>
       </nav>
     </div>
   </header>

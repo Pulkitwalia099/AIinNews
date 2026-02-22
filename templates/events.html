@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="margin-bottom: 32px;">
+  <h1 style="font-size: 1.4rem; font-weight: 700; color: #1d1d1f; margin-bottom: 6px;">Boston AI Events</h1>
+  <p style="font-size: 0.86rem; color: #6b6b6b;">Upcoming AI and startup events in Boston, pulled from Eventbrite and MIT.</p>
+</div>
+
+{% if events %}
+  {% for event in events %}
+  <div class="event-card">
+    <div class="event-date-block">
+      <span class="event-month">{{ event.start_time.strftime('%b') if event.start_time else '—' }}</span>
+      <span class="event-day">{{ event.start_time.strftime('%-d') if event.start_time else '—' }}</span>
+    </div>
+    <div class="event-body">
+      <h2 class="event-title"><a href="{{ event.url }}" target="_blank">{{ event.title }}</a></h2>
+      <div class="event-meta">
+        {% if event.start_time %}
+          <span>{{ event.start_time.strftime('%A, %b %-d · %-I:%M %p') }}</span>
+        {% endif %}
+        {% if event.location %}
+          <span>&middot; {{ event.location }}</span>
+        {% endif %}
+        <span class="event-source-badge">{{ event.source }}</span>
+      </div>
+      {% if event.description %}
+        <p class="event-desc">{{ event.description }}</p>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+{% else %}
+  <div style="text-align: center; padding: 60px 0; color: #9b9a97;">
+    <p style="font-size: 1rem; margin-bottom: 8px;">No upcoming events yet.</p>
+    <p style="font-size: 0.86rem;">Run <code>fetch_events.py</code> to pull the latest from Eventbrite and MIT.</p>
+  </div>
+{% endif %}
+{% endblock %}

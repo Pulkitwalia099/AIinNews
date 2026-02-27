@@ -39,7 +39,10 @@ def init_db():
     con.close()
 
 
-init_db()
+try:
+    init_db()
+except Exception:
+    pass
 
 
 def load_newsletter(date_str):

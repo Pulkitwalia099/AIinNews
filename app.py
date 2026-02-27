@@ -41,8 +41,8 @@ def init_db():
 
 try:
     init_db()
-except Exception:
-    pass
+except Exception as e:
+    print(f"init_db error: {e}")
 
 
 def load_newsletter(date_str):
@@ -89,7 +89,8 @@ def get_events(limit=None):
             }
             for r in rows
         ]
-    except Exception:
+    except Exception as e:
+        print(f"get_events error: {e}")
         return []
 
 
@@ -126,6 +127,27 @@ def subscribe():
         return redirect("/?status=subscribed")
     except psycopg2.IntegrityError:
         return redirect("/?status=exists")
+
+
+@app.route("/debug-db")
+def debug_db():
+    try:
+        db_url = os.environ.get("DATABASE_URL", "NOT SET")
+        # Show only first 30 and last 20 chars for safety
+        masked = db_url[:30] + "..." + db_url[-20:] if len(db_url) > 50 else db_url
+        con = get_db()
+        cur = con.cursor()
+        cur.execute("SELECT COUNT(*) FROM events")
+        count = cur.fetchone()[0]
+        cur.execute("SELECT COUNT(*) FROM events WHERE start_time > NOW()")
+        future_count = cur.fetchone()[0]
+        cur.close()
+        con.close()
+        return f"DB URL: {masked}<br>Total events: {count}<br>Future events: {future_count}"
+    except Exception as e:
+        db_url = os.environ.get("DATABASE_URL", "NOT SET")
+        masked = db_url[:30] + "..." + db_url[-20:] if len(db_url) > 50 else db_url
+        return f"DB URL: {masked}<br>Error: {e}"
 
 
 @app.route("/events")

@@ -1,0 +1,28 @@
+name: Daily Events Update
+
+on:
+  schedule:
+    - cron: '0 3 * * *'  # 8:30am IST (UTC+5:30), 30 min after newsletter
+  workflow_dispatch:  # allows manual trigger from GitHub UI
+
+jobs:
+  fetch-events:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch and save events
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          EVENTBRITE_API_KEY: ${{ secrets.EVENTBRITE_API_KEY }}
+        run: python fetch_events.py

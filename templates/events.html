@@ -27,6 +27,7 @@
       {% if event.description %}
         <p class="event-desc">{{ event.description }}</p>
       {% endif %}
+      <a href="{{ event.url }}" target="_blank" rel="noopener noreferrer" class="event-cta">RSVP &rarr;</a>
     </div>
   </div>
   {% endfor %}

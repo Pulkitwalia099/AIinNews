@@ -3,7 +3,7 @@
 {% block content %}
 <div class="newsletter-intro">
   <p class="intro-tagline">The daily AI briefing for founders.</p>
-  <p class="intro-desc">Pulled from 12 sources — TechCrunch, MIT Tech Review, HuggingFace, The Batch and more. Scored by HackerNews community signal, deduplicated, and filtered to what actually matters for building in AI.</p>
+  <p class="intro-desc">Pulled from 19 sources — TechCrunch, MIT Tech Review, OpenAI, Anthropic, HuggingFace, Simon Willison and more. Scored by HackerNews community signal, deduplicated, and filtered to what actually matters for building in AI.</p>
 </div>
 
 <div class="subscribe-bar">
@@ -145,6 +145,16 @@
       {% endfor %}
     </div>
   </details>
+  {% else %}
+  <div class="section-empty">
+    <div class="section-summary">
+      <div class="section-summary-inner">
+        <span class="section-label {{ section_class }}">{{ section_name }}</span>
+        <span class="section-desc">{{ section_desc }}</span>
+      </div>
+    </div>
+    <p class="section-empty-msg">Nothing noteworthy across our sources today. We only include stories worth your time.</p>
+  </div>
   {% endif %}
 {% endfor %}
 

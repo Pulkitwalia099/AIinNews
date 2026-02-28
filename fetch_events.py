@@ -1,5 +1,7 @@
 import os
 import json
+import re
+import time
 import urllib.request
 import urllib.parse
 import psycopg2
@@ -237,6 +239,222 @@ def fetch_mit_events():
     return events
 
 
+def fetch_luma_events():
+    """Fetch AI/Startup/VC events from Luma Boston discover page."""
+
+    BROWSER_HEADERS = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                      "AppleWebKit/537.36 (KHTML, like Gecko) "
+                      "Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+
+    # --- Step 1: Fetch lu.ma/boston and extract event URLs ---
+    print("Fetching Luma Boston events...")
+    try:
+        req = urllib.request.Request("https://lu.ma/boston", headers=BROWSER_HEADERS)
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            html = resp.read().decode("utf-8", errors="replace")
+    except Exception as e:
+        print(f"Luma page fetch failed: {e}")
+        return []
+
+    # Extract event URLs from the HTML
+    # Luma event links look like: /event/evt-XXXXX or /e/XXXXX or just /slug-name
+    event_urls = set()
+
+    # Look for embedded JSON data (Next.js __NEXT_DATA__ or inline scripts)
+    next_data_match = re.search(r'<script[^>]*id="__NEXT_DATA__"[^>]*>(.*?)</script>', html, re.DOTALL)
+    if next_data_match:
+        try:
+            next_data = json.loads(next_data_match.group(1))
+            # Walk the JSON looking for event URLs or api_ids
+            data_str = json.dumps(next_data)
+            # Find lu.ma event URLs in the data
+            for match in re.findall(r'"url"\s*:\s*"(https://lu\.ma/[^"]+)"', data_str):
+                if "/boston" not in match and "/signin" not in match:
+                    event_urls.add(match)
+            # Find event slugs/paths
+            for match in re.findall(r'"event_url"\s*:\s*"([^"]+)"', data_str):
+                if match.startswith("http"):
+                    event_urls.add(match)
+                else:
+                    event_urls.add(f"https://lu.ma/{match}")
+        except json.JSONDecodeError:
+            pass
+
+    # Also scan for links in the raw HTML
+    for match in re.findall(r'href="(https://lu\.ma/[^"]+)"', html):
+        if "/boston" not in match and "/signin" not in match and "/settings" not in match:
+            event_urls.add(match)
+    for match in re.findall(r'href="(/[a-zA-Z0-9][\w-]*[^"]*)"', html):
+        if not match.startswith(("/signin", "/settings", "/home", "/explore", "/_next")):
+            event_urls.add(f"https://lu.ma{match}")
+
+    print(f"  Found {len(event_urls)} potential event URLs on Luma Boston.")
+
+    if not event_urls:
+        print("  No event URLs found. Luma page may require JS rendering.")
+        return []
+
+    # --- Step 2: Fetch each event page for JSON-LD structured data ---
+    events_raw = []
+    for url in list(event_urls)[:40]:
+        try:
+            req = urllib.request.Request(url, headers=BROWSER_HEADERS)
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                event_html = resp.read().decode("utf-8", errors="replace")
+        except Exception:
+            continue
+
+        # Look for JSON-LD (most reliable — Luma includes this for SEO)
+        for ld_match in re.findall(
+            r'<script[^>]*type="application/ld\+json"[^>]*>(.*?)</script>',
+            event_html, re.DOTALL
+        ):
+            try:
+                ld = json.loads(ld_match)
+                if isinstance(ld, list):
+                    ld = ld[0]
+                if ld.get("@type") == "Event" or "startDate" in ld:
+                    events_raw.append({
+                        "title": ld.get("name", ""),
+                        "url": url,
+                        "location": _extract_ld_location(ld),
+                        "start_time": ld.get("startDate", ""),
+                        "description": (ld.get("description") or "")[:400],
+                    })
+                    break
+            except json.JSONDecodeError:
+                continue
+
+        # Fallback: extract from meta tags
+        if not any(e["url"] == url for e in events_raw):
+            title = _extract_meta(event_html, "og:title") or _extract_meta(event_html, "twitter:title")
+            desc = _extract_meta(event_html, "og:description") or _extract_meta(event_html, "twitter:description")
+            if title:
+                events_raw.append({
+                    "title": title,
+                    "url": url,
+                    "location": "Boston, MA",
+                    "start_time": None,
+                    "description": (desc or "")[:400],
+                })
+
+        time.sleep(0.5)  # Be respectful with rate limiting
+
+    print(f"  Extracted details for {len(events_raw)} events from Luma.")
+
+    if not events_raw:
+        return []
+
+    # --- Step 3: Use Claude to filter for AI/Startup/VC events ---
+    return _filter_events_with_claude(events_raw)
+
+
+def _extract_ld_location(ld):
+    """Extract location string from JSON-LD data."""
+    loc = ld.get("location", {})
+    if isinstance(loc, str):
+        return loc
+    if isinstance(loc, dict):
+        name = loc.get("name", "")
+        addr = loc.get("address", {})
+        if isinstance(addr, str):
+            return f"{name}, {addr}" if name else addr
+        if isinstance(addr, dict):
+            city = addr.get("addressLocality", "")
+            state = addr.get("addressRegion", "")
+            parts = [name, city, state]
+            return ", ".join(p for p in parts if p) or "Boston, MA"
+    return "Boston, MA"
+
+
+def _extract_meta(html, prop):
+    """Extract content from a meta tag."""
+    match = re.search(
+        rf'<meta[^>]*(?:property|name)="{re.escape(prop)}"[^>]*content="([^"]*)"',
+        html
+    )
+    if not match:
+        match = re.search(
+            rf'<meta[^>]*content="([^"]*)"[^>]*(?:property|name)="{re.escape(prop)}"',
+            html
+        )
+    return match.group(1) if match else None
+
+
+def _filter_events_with_claude(events_raw):
+    """Use Claude to filter events for AI, Startup, and VC relevance."""
+    try:
+        import anthropic
+    except ImportError:
+        print("  anthropic package not installed, skipping Claude filtering.")
+        return []
+
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+    if not api_key:
+        print("  No ANTHROPIC_API_KEY set, returning all Luma events unfiltered.")
+        return [
+            {**e, "source": "Luma"}
+            for e in events_raw
+        ]
+
+    client = anthropic.Anthropic()
+    events_json = json.dumps([
+        {"title": e["title"], "description": e["description"], "url": e["url"]}
+        for e in events_raw
+    ], indent=2)
+
+    try:
+        response = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=2000,
+            messages=[{
+                "role": "user",
+                "content": (
+                    "You are filtering events for a Boston AI/tech newsletter for founders.\n\n"
+                    "From the events below, return ONLY the ones related to:\n"
+                    "- Artificial Intelligence, Machine Learning, LLMs, GenAI\n"
+                    "- Startups, entrepreneurship, venture building\n"
+                    "- Venture Capital, fundraising, investor events\n"
+                    "- Tech industry networking relevant to founders\n\n"
+                    "Exclude: pure social gatherings, food/drink, fitness, arts, "
+                    "music, sports, or events with no clear tech/startup angle.\n\n"
+                    "Return a JSON array of the URLs that pass the filter. "
+                    "Return ONLY valid JSON, no other text.\n"
+                    'Example: ["https://lu.ma/abc", "https://lu.ma/xyz"]\n\n'
+                    f"Events:\n{events_json}"
+                ),
+            }],
+        )
+    except Exception as e:
+        print(f"  Claude filtering failed: {e}")
+        return [{**e, "source": "Luma"} for e in events_raw]
+
+    # Parse Claude's response to get filtered URLs
+    try:
+        text = response.content[0].text.strip()
+        # Handle markdown code blocks
+        if text.startswith("```"):
+            text = re.sub(r"^```\w*\n?", "", text)
+            text = re.sub(r"\n?```$", "", text)
+        filtered_urls = set(json.loads(text))
+    except (json.JSONDecodeError, IndexError):
+        print("  Could not parse Claude's filter response, returning all events.")
+        return [{**e, "source": "Luma"} for e in events_raw]
+
+    filtered = [
+        {**e, "source": "Luma"}
+        for e in events_raw
+        if e["url"] in filtered_urls
+    ]
+
+    print(f"  Claude filtered to {len(filtered)} AI/Startup/VC events from {len(events_raw)} total.")
+    return filtered
+
+
 def save_events(events):
     if not events:
         print("No events to save.")
@@ -276,6 +494,7 @@ if __name__ == "__main__":
     all_events += fetch_tnt_events()
     all_events += fetch_eventbrite()
     all_events += fetch_mit_events()
+    all_events += fetch_luma_events()
 
     save_events(all_events)
     print(f"\nTotal: {len(all_events)} events fetched.")

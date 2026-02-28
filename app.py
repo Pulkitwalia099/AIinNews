@@ -827,27 +827,97 @@ def send_plan_email(plan_id, plan_date, plan_title, plan_md):
     print(f"[plan_email] Sent: {plan_title}")
 
 
-def send_acknowledgment_email(to_email, feedback_type, comment, shipped_note):
-    """Thank a feedback giver whose suggestion has been shipped."""
+def send_acknowledgment_email(to_email, feedback_type, comment, shipped_note, rec=None):
+    """Thank a feedback giver whose suggestion has been shipped.
+
+    If rec (the recommendation dict) is provided, uses Claude Sonnet to draft a
+    personalised email body that names their exact feedback, what was built, and why.
+    Falls back to a static template if the API call fails.
+    """
     type_labels = {
         "bug": "bug report", "feature": "feature request",
         "general": "feedback", "question": "question",
     }
     type_label = type_labels.get(feedback_type, "feedback")
-    quoted = (
-        f'<blockquote style="border-left:3px solid #e0e0e0; padding:4px 12px; margin:12px 0; '
-        f'color:#6b6b6b; font-style:italic; font-size:0.88rem;">'
-        f'{html_lib.escape(comment[:300])}</blockquote>'
-        if comment else
-        f'<p style="color:#6b6b6b; font-style:italic; font-size:0.86rem;">({type_label})</p>'
-    )
-    what_changed = (
-        f'<p style="font-size:0.88rem; line-height:1.7; margin-top:6px;">'
-        f'Here\'s what changed: {html_lib.escape(shipped_note)}</p>'
-        if shipped_note else
-        '<p style="font-size:0.88rem; line-height:1.7; margin-top:6px;">'
-        'This improvement is now live in AI in News.</p>'
-    )
+
+    # --- Try Claude-generated body ---
+    body_html = None
+    if rec:
+        try:
+            comment_str = f'"{comment[:300]}"' if comment else "(no written comment — submitted as a {type_label})"
+            shipped_str = shipped_note or "(no specific note from the team)"
+            prompt = f"""You are writing a short, warm thank-you email for a newsletter called "AI in News" — a daily AI briefing for builders and founders.
+
+A user submitted product feedback. We built a solution inspired by it and have just shipped it.
+
+USER'S FEEDBACK:
+- Type: {type_label}
+- Their comment: {comment_str}
+
+WHAT WE BUILT:
+- Feature/fix: {rec.get('title', '')}
+- Why we built it: {rec.get('why', '')}
+- What was implemented: {rec.get('what_to_build', '')}
+- What changed (team note): {shipped_str}
+
+Write 3–4 short paragraphs for the email body:
+1. Open by directly referencing their specific feedback — use their actual words if they wrote a comment, otherwise reference the feedback type. Make it clear we actually read what they wrote.
+2. Explain concisely what was built and why we built it — connect their feedback to our decision so it feels earned, not generic corporate boilerplate.
+3. A genuine, short thank-you — they helped make AI in News better for builders like them.
+4. One warm closing line inviting them to share more if they have ideas.
+
+Rules:
+- No subject line, no greeting ("Hi", "Dear [name]"), no sign-off ("Best," etc.)
+- No filler openers like "I hope this email finds you well"
+- Tone: warm and direct, like a message from a small team that genuinely cares — not a corporation
+- Under 160 words total
+- Plain text only — no HTML tags, no markdown"""
+
+            message = get_claude().messages.create(
+                model="claude-sonnet-4-6",
+                max_tokens=400,
+                messages=[{"role": "user", "content": prompt}]
+            )
+            raw_text = message.content[0].text.strip()
+            paragraphs = [p.strip() for p in raw_text.split("\n\n") if p.strip()]
+            body_html = "".join(
+                f'<p style="font-size:0.88rem; line-height:1.75; margin:0 0 14px; color:#37352f;">'
+                f'{html_lib.escape(p)}</p>'
+                for p in paragraphs
+            )
+            print(f"[ack_email] Claude draft generated ({len(raw_text)} chars)")
+        except Exception as e:
+            print(f"[ack_email] Claude generation failed, using static fallback: {e}")
+            body_html = None
+
+    # --- Static fallback ---
+    if not body_html:
+        quoted = (
+            f'<blockquote style="border-left:3px solid #e0e0e0; padding:4px 12px; margin:12px 0; '
+            f'color:#6b6b6b; font-style:italic; font-size:0.88rem;">'
+            f'{html_lib.escape(comment[:300])}</blockquote>'
+            if comment else
+            f'<p style="color:#6b6b6b; font-style:italic; font-size:0.86rem;">({type_label})</p>'
+        )
+        what_changed = (
+            f'<p style="font-size:0.88rem; line-height:1.7; margin-top:6px;">'
+            f'Here\'s what changed: {html_lib.escape(shipped_note)}</p>'
+            if shipped_note else
+            '<p style="font-size:0.88rem; line-height:1.7; margin-top:6px;">'
+            'This improvement is now live in AI in News.</p>'
+        )
+        body_html = f"""  <p style="font-size:0.88rem; color:#6b6b6b; line-height:1.65; margin-bottom:4px;">
+    You submitted a {type_label} for AI in News:
+  </p>
+  {quoted}
+  <p style="font-size:0.88rem; line-height:1.7; margin-top:16px;">
+    Our AI PM flagged it, a plan was made, and we shipped it.
+  </p>
+  {what_changed}
+  <p style="font-size:0.88rem; line-height:1.7; margin-top:18px; color:#37352f;">
+    Thank you — suggestions like yours are how AI in News gets better for builders.
+  </p>"""
+
     try:
         resend_lib.api_key = os.environ["RESEND_API_KEY"]
         resend_lib.Emails.send({
@@ -860,25 +930,17 @@ def send_acknowledgment_email(to_email, feedback_type, comment, shipped_note):
              margin:0 auto; padding:32px 16px; background:#FAFAF9; color:#37352f;">
   <p style="font-size:0.7rem; font-weight:700; text-transform:uppercase;
              letter-spacing:0.12em; color:#9b9a97; margin-bottom:20px;">AI in News</p>
-  <p style="font-size:1rem; font-weight:600; color:#1d1d1f; margin-bottom:6px;">
+  <p style="font-size:1rem; font-weight:600; color:#1d1d1f; margin-bottom:16px;">
     Your feedback shaped something real.
   </p>
-  <p style="font-size:0.88rem; color:#6b6b6b; line-height:1.65; margin-bottom:4px;">
-    You submitted a {type_label} for AI in News:
-  </p>
-  {quoted}
-  <p style="font-size:0.88rem; line-height:1.7; margin-top:16px;">
-    Our AI PM flagged it, a plan was made, and we shipped it.
-  </p>
-  {what_changed}
-  <p style="font-size:0.88rem; line-height:1.7; margin-top:18px; color:#37352f;">
-    Thank you — suggestions like yours are how AI in News gets better for builders.
-  </p>
-  <div style="margin-top:28px; padding-top:16px; border-top:1px solid #ebebea;
+  {body_html}
+  <div style="margin-top:24px; padding-top:16px; border-top:1px solid #ebebea;
               font-size:0.75rem; color:#b0aeab;">
-    <a href="https://aiinnews.space" style="color:#b0aeab; text-decoration:none;">
-      Back to the newsletter &rarr;
-    </a>
+    <a href="https://aiinnews.space/feedback/product"
+       style="color:#b0aeab; text-decoration:none;">Share more feedback &rarr;</a>
+    &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+    <a href="https://aiinnews.space"
+       style="color:#b0aeab; text-decoration:none;">Back to the newsletter &rarr;</a>
   </div>
 </body></html>""",
         })
@@ -1110,7 +1172,28 @@ def pm_ship():
     except Exception as e:
         return f"DB error: {e}", 500
 
-    # 2. Find linked feedback rows that have emails and haven't been acknowledged yet
+    # 2. Fetch the recommendation data for personalised email drafting
+    rec = None
+    try:
+        con = get_db()
+        cur = con.cursor()
+        cur.execute("""
+            SELECT r.recommendations_json, p.rec_index
+            FROM pm_plans p
+            JOIN pm_reports r ON r.id = p.report_id
+            WHERE p.id = %s
+        """, (plan_id,))
+        plan_row = cur.fetchone()
+        cur.close()
+        con.close()
+        if plan_row and plan_row[0] and plan_row[1] is not None:
+            recs, idx = plan_row[0], plan_row[1]
+            if idx < len(recs):
+                rec = recs[idx]
+    except Exception as e:
+        print(f"[ship] DB error fetching rec: {e}")
+
+    # 3. Find linked feedback rows that have emails and haven't been acknowledged yet
     try:
         con = get_db()
         cur = con.cursor()
@@ -1126,10 +1209,10 @@ def pm_ship():
         print(f"[ship] DB error fetching feedback: {e}")
         rows = []
 
-    # 3. Send emails and mark acknowledged
+    # 4. Send emails and mark acknowledged
     sent = 0
     for fb_id, feedback_type, comment, email in rows:
-        send_acknowledgment_email(email, feedback_type, comment, shipped_note)
+        send_acknowledgment_email(email, feedback_type, comment, shipped_note, rec=rec)
         try:
             con = get_db()
             cur = con.cursor()

@@ -1,0 +1,29 @@
+name: PM Reminder
+
+on:
+  schedule:
+    - cron: '0 9 * * 2'  # Tuesday 9:00 AM UTC (3 days after Saturday report)
+  workflow_dispatch:      # manual trigger for testing
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run PM reminder check
+        env:
+          RESEND_API_KEY: ${{ secrets.RESENDKEYAINEWLETTER }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PM_SECRET: ${{ secrets.PM_SECRET }}
+        run: python pm_reminder.py

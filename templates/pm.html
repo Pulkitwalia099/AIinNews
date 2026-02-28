@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PM Dashboard — AI in News</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      background: #FAFAF9; color: #37352f; padding: 40px 24px 80px;
+      -webkit-font-smoothing: antialiased; line-height: 1.65;
+    }
+    .container { max-width: 720px; margin: 0 auto; }
+
+    .page-header { margin-bottom: 32px; }
+    .page-header h1 { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; }
+    .page-meta { font-size: 0.82rem; color: #9b9a97; }
+    .status-badge {
+      display: inline-block; font-size: 0.7rem; font-weight: 600;
+      padding: 2px 10px; border-radius: 20px; margin-left: 8px;
+    }
+    .status-pending  { background: #fff4e5; color: #c4680a; }
+    .status-approved { background: #e6f7ed; color: #156038; }
+
+    .section-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #9b9a97; margin-bottom: 10px;
+      display: block;
+    }
+
+    /* Report markdown box */
+    .report-body {
+      background: #fff; border-radius: 10px; padding: 24px 26px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 36px;
+      font-size: 0.88rem; line-height: 1.75; white-space: pre-wrap;
+    }
+
+    /* Recommendation cards */
+    .rec-card {
+      background: #fff; border-radius: 10px; padding: 24px 26px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 16px;
+      border-left: 4px solid #7b78e8;
+    }
+    .rec-card.carried-over { border-left-color: #c4680a; }
+
+    .rec-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .badge {
+      font-size: 0.68rem; font-weight: 600; padding: 2px 10px;
+      border-radius: 20px; text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .badge-type-bug_fix       { background: #fee2e2; color: #b91c1c; }
+    .badge-type-improvement   { background: #e8f1ff; color: #0050b3; }
+    .badge-type-new_build     { background: #eceafb; color: #4240b8; }
+    .badge-type-cost_impact   { background: #fff4e5; color: #c4680a; }
+    .badge-type-editorial     { background: #f4f4f2; color: #6b6b6b; }
+    .badge-priority-high      { background: #fee2e2; color: #b91c1c; }
+    .badge-priority-medium    { background: #fff4e5; color: #c4680a; }
+    .badge-priority-low       { background: #f4f4f2; color: #6b6b6b; }
+    .badge-effort-small       { background: #e6f7ed; color: #156038; }
+    .badge-effort-medium      { background: #fff4e5; color: #c4680a; }
+    .badge-effort-large       { background: #fee2e2; color: #b91c1c; }
+
+    .rec-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 14px; color: #1d1d1f; }
+
+    .rec-section-label {
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: #9b9a97; margin-bottom: 4px; display: block;
+    }
+    .rec-card p { font-size: 0.88rem; line-height: 1.65; margin-bottom: 12px; color: #37352f; }
+    .impact-note { font-size: 0.82rem; color: #6b6b6b; font-style: italic; }
+
+    /* Action area */
+    .rec-actions { margin-top: 18px; padding-top: 16px; border-top: 1px solid #f4f4f2; }
+    .approved-badge {
+      display: inline-block; background: #e6f7ed; color: #156038;
+      font-size: 0.78rem; font-weight: 600; padding: 5px 14px; border-radius: 20px;
+    }
+
+    .refinement-toggle {
+      font-size: 0.82rem; color: #9b9a97; cursor: pointer;
+      background: none; border: none; font-family: inherit; padding: 0;
+      text-decoration: underline; text-decoration-style: dotted;
+    }
+    .refinement-toggle:hover { color: #37352f; }
+
+    .refinement-box {
+      display: none; margin-top: 12px;
+      background: #f4f4f2; border-radius: 8px; padding: 14px 16px;
+    }
+    .refinement-box.open { display: block; }
+    .refinement-label {
+      font-size: 0.78rem; font-weight: 600; color: #6b6b6b;
+      margin-bottom: 8px; display: block;
+    }
+    .refinement-box textarea {
+      width: 100%; font-size: 0.86rem; font-family: inherit;
+      border: 1px solid #ddd; border-radius: 6px; padding: 8px 12px;
+      resize: vertical; min-height: 60px; margin-bottom: 10px; color: #37352f;
+    }
+    .refinement-box textarea:focus { outline: none; border-color: #7b78e8; }
+
+    .btn-approve {
+      background: #156038; color: #fff; border: none; padding: 10px 22px;
+      border-radius: 8px; font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; font-family: inherit; transition: background 0.15s;
+    }
+    .btn-approve:hover { background: #0e4227; }
+
+    .btn-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 12px; }
+
+    /* Divider */
+    .carried-over-header {
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #c4680a; margin: 32px 0 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="page-header">
+      <h1>PM Dashboard
+        <span class="status-badge status-{{ report.status }}">{{ report.status }}</span>
+      </h1>
+      <p class="page-meta">AI in News &middot; Week of {{ report.report_date }}</p>
+    </div>
+
+    <!-- Full report markdown -->
+    <span class="section-label">Weekly Report</span>
+    <div class="report-body">{{ report.report_md }}</div>
+
+    <!-- Recommendations -->
+    <span class="section-label">Recommendations — pick one to approve</span>
+
+    {% for rec in report.recommendations %}
+    <div class="rec-card">
+      <div class="rec-badges">
+        <span class="badge badge-type-{{ rec.type | default('improvement') }}">
+          {{ rec.type | default('improvement') | replace('_', ' ') }}
+        </span>
+        <span class="badge badge-priority-{{ rec.priority | default('medium') }}">
+          {{ rec.priority | default('medium') }} priority
+        </span>
+        <span class="badge badge-effort-{{ rec.effort | default('medium') }}">
+          {{ rec.effort | default('medium') }} effort
+        </span>
+      </div>
+
+      <h3>{{ loop.index }}. {{ rec.title }}</h3>
+
+      <span class="rec-section-label">Why this matters</span>
+      <p>{{ rec.why }}</p>
+
+      <span class="rec-section-label">What to build</span>
+      <p>{{ rec.what_to_build }}</p>
+
+      <p class="impact-note">Expected impact: {{ rec.impact_estimate }}</p>
+
+      <div class="rec-actions">
+        {% if report.status == "approved" %}
+          <span class="approved-badge">✓ Plan generated — check your email</span>
+        {% else %}
+          <button class="refinement-toggle" onclick="toggleRefinement(this)">
+            + Add notes before approving (optional)
+          </button>
+
+          <form action="/pm/approve" method="POST">
+            <input type="hidden" name="report_id" value="{{ report.id }}">
+            <input type="hidden" name="rec_index" value="{{ loop.index0 }}">
+            <input type="hidden" name="secret" value="{{ secret }}">
+
+            <div class="refinement-box" id="refinement-{{ loop.index0 }}">
+              <span class="refinement-label">
+                Refine this recommendation — your notes will be included in the Architect's brief:
+              </span>
+              <textarea name="refinement_notes"
+                placeholder="e.g. 'focus only on the web version', 'skip the email part', 'make it simpler'..."></textarea>
+            </div>
+
+            <div class="btn-row">
+              <button class="btn-approve" type="submit">
+                Approve &amp; Generate Plan &rarr;
+              </button>
+            </div>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+
+    {% if report.recommendations | length == 0 %}
+    <p style="font-size:0.88rem; color:#9b9a97; font-style:italic;">
+      No recommendations in this report yet.
+    </p>
+    {% endif %}
+
+  </div>
+
+  <script>
+    function toggleRefinement(btn) {
+      var index = btn.closest('.rec-actions').querySelector('.refinement-box').id.replace('refinement-', '');
+      var box = document.getElementById('refinement-' + index);
+      box.classList.toggle('open');
+      btn.textContent = box.classList.contains('open')
+        ? '− Hide notes'
+        : '+ Add notes before approving (optional)';
+    }
+  </script>
+</body>
+</html>

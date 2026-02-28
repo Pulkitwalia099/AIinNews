@@ -1,5 +1,6 @@
 import os
 import json
+import re
 import urllib.request
 import urllib.parse
 import psycopg2
@@ -31,54 +32,54 @@ def init_events_table():
     print("Events table ready.")
 
 
-def fetch_eventbrite():
-    api_key = os.environ.get("EVENTBRITE_API_KEY", "")
+def fetch_ticketmaster():
+    api_key = os.environ.get("TICKETMASTER_API_KEY", "")
     if not api_key:
-        print("No EVENTBRITE_API_KEY set, skipping Eventbrite.")
+        print("No TICKETMASTER_API_KEY set, skipping Ticketmaster.")
         return []
 
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     params = urllib.parse.urlencode({
-        "token": api_key,
-        "q": "AI machine learning startup artificial intelligence",
-        "location.address": "Boston, MA",
-        "location.within": "25mi",
-        "start_date.range_start": today,
-        "categories": "102",  # Technology category
-        "expand": "venue",
-        "page_size": 20,
-        "sort_by": "date",
+        "apikey": api_key,
+        "city": "Boston",
+        "stateCode": "MA",
+        "keyword": "AI artificial intelligence machine learning startup",
+        "sort": "date,asc",
+        "size": 20,
     })
-    url = f"https://www.eventbriteapi.com/v3/events/search/?{params}"
+    url = f"https://app.ticketmaster.com/discovery/v2/events.json?{params}"
     req = urllib.request.Request(url, headers={"User-Agent": "AIinNews/1.0"})
 
     try:
         with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read())
     except Exception as e:
-        print(f"Eventbrite fetch failed: {e}")
+        print(f"Ticketmaster fetch failed: {e}")
         return []
 
-    events = []
-    for e in data.get("events", []):
-        venue = e.get("venue") or {}
-        addr = venue.get("address") or {}
-        location = addr.get("localized_address_display", "Boston, MA")
+    embedded = data.get("_embedded", {})
+    raw_events = embedded.get("events", [])
 
-        desc = ""
-        if e.get("description") and e["description"].get("text"):
-            desc = e["description"]["text"][:400]
+    events = []
+    for e in raw_events:
+        venues = e.get("_embedded", {}).get("venues", [{}])
+        venue = venues[0] if venues else {}
+        city = venue.get("city", {}).get("name", "Boston")
+        venue_name = venue.get("name", "")
+        location = f"{venue_name}, {city}" if venue_name else city
+
+        start = e.get("dates", {}).get("start", {})
+        start_time = start.get("dateTime")  # ISO 8601 UTC
 
         events.append({
-            "title": e["name"]["text"],
-            "url": e["url"],
-            "source": "Eventbrite",
+            "title": e["name"],
+            "url": e.get("url", ""),
+            "source": "Ticketmaster",
             "location": location,
-            "start_time": e["start"]["utc"],
-            "description": desc,
+            "start_time": start_time,
+            "description": e.get("info", "")[:400],
         })
 
-    print(f"Fetched {len(events)} events from Eventbrite.")
+    print(f"Fetched {len(events)} events from Ticketmaster.")
     return events
 
 
@@ -202,38 +203,79 @@ def fetch_tnt_events():
     return events
 
 
-def fetch_mit_events():
-    """Fetch AI-related events from MIT's public event calendar."""
-    url = "https://events.mit.edu/api/2/events/?days=30&tag=artificial+intelligence&pp=20"
-    req = urllib.request.Request(url, headers={"User-Agent": "AIinNews/1.0"})
+def fetch_luma_boston():
+    """Fetch upcoming Boston events from Luma's discover API, filtered for AI/VC/startup/tech."""
+    LUMA_DISCOVER_URL = (
+        "https://api.lu.ma/discover/get-paginated-events"
+        "?discover_place_api_id=discplace-VWeZ1zUvnawYHMj"
+        "&pagination_limit=50"
+    )
 
+    # Keywords that signal an AI / VC / startup / tech event
+    KEYWORDS = re.compile(
+        r"\b("
+        r"ai|artificial.intelligence|machine.learning|deep.learning|llm|gpt|genai|generative.ai"
+        r"|startup|startups|founder|founders|entrepreneurship|demo.day|pitch"
+        r"|venture.capital|vc|angel.invest|seed.fund|series.[a-d]"
+        r"|tech|technology|software|saas|devops|cloud|data.science|robotics|biotech"
+        r"|hackathon|hack.night|build.night|dev|developer|engineering|cto|product"
+        r")\b",
+        re.IGNORECASE,
+    )
+
+    req = urllib.request.Request(LUMA_DISCOVER_URL, headers={"User-Agent": "AIinNews/1.0"})
     try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
+        with urllib.request.urlopen(req, timeout=15) as resp:
             data = json.loads(resp.read())
     except Exception as e:
-        print(f"MIT events fetch failed: {e}")
+        print(f"Luma Boston fetch failed: {e}")
         return []
 
+    entries = data.get("entries", [])
+    now = datetime.now(timezone.utc)
     events = []
-    for e in data.get("events", []):
-        event = e.get("event", e)  # Localist wraps events
-        title = event.get("title", "")
-        url_str = event.get("url", "")
-        location = event.get("location_name", "MIT, Cambridge")
-        start_time = event.get("event_instances", [{}])[0].get("event_instance", {}).get("start", "")
-        desc = event.get("description_text", "")[:400]
 
-        if title and url_str:
+    for entry in entries:
+        ev = entry.get("event", {})
+        name = ev.get("name", "")
+        slug = ev.get("url", "")
+        start_at = ev.get("start_at")
+
+        # Build a text blob to match keywords against (name + calendar name + host names)
+        calendar_name = (entry.get("calendar", {}) or {}).get("name", "")
+        host_names = " ".join(
+            (h.get("name") or "" for h in (entry.get("hosts") or [])),
+        )
+        search_text = f"{name} {calendar_name} {host_names}"
+
+        if not KEYWORDS.search(search_text):
+            continue
+
+        # Skip past events
+        start_time = None
+        if start_at:
+            try:
+                start_time = datetime.fromisoformat(start_at.replace("Z", "+00:00"))
+                if start_time < now:
+                    continue
+            except Exception:
+                pass
+
+        # Location
+        geo = ev.get("geo_address_info") or {}
+        location = geo.get("full_address") or geo.get("city_state") or "Boston, MA"
+
+        if name and slug:
             events.append({
-                "title": title,
-                "url": url_str,
-                "source": "MIT Events",
+                "title": name,
+                "url": f"https://luma.com/{slug}",
+                "source": "Luma",
                 "location": location,
-                "start_time": start_time or None,
-                "description": desc,
+                "start_time": start_time.isoformat() if start_time else None,
+                "description": "",
             })
 
-    print(f"Fetched {len(events)} events from MIT.")
+    print(f"Fetched {len(events)} AI/VC/startup/tech events from Luma Boston (out of {len(entries)} total).")
     return events
 
 
@@ -274,8 +316,8 @@ if __name__ == "__main__":
 
     all_events = []
     all_events += fetch_tnt_events()
-    all_events += fetch_eventbrite()
-    all_events += fetch_mit_events()
+    all_events += fetch_ticketmaster()
+    all_events += fetch_luma_boston()
 
     save_events(all_events)
     print(f"\nTotal: {len(all_events)} events fetched.")

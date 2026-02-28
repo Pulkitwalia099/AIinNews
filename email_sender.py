@@ -150,15 +150,21 @@ def send_newsletter(newsletter):
     date_str = newsletter["date"]
     recipients = get_subscribers()
 
-    params: resend.Emails.SendParams = {
-        "from": "AI in News <newsletter@aiinnews.space>",
-        "to": recipients,
-        "subject": f"AI in News — {date_str}",
-        "html": html,
-    }
+    sent, failed = 0, 0
+    for email in recipients:
+        try:
+            resend.Emails.send({
+                "from": "AI in News <newsletter@aiinnews.space>",
+                "to": [email],
+                "subject": f"AI in News — {date_str}",
+                "html": html,
+            })
+            sent += 1
+        except Exception as e:
+            print(f"  [send] Failed to send to {email}: {e}")
+            failed += 1
 
-    response = resend.Emails.send(params)
-    print(f"Email sent to {len(recipients)} subscriber(s) (id: {response['id']})")
+    print(f"Email sent to {sent}/{len(recipients)} subscriber(s)" + (f" ({failed} failed)" if failed else ""))
 
 
 if __name__ == "__main__":

@@ -94,29 +94,13 @@
   }
   .pfb-heading { font-size: 0.9rem; font-weight: 600; color: #1d1d1f; margin-bottom: 5px; }
   .pfb-sub { font-size: 0.8rem; color: #6b6b6b; margin-bottom: 14px; }
-  .pfb-form { display: flex; gap: 7px; justify-content: center; align-items: center; flex-wrap: wrap; }
-  .pfb-select {
-    padding: 7px 10px;
-    font-size: 0.78rem;
-    font-family: inherit;
-    border: 1px solid #ddd;
-    border-radius: 7px;
-    background: #fff;
-    color: #37352f;
+  .pfb-btns { display: flex; gap: 7px; justify-content: center; flex-wrap: wrap; }
+  .pfb-btn {
+    display: inline-block; background: #fff; border: 1px solid #e0e0e0;
+    color: #37352f; text-decoration: none; padding: 6px 13px;
+    border-radius: 20px; font-size: 0.76rem; transition: border-color 0.12s, background 0.12s;
   }
-  .pfb-select:focus { outline: none; border-color: #7b78e8; }
-  .pfb-submit {
-    background: #1d1d1f;
-    color: #fff;
-    border: none;
-    padding: 7px 14px;
-    border-radius: 7px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
-  }
-  .pfb-submit:hover { background: #3a3a3c; }
+  .pfb-btn:hover { border-color: #7b78e8; background: #f0effe; }
 </style>
 <div class="newsletter-intro">
   <p class="intro-tagline">What's actually happening in AI — explained for people who build things.</p>
@@ -299,15 +283,12 @@
 <div class="product-feedback-card">
   <p class="pfb-heading">Help us improve AI in News</p>
   <p class="pfb-sub">Got a suggestion, bug report, or question?</p>
-  <form class="pfb-form" action="/feedback/product" method="get">
-    <select name="type" class="pfb-select">
-      <option value="general">💬 General feedback</option>
-      <option value="bug">🐛 Bug report</option>
-      <option value="feature">✨ Feature request</option>
-      <option value="question">❓ Question</option>
-    </select>
-    <button type="submit" class="pfb-submit">Share →</button>
-  </form>
+  <div class="pfb-btns">
+    <a href="/feedback/product?type=bug" class="pfb-btn">🐛 Bug</a>
+    <a href="/feedback/product?type=feature" class="pfb-btn">✨ Feature</a>
+    <a href="/feedback/product?type=general" class="pfb-btn">💬 Feedback</a>
+    <a href="/feedback/product?type=question" class="pfb-btn">❓ Question</a>
+  </div>
 </div>
 
 <script>

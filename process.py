@@ -127,7 +127,7 @@ def select_articles(articles):
         if article.get("summary"):
             articles_text += f"    {article['summary'][:200]}\n"
 
-    prompt = f"""You are the selection editor for "AI in News", a daily AI briefing for MBA founders and tech executives.
+    prompt = f"""You are the selection editor for "AI in News", a daily AI briefing for builders and tech executives.
 
 Here are {len(articles)} candidate articles:
 
@@ -184,7 +184,7 @@ HN Score: {article.get('hn_score', 0)}
 Summary: {article.get('summary', '')[:500]}
 ---"""
 
-    prompt = f"""You are the senior analyst for "AI in News", a daily briefing read by HBS MBA founders, YC alumni, and technical executives.
+    prompt = f"""You are the senior analyst for "AI in News", a daily briefing read by builders, YC alumni, and technical executives.
 
 Your readers are smart, time-pressed, and care about:
 - Where to deploy capital or attention
@@ -207,8 +207,8 @@ For each article, produce a structured analysis. Return ONLY a valid JSON array.
   "signal_tags": array of 1-3 tags from ["Opportunity", "Enabler", "Disruption", "Platform Shift", "Cost Driver", "New Market"],
   "maturity_tag": one of ["Early Research", "Emerging", "Production-Ready"],
   "summary": "2-3 crisp sentences. Lead with what happened, then why it matters. No filler.",
-  "founders_lens": "1-2 sentences, direct address. What should a founder do or think differently because of this? Be specific — name the opportunity, the risk, or the strategic move. Return null if no actionable takeaway.",
-  "impact_level": one of ["act", "watch", "context"] — "act" means founders should do something now, "watch" means monitor this closely, "context" means good to know,
+  "builders_lens": "2-3 sentences for someone building in AI — whether that's a startup, a class project, a career move, or a product feature. Be specific — name the opportunity, the risk, or the strategic move. Return null if no actionable takeaway.",
+  "impact_level": one of ["act", "watch", "context"] — "act" means builders should do something now, "watch" means monitor this closely, "context" means good to know,
   "technical_detail": "1 sentence of technical specifics for technical readers (model size, API details, benchmark numbers, architecture). Return null if the article is non-technical."
 }}
 

@@ -1,10 +1,10 @@
 # AI Newsletter Project
 
 ## What we're building
-A daily AI/tech newsletter for founders — curated by Claude, published on a public website.
+A daily AI/tech newsletter for builders — curated by Claude, published on a public website.
 
 ## Audience
-Founders exploring ideas, using this newsletter to track where tech is moving.
+Builders exploring ideas — whether that's a startup, a class project, a career move, or a product feature.
 
 ## Newsletter structure
 Each article is processed into:
@@ -13,7 +13,7 @@ Each article is processed into:
   - Signal type: Opportunity, Enabler, Disruption, Platform Shift, Cost Driver, New Market
   - Maturity: Early Research, Emerging, Production-Ready
 - **Summary**: 2-3 sentences
-- **So what?**: 1 paragraph from a founder/business lens
+- **Builder's Lens**: 1 paragraph — what this means for what you're building
 
 ## Tech stack
 - Python pipeline (fetch → process → save)

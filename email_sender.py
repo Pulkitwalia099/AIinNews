@@ -57,15 +57,15 @@ def build_html(newsletter):
                     f'font-size:0.7rem; font-weight:500; padding:2px 9px; border-radius:20px;">{maturity}</span>'
                 )
 
-            founders_lens = a.get("founders_lens")
+            builders_lens = a.get("builders_lens") or a.get("founders_lens")
             lens_html = ""
-            if founders_lens:
+            if builders_lens:
                 lens_html = f"""
                 <div style="background:#f0fdf4; border-left:3px solid #34C759; border-radius:0 6px 6px 0;
                             padding:10px 14px; font-size:0.86rem; color:#1a4731; line-height:1.6; margin-top:10px;">
                     <span style="display:block; font-size:0.65rem; font-weight:700; letter-spacing:0.1em;
-                                 text-transform:uppercase; color:#1a7f4e; margin-bottom:4px;">Founder's Lens</span>
-                    {founders_lens}
+                                 text-transform:uppercase; color:#1a7f4e; margin-bottom:4px;">Builder's Lens</span>
+                    {builders_lens}
                 </div>"""
 
             articles_html += f"""
@@ -101,11 +101,10 @@ def build_html(newsletter):
 
     <div style="padding:20px 0 24px; border-bottom:1px solid #ebebea; margin-bottom:8px;">
         <p style="margin:0 0 6px; font-size:1rem; font-weight:600; color:#1d1d1f;">
-            The daily AI briefing for founders.
+            What's actually happening in AI — explained for people who build things.
         </p>
         <p style="margin:0; font-size:0.86rem; color:#6b6b6b; line-height:1.65;">
-            Pulled from 12 sources — TechCrunch, MIT Tech Review, HuggingFace, The Batch and more.
-            Scored by HackerNews community signal, deduplicated, and filtered to what actually matters for building in AI.
+            The stories that matter from the past 24 hours. No jargon. No hype. Just signal.
         </p>
     </div>
 
@@ -113,7 +112,7 @@ def build_html(newsletter):
 
     <div style="margin-top:40px; padding-top:16px; border-top:1px solid #ebebea;
                 font-size:0.75rem; color:#b0aeab; text-align:center;">
-        Curated daily for founders · Powered by Claude
+        Curated daily for builders · Powered by Claude
     </div>
 </body>
 </html>"""

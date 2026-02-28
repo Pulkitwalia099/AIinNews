@@ -2,8 +2,8 @@
 
 {% block content %}
 <div class="newsletter-intro">
-  <p class="intro-tagline">The daily AI briefing for founders.</p>
-  <p class="intro-desc">Pulled from 19 sources — TechCrunch, MIT Tech Review, OpenAI, Anthropic, HuggingFace, Simon Willison and more. Scored by HackerNews community signal, deduplicated, and filtered to what actually matters for building in AI.</p>
+  <p class="intro-tagline">What's actually happening in AI — explained for people who build things.</p>
+  <p class="intro-desc">The stories that matter from the past 24 hours, with clear analysis of what it means for your startup, your career, and what to build next. No jargon. No hype. Just signal.</p>
 </div>
 
 <div class="subscribe-bar">
@@ -16,6 +16,7 @@
     <button class="subscribe-trigger" onclick="openModal()">Subscribe — it's free</button>
   {% endif %}
 </div>
+<p class="sources-line">Curated from OpenAI, Anthropic, TechCrunch, MIT Tech Review, and 15 more sources. Updated daily.</p>
 
 <!-- Subscribe modal -->
 <div id="subscribe-modal" class="modal-overlay" onclick="handleOverlayClick(event)">
@@ -135,10 +136,11 @@
           <a class="read-source" href="{{ article.url }}" target="_blank" rel="noopener noreferrer">Read source &rarr;</a>
         </div>
 
-        {% if article.founders_lens %}
-        <div class="founders-lens">
-          <span class="lens-label">Founder's Lens</span>
-          {{ article.founders_lens }}
+        {% set lens = article.builders_lens or article.founders_lens %}
+        {% if lens %}
+        <div class="builders-lens">
+          <span class="lens-label">Builder's Lens</span>
+          {{ lens }}
         </div>
         {% endif %}
       </div>

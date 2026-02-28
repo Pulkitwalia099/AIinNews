@@ -1,6 +1,7 @@
 import os
 import json
 import time
+import urllib.parse
 import psycopg2
 import resend
 from datetime import date
@@ -19,7 +20,7 @@ SECTIONS = [
     ("Application Layer",    "#0050b3", "#e8f1ff"),
 ]
 
-def build_html(newsletter):
+def build_html(newsletter, recipient_email=""):
     date_str = newsletter["date"]
     articles = newsletter["articles"]
 
@@ -72,6 +73,18 @@ def build_html(newsletter):
                     {builders_lens}
                 </div>"""
 
+            article_url_enc = urllib.parse.quote(a['url'], safe='')
+            email_enc = urllib.parse.quote(recipient_email, safe='')
+            base = "https://aiinnews.space/feedback"
+            up_url = f"{base}?date={date_str}&url={article_url_enc}&rating=up&email={email_enc}"
+            down_url = f"{base}?date={date_str}&url={article_url_enc}&rating=down&email={email_enc}"
+            rating_html = f"""
+                <div style="text-align:right; margin-top:10px; font-size:0.75rem; color:#b0aeab;">
+                    Was this useful?&nbsp;
+                    <a href="{up_url}" style="text-decoration:none; font-size:1rem;">👍</a>&nbsp;
+                    <a href="{down_url}" style="text-decoration:none; font-size:1rem;">👎</a>
+                </div>"""
+
             articles_html += f"""
             <div style="background:#fff; border-radius:10px; box-shadow:0 1px 3px rgba(0,0,0,0.06);
                         padding:20px 22px; margin-bottom:12px;">
@@ -86,6 +99,7 @@ def build_html(newsletter):
                     {a.get('summary', '')}
                 </p>
                 {lens_html}
+                {rating_html}
             </div>
             """
 
@@ -147,13 +161,13 @@ def get_subscribers():
         return [config["recipient_email"]]
 
 
-def send_newsletter(newsletter):
-    html = build_html(newsletter)
+def send_newsletter(newsletter, test_recipient=None):
     date_str = newsletter["date"]
-    recipients = get_subscribers()
+    recipients = [test_recipient] if test_recipient else get_subscribers()
 
     sent, failed = 0, 0
     for email in recipients:
+        html = build_html(newsletter, recipient_email=email)
         try:
             resend.Emails.send({
                 "from": "AI in News <newsletter@aiinnews.space>",

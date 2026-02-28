@@ -24,5 +24,4 @@ jobs:
       - name: Fetch and save events
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          EVENTBRITE_API_KEY: ${{ secrets.EVENTBRITE_API_KEY }}
         run: python fetch_events.py

@@ -1,4 +1,5 @@
 import json
+import os
 import re
 import time
 import urllib.request
@@ -116,6 +117,82 @@ def deduplicate_articles(articles):
 # Two-pass Claude pipeline
 # ---------------------------------------------------------------------------
 
+def get_feedback_context():
+    """
+    Query last 14 days of reader feedback (thumbs ratings + click events).
+    Returns a short summary string to inject into the selection prompt,
+    or None if there isn't enough signal yet (< 3 data points).
+    """
+    db_url = os.environ.get("DATABASE_URL")
+    if not db_url:
+        return None
+    try:
+        import psycopg2
+        con = psycopg2.connect(db_url)
+        cur = con.cursor()
+
+        # Thumbs-up'd articles: which sections/tags perform well
+        cur.execute("""
+            SELECT af.article_url, af.rating, nl_date.section, nl_date.signal_tags
+            FROM article_feedback af
+            LEFT JOIN LATERAL (
+                SELECT a->>'section' AS section, a->>'signal_tags' AS signal_tags
+                FROM (
+                    SELECT jsonb_array_elements(content::jsonb->'articles') AS a
+                    FROM (SELECT newsletter_date) sub
+                ) expanded
+                WHERE a->>'url' = af.article_url
+                LIMIT 1
+            ) nl_date ON true
+            WHERE af.created_at > NOW() - INTERVAL '14 days'
+        """)
+        # Simpler fallback: just count up/down per section from raw feedback table
+        cur.execute("""
+            SELECT rating, COUNT(*) as cnt
+            FROM article_feedback
+            WHERE created_at > NOW() - INTERVAL '14 days'
+            GROUP BY rating
+        """)
+        rating_rows = cur.fetchall()
+
+        # Click counts per newsletter date
+        cur.execute("""
+            SELECT newsletter_date, COUNT(*) as clicks
+            FROM email_events
+            WHERE event_type = 'email.clicked'
+              AND created_at > NOW() - INTERVAL '14 days'
+            GROUP BY newsletter_date
+            ORDER BY clicks DESC
+            LIMIT 3
+        """)
+        click_rows = cur.fetchall()
+
+        cur.close()
+        con.close()
+
+        total_ratings = sum(cnt for _, cnt in rating_rows)
+        if total_ratings < 3:
+            print(f"  [feedback] Not enough signal yet ({total_ratings} ratings). Skipping feedback context.")
+            return None
+
+        up_count = next((cnt for rating, cnt in rating_rows if rating == "up"), 0)
+        down_count = next((cnt for rating, cnt in rating_rows if rating == "down"), 0)
+        total = up_count + down_count
+        approval_pct = round(100 * up_count / total) if total else 0
+
+        lines = [f"Reader feedback signal (last 14 days): {up_count} 👍 / {down_count} 👎 ({approval_pct}% approval)."]
+        if click_rows:
+            lines.append(f"Most-clicked newsletter dates: {', '.join(r[0] for r in click_rows if r[0])}.")
+
+        context = " ".join(lines)
+        print(f"  [feedback] Context: {context}")
+        return context
+
+    except Exception as e:
+        print(f"  [feedback] Could not load feedback context: {e}")
+        return None
+
+
 def select_articles(articles):
     """
     Pass 1 (Haiku): Fast selection of the most relevant articles.
@@ -127,6 +204,9 @@ def select_articles(articles):
         if article.get("summary"):
             articles_text += f"    {article['summary'][:200]}\n"
 
+    feedback_context = get_feedback_context()
+    feedback_line = f"\n\n{feedback_context}" if feedback_context else ""
+
     prompt = f"""You are the selection editor for "AI in News", a daily AI briefing for builders and tech executives.
 
 Here are {len(articles)} candidate articles:
@@ -137,7 +217,7 @@ Select the 8-10 BEST articles for this audience. Prioritize:
 1. Articles with high HN scores (strong community signal)
 2. Major product launches, funding rounds, partnerships, or policy changes
 3. Meaningful research breakthroughs with business implications
-4. Skip: job posts, event announcements, listicles, opinion pieces with no news, duplicates
+4. Skip: job posts, event announcements, listicles, opinion pieces with no news, duplicates{feedback_line}
 
 Return ONLY a JSON array of the selected article indices (e.g. [0, 3, 5, 7, 12, 15, 18, 21]).
 No explanation, just the JSON array."""

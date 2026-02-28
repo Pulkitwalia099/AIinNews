@@ -2,6 +2,7 @@ import json
 import os
 import psycopg2
 from datetime import date
+import urllib.parse
 from flask import Flask, render_template, request, redirect, jsonify
 
 app = Flask(__name__)
@@ -32,6 +33,28 @@ def init_db():
             location TEXT,
             start_time TIMESTAMPTZ,
             description TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS article_feedback (
+            id SERIAL PRIMARY KEY,
+            newsletter_date TEXT NOT NULL,
+            article_url TEXT NOT NULL,
+            rating TEXT NOT NULL,
+            subscriber_email TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE (article_url, subscriber_email)
+        )
+    """)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS email_events (
+            id SERIAL PRIMARY KEY,
+            event_type TEXT NOT NULL,
+            email_id TEXT,
+            subscriber_email TEXT,
+            clicked_url TEXT,
+            newsletter_date TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
@@ -132,6 +155,9 @@ def subscribe():
 
 @app.route("/debug-db")
 def debug_db():
+    debug_secret = os.environ.get("DEBUG_SECRET", "")
+    if not debug_secret or request.args.get("secret") != debug_secret:
+        return "Forbidden", 403
     try:
         db_url = os.environ.get("DATABASE_URL", "NOT SET")
         # Show only first 30 and last 20 chars for safety
@@ -149,6 +175,89 @@ def debug_db():
         db_url = os.environ.get("DATABASE_URL", "NOT SET")
         masked = db_url[:30] + "..." + db_url[-20:] if len(db_url) > 50 else db_url
         return f"DB URL: {masked}<br>Error: {e}"
+
+
+@app.route("/feedback")
+def feedback():
+    date_str = request.args.get("date", "")
+    article_url = request.args.get("url", "")
+    rating = request.args.get("rating", "")
+    subscriber_email = request.args.get("email", "")
+
+    if rating not in ("up", "down") or not article_url:
+        return "Invalid feedback.", 400
+
+    try:
+        con = get_db()
+        cur = con.cursor()
+        cur.execute("""
+            INSERT INTO article_feedback (newsletter_date, article_url, rating, subscriber_email)
+            VALUES (%s, %s, %s, %s)
+            ON CONFLICT (article_url, subscriber_email) DO UPDATE SET rating = EXCLUDED.rating
+        """, (date_str, article_url, rating, subscriber_email or None))
+        con.commit()
+        cur.close()
+        con.close()
+    except Exception as e:
+        print(f"[feedback] DB error: {e}")
+
+    emoji = "👍" if rating == "up" else "👎"
+    return f"""<!DOCTYPE html><html><head><meta charset="UTF-8">
+<meta http-equiv="refresh" content="3;url=https://aiinnews.space">
+</head><body style="font-family:-apple-system,sans-serif;text-align:center;padding:60px;color:#37352f;">
+<p style="font-size:2rem;">{emoji}</p>
+<p style="font-size:1rem;">Thanks for your feedback — it helps improve the newsletter.</p>
+<p style="font-size:0.8rem;color:#9b9a97;">Redirecting you back...</p>
+</body></html>"""
+
+
+@app.route("/resend-webhook", methods=["POST"])
+def resend_webhook():
+    import hmac, hashlib, time as _time
+
+    webhook_secret = os.environ.get("RESEND_WEBHOOK_SECRET", "")
+    if webhook_secret:
+        sig_header = request.headers.get("svix-signature", "")
+        msg_id = request.headers.get("svix-id", "")
+        msg_ts = request.headers.get("svix-timestamp", "")
+        to_sign = f"{msg_id}.{msg_ts}.{request.get_data(as_text=True)}"
+        expected = "v1," + __import__("base64").b64encode(
+            hmac.new(webhook_secret.encode(), to_sign.encode(), hashlib.sha256).digest()
+        ).decode()
+        if not any(s == expected for s in sig_header.split(" ")):
+            return "Unauthorized", 401
+
+    try:
+        payload = request.get_json(silent=True) or {}
+        event_type = payload.get("type", "")
+        data = payload.get("data", {})
+        subscriber_email = data.get("to", [None])[0] if isinstance(data.get("to"), list) else data.get("to")
+        email_id = data.get("email_id") or data.get("id")
+        clicked_url = data.get("click", {}).get("link") if event_type == "email.clicked" else None
+
+        # Extract newsletter date from subject line e.g. "AI in News — 2026-02-28"
+        subject = data.get("subject", "")
+        newsletter_date = None
+        if subject:
+            import re
+            m = re.search(r"(\d{4}-\d{2}-\d{2})", subject)
+            if m:
+                newsletter_date = m.group(1)
+
+        if event_type in ("email.opened", "email.clicked"):
+            con = get_db()
+            cur = con.cursor()
+            cur.execute("""
+                INSERT INTO email_events (event_type, email_id, subscriber_email, clicked_url, newsletter_date)
+                VALUES (%s, %s, %s, %s, %s)
+            """, (event_type, email_id, subscriber_email, clicked_url, newsletter_date))
+            con.commit()
+            cur.close()
+            con.close()
+    except Exception as e:
+        print(f"[resend-webhook] Error: {e}")
+
+    return "", 200
 
 
 @app.route("/events")

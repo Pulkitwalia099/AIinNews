@@ -2,17 +2,26 @@ import json
 import os
 from datetime import date
 from fetch import fetch_articles
+from fetch_github import fetch_github_trending
 from process import process_articles
 from email_sender import send_newsletter
 
 def generate_newsletter():
     print("=== AI in News — Newsletter Generator ===\n")
 
-    # Step 1: Fetch
+    # Step 1: Fetch RSS feeds
     articles = fetch_articles()
     if not articles:
         print("No articles fetched. Aborting.")
         return
+
+    # Step 1b: Fetch GitHub trending repos
+    try:
+        github_repos = fetch_github_trending()
+        articles.extend(github_repos)
+        print(f"Total candidates: {len(articles)} (feeds + GitHub)")
+    except Exception as e:
+        print(f"GitHub fetch failed (continuing without): {e}")
 
     # Step 2: Process
     processed = process_articles(articles)

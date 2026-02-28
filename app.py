@@ -1,7 +1,8 @@
 import json
 import os
 import psycopg2
-from flask import Flask, render_template, request, redirect
+from datetime import date
+from flask import Flask, render_template, request, redirect, jsonify
 
 app = Flask(__name__)
 
@@ -177,6 +178,28 @@ def archive():
             "breakdown": counts
         })
     return render_template("archive.html", summaries=summaries)
+
+
+@app.route("/api/generate", methods=["POST"])
+def api_generate():
+    """Trigger newsletter generation. Protected by CRON_SECRET bearer token."""
+    secret = os.environ.get("CRON_SECRET", "")
+    auth = request.headers.get("Authorization", "")
+
+    if not secret or auth != f"Bearer {secret}":
+        return jsonify({"error": "Unauthorized"}), 401
+
+    today = date.today().isoformat()
+    path = f"newsletters/{today}.json"
+    if os.path.exists(path):
+        return jsonify({"status": "skipped", "reason": f"Newsletter for {today} already exists"})
+
+    try:
+        from generate import generate_newsletter
+        generate_newsletter()
+        return jsonify({"status": "ok", "date": today})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route("/<date>")

@@ -2,8 +2,8 @@
 
 {% block content %}
 <div style="margin-bottom: 32px;">
-  <h1 style="font-size: 1.4rem; font-weight: 700; color: #1d1d1f; margin-bottom: 6px;">Boston AI Events</h1>
-  <p style="font-size: 0.86rem; color: #6b6b6b;">Upcoming AI, VC, and startup events at Harvard, MIT, and Boston, pulled from <a href="https://www.tnt.so/calendar" target="_blank" style="color: #6b6b6b;">TNT</a>, Luma, and Ticketmaster.</p>
+  <h1 style="font-size: 1.4rem; font-weight: 700; color: #1d1d1f; margin-bottom: 6px;">Events</h1>
+  <p style="font-size: 0.86rem; color: #6b6b6b;">Upcoming AI, VC, and startup events at Harvard, MIT, and across Boston — pulled from Luma, TNT, and Ticketmaster.</p>
 </div>
 
 {% if events %}
@@ -27,8 +27,8 @@
       {% if event.description %}
         <p class="event-desc">{{ event.description }}</p>
       {% endif %}
-      <a href="{{ event.url }}" target="_blank" rel="noopener noreferrer" class="event-cta">RSVP &rarr;</a>
     </div>
+    <a href="{{ event.url }}" target="_blank" rel="noopener noreferrer" class="event-arrow" aria-label="RSVP">&rarr;</a>
   </div>
   {% endfor %}
 {% else %}

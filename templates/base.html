@@ -112,6 +112,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
       gap: 16px;
       background: #fff;
       border-radius: 10px;
@@ -129,7 +130,9 @@
       font-size: 0.75rem;
       color: #9b9a97;
       text-align: center;
-      margin-top: 8px;
+      margin-top: 6px;
+      margin-bottom: 0;
+      width: 100%;
     }
 
     .subscribe-trigger {
@@ -536,6 +539,13 @@
       color: #9b9a97;
     }
 
+    .events-strip-subtitle {
+      font-size: 0.8rem;
+      color: #6b7280;
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
     .events-strip-link {
       font-size: 0.78rem;
       color: #6b6b6b;
@@ -593,9 +603,19 @@
       color: #9b9a97;
     }
 
+    .event-mini-arrow {
+      margin-left: auto;
+      font-size: 0.9rem;
+      color: #b0aeab;
+      flex-shrink: 0;
+      transition: color 0.15s;
+    }
+    .event-mini:hover .event-mini-arrow { color: #374151; }
+
     /* Events full page */
     .event-card {
       display: flex;
+      align-items: center;
       gap: 16px;
       background: #fff;
       border-radius: 10px;
@@ -666,21 +686,25 @@
       margin: 0;
     }
 
-    .event-cta {
-      display: inline-block;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: #1d1d1f;
+    .event-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      border: 1px solid #e5e5e5;
+      border-radius: 50%;
+      background: #fff;
+      color: #374151;
+      font-size: 1rem;
       text-decoration: none;
-      margin-top: 10px;
-      padding: 5px 14px;
-      border: 1px solid #d4d4d4;
-      border-radius: 6px;
+      flex-shrink: 0;
       transition: background 0.15s, border-color 0.15s;
     }
-    .event-cta:hover {
-      background: #f4f4f2;
-      border-color: #b0aeab;
+    .event-arrow:hover {
+      background: #f3f4f6;
+      border-color: #d1d5db;
     }
 
     /* Archive cards */

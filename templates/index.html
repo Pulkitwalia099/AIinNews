@@ -15,8 +15,8 @@
     <p class="subscribe-bar-text">Get the daily briefing in your inbox.</p>
     <button class="subscribe-trigger" onclick="openModal()">Subscribe — it's free</button>
   {% endif %}
+  <p class="sources-line">Curated from OpenAI, Anthropic, TechCrunch, MIT Tech Review, and 15 more sources. Updated daily.</p>
 </div>
-<p class="sources-line">Curated from OpenAI, Anthropic, TechCrunch, MIT Tech Review, and 15 more sources. Updated daily.</p>
 
 <!-- Subscribe modal -->
 <div id="subscribe-modal" class="modal-overlay" onclick="handleOverlayClick(event)">
@@ -70,7 +70,10 @@
 {% if upcoming_events %}
 <div class="events-strip">
   <div class="events-strip-header">
-    <span class="events-strip-title">Upcoming Boston AI Events</span>
+    <div>
+      <span class="events-strip-title">Upcoming Events</span>
+      <p class="events-strip-subtitle">From across Harvard, MIT, and Boston's startup ecosystem</p>
+    </div>
     <a href="/events" class="events-strip-link">See all &rarr;</a>
   </div>
   {% for event in upcoming_events %}
@@ -83,6 +86,7 @@
       <span class="event-mini-title">{{ event.title }}</span>
       <span class="event-mini-loc">{{ event.location }}</span>
     </div>
+    <span class="event-mini-arrow">&rarr;</span>
   </a>
   {% endfor %}
 </div>

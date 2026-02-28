@@ -1,6 +1,122 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+  /* --- Feedback popup --- */
+  .fb-popup {
+    margin-top: 8px;
+    background: #fff;
+    border: 1px solid #e8e8e7;
+    border-radius: 10px;
+    padding: 12px 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .fb-popup-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin-bottom: 9px;
+  }
+  .fb-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 8px;
+  }
+  .fb-chip {
+    background: #f4f4f2;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 5px 11px;
+    font-size: 0.75rem;
+    color: #37352f;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.1s;
+  }
+  .fb-chip:hover { border-color: #7b78e8; background: #f0effe; }
+  .fb-chip.active { background: #eceafb; border-color: #7b78e8; color: #4240b8; font-weight: 500; }
+  .fb-select {
+    width: 100%;
+    padding: 7px 10px;
+    font-size: 0.78rem;
+    font-family: inherit;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    background: #fff;
+    margin-bottom: 7px;
+    color: #37352f;
+  }
+  .fb-textarea {
+    width: 100%;
+    padding: 7px 10px;
+    font-size: 0.78rem;
+    font-family: inherit;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    resize: none;
+    height: 46px;
+    margin-bottom: 7px;
+    color: #37352f;
+  }
+  .fb-textarea:focus, .fb-select:focus { outline: none; border-color: #7b78e8; }
+  .fb-actions { display: flex; align-items: center; gap: 12px; }
+  .fb-send {
+    background: #1d1d1f;
+    color: #fff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .fb-send:hover { background: #3a3a3c; }
+  .fb-skip {
+    font-size: 0.74rem;
+    color: #b0aeab;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+  }
+  .fb-skip:hover { color: #37352f; }
+  .fb-thanks { font-size: 0.82rem; color: #37352f; text-align: center; padding: 6px 0; margin: 0; }
+  /* Override default <button> styles for emoji vote buttons */
+  button.feedback-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+    line-height: 1;
+  }
+  /* --- Product feedback card --- */
+  .product-feedback-card {
+    margin: 28px 0;
+    padding: 20px 22px;
+    background: #f4f4f2;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .pfb-heading { font-size: 0.9rem; font-weight: 600; color: #1d1d1f; margin-bottom: 5px; }
+  .pfb-sub { font-size: 0.8rem; color: #6b6b6b; margin-bottom: 14px; }
+  .pfb-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .pfb-btn {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    color: #37352f;
+    text-decoration: none;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    transition: border-color 0.12s, background 0.12s;
+  }
+  .pfb-btn:hover { border-color: #7b78e8; background: #f8f7ff; }
+</style>
 <div class="newsletter-intro">
   <p class="intro-tagline">What's actually happening in AI — explained for people who build things.</p>
   <p class="intro-desc">The stories that matter from the past 24 hours, with clear analysis of what it means for your startup, your career, and what to build next. No jargon. No hype. Just signal.</p>
@@ -148,10 +264,10 @@
         </div>
         {% endif %}
 
-        <div class="article-feedback">
+        <div class="article-feedback" data-date="{{ newsletter.date }}" data-url="{{ article.url }}">
           <span class="feedback-label">Was this useful?</span>
-          <a href="/feedback?date={{ newsletter.date }}&url={{ article.url | urlencode }}&rating=up" class="feedback-btn up" title="Yes">👍</a>
-          <a href="/feedback?date={{ newsletter.date }}&url={{ article.url | urlencode }}&rating=down" class="feedback-btn down" title="No">👎</a>
+          <button class="feedback-btn up" onclick="handleFeedback(this,'up')" title="Yes">👍</button>
+          <button class="feedback-btn down" onclick="handleFeedback(this,'down')" title="No">👎</button>
         </div>
       </div>
       {% endfor %}
@@ -178,4 +294,107 @@
   <p class="bottom-cta-sub">Get it in your inbox every morning — free.</p>
   <button class="subscribe-trigger" onclick="openModal()">Subscribe — it's free</button>
 </div>
+
+<div class="product-feedback-card">
+  <p class="pfb-heading">Help us improve AI in News</p>
+  <p class="pfb-sub">Got a suggestion, bug report, or question?</p>
+  <div class="pfb-btns">
+    <a href="/feedback/product?type=bug" class="pfb-btn">🐛 Bug</a>
+    <a href="/feedback/product?type=feature" class="pfb-btn">✨ Feature</a>
+    <a href="/feedback/product?type=general" class="pfb-btn">💬 Feedback</a>
+    <a href="/feedback/product?type=question" class="pfb-btn">❓ Question</a>
+  </div>
+</div>
+
+<script>
+function handleFeedback(btn, rating) {
+  var container = btn.closest('.article-feedback');
+  if (container.dataset.voted) return;
+  container.dataset.voted = '1';
+
+  var dateStr = container.dataset.date;
+  var articleUrl = container.dataset.url;
+
+  btn.style.opacity = '1';
+  btn.style.transform = 'scale(1.3)';
+
+  fetch('/feedback?date=' + encodeURIComponent(dateStr) + '&url=' + encodeURIComponent(articleUrl) + '&rating=' + rating)
+    .catch(function() {});
+
+  showFeedbackPopup(container, rating, articleUrl);
+}
+
+function showFeedbackPopup(container, rating, articleUrl) {
+  var existing = container.querySelector('.fb-popup');
+  if (existing) existing.remove();
+
+  var popup = document.createElement('div');
+  popup.className = 'fb-popup';
+  popup.dataset.articleUrl = articleUrl;
+
+  if (rating === 'up') {
+    popup.innerHTML =
+      '<p class="fb-popup-title">What resonated? <span style="font-weight:400;color:#b0aeab;font-size:0.8em">optional</span></p>' +
+      '<div class="fb-chips">' +
+        '<button type="button" class="fb-chip" data-v="relevant">Relevant to my work</button>' +
+        '<button type="button" class="fb-chip" data-v="new">Learned something new</button>' +
+        '<button type="button" class="fb-chip" data-v="mix">Good mix of topics</button>' +
+        '<button type="button" class="fb-chip" data-v="writing">Well written</button>' +
+      '</div>' +
+      '<textarea class="fb-textarea" placeholder="Anything else... (optional)"></textarea>' +
+      '<div class="fb-actions">' +
+        '<button type="button" class="fb-send" onclick="submitFeedbackPopup(this)">Send \u2192</button>' +
+        '<button type="button" class="fb-skip" onclick="this.closest(\'.fb-popup\').remove()">skip</button>' +
+      '</div>';
+  } else {
+    popup.innerHTML =
+      '<p class="fb-popup-title">What went wrong? <span style="font-weight:400;color:#b0aeab;font-size:0.8em">optional</span></p>' +
+      '<select class="fb-select">' +
+        '<option value="">Select a reason\u2026</option>' +
+        '<option value="not_relevant">Not relevant to my work</option>' +
+        '<option value="too_basic">Already knew most of this</option>' +
+        '<option value="too_advanced">Hard to follow</option>' +
+        '<option value="inaccurate">Something seemed off</option>' +
+        '<option value="broken_link">Broken link</option>' +
+      '</select>' +
+      '<textarea class="fb-textarea" placeholder="Tell us more... (optional)"></textarea>' +
+      '<div class="fb-actions">' +
+        '<button type="button" class="fb-send" onclick="submitFeedbackPopup(this)">Send \u2192</button>' +
+        '<button type="button" class="fb-skip" onclick="this.closest(\'.fb-popup\').remove()">skip</button>' +
+      '</div>';
+  }
+
+  container.appendChild(popup);
+
+  popup.querySelectorAll('.fb-chip').forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      chip.classList.toggle('active');
+    });
+  });
+}
+
+function submitFeedbackPopup(btn) {
+  var popup = btn.closest('.fb-popup');
+  var articleUrl = popup.dataset.articleUrl;
+
+  var chips = popup.querySelectorAll('.fb-chip.active');
+  var likedAspects = Array.from(chips).map(function(c) { return c.dataset.v; }).join(',');
+  var selectEl = popup.querySelector('.fb-select');
+  var feedbackCategory = selectEl ? selectEl.value : '';
+  var textareaEl = popup.querySelector('.fb-textarea');
+  var comment = textareaEl ? textareaEl.value.trim() : '';
+
+  var formData = new FormData();
+  formData.append('article_url', articleUrl);
+  formData.append('subscriber_email', '');
+  formData.append('liked_aspects', likedAspects);
+  formData.append('feedback_category', feedbackCategory);
+  formData.append('comment', comment);
+
+  fetch('/feedback/comment', { method: 'POST', body: formData }).catch(function() {});
+
+  popup.innerHTML = '<p class="fb-thanks">Thanks! \uD83C\uDF89</p>';
+  setTimeout(function() { popup.remove(); }, 1500);
+}
+</script>
 {% endblock %}

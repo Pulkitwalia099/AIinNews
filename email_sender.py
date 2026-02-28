@@ -29,6 +29,7 @@ def build_html(newsletter, recipient_email=""):
         s = article.get("section", "Other")
         sections_map.setdefault(s, []).append(article)
 
+    email_enc = urllib.parse.quote(recipient_email, safe='')
     articles_html = ""
     for section_name, color, bg in SECTIONS:
         if section_name not in sections_map:
@@ -74,15 +75,14 @@ def build_html(newsletter, recipient_email=""):
                 </div>"""
 
             article_url_enc = urllib.parse.quote(a['url'], safe='')
-            email_enc = urllib.parse.quote(recipient_email, safe='')
             base = "https://aiinnews.space/feedback"
             up_url = f"{base}?date={date_str}&url={article_url_enc}&rating=up&email={email_enc}"
             down_url = f"{base}?date={date_str}&url={article_url_enc}&rating=down&email={email_enc}"
             rating_html = f"""
                 <div style="text-align:right; margin-top:10px; font-size:0.75rem; color:#b0aeab;">
                     Was this useful?&nbsp;
-                    <a href="{up_url}" style="text-decoration:none; font-size:1rem;">👍</a>&nbsp;
-                    <a href="{down_url}" style="text-decoration:none; font-size:1rem;">👎</a>
+                    <a href="{up_url}" target="_blank" style="text-decoration:none; font-size:1rem;">👍</a>&nbsp;
+                    <a href="{down_url}" target="_blank" style="text-decoration:none; font-size:1rem;">👎</a>
                 </div>"""
 
             articles_html += f"""
@@ -102,6 +102,21 @@ def build_html(newsletter, recipient_email=""):
                 {rating_html}
             </div>
             """
+
+    product_cta_html = f"""
+    <div style="background:#f4f4f2; border-radius:10px; padding:16px 20px; margin:28px 0 0; text-align:center;">
+        <p style="font-size:0.8rem; font-weight:600; color:#1d1d1f; margin:0 0 10px;">Have a suggestion for AI in News?</p>
+        <div style="display:flex; gap:7px; justify-content:center; flex-wrap:wrap;">
+            <a href="https://aiinnews.space/feedback/product?type=bug&amp;email={email_enc}" target="_blank"
+               style="display:inline-block; background:#fff; border:1px solid #e0e0e0; color:#37352f; text-decoration:none; padding:6px 13px; border-radius:20px; font-size:0.76rem;">🐛 Bug</a>
+            <a href="https://aiinnews.space/feedback/product?type=feature&amp;email={email_enc}" target="_blank"
+               style="display:inline-block; background:#fff; border:1px solid #e0e0e0; color:#37352f; text-decoration:none; padding:6px 13px; border-radius:20px; font-size:0.76rem;">✨ Feature</a>
+            <a href="https://aiinnews.space/feedback/product?type=general&amp;email={email_enc}" target="_blank"
+               style="display:inline-block; background:#fff; border:1px solid #e0e0e0; color:#37352f; text-decoration:none; padding:6px 13px; border-radius:20px; font-size:0.76rem;">💬 Feedback</a>
+            <a href="https://aiinnews.space/feedback/product?type=question&amp;email={email_enc}" target="_blank"
+               style="display:inline-block; background:#fff; border:1px solid #e0e0e0; color:#37352f; text-decoration:none; padding:6px 13px; border-radius:20px; font-size:0.76rem;">❓ Question</a>
+        </div>
+    </div>"""
 
     return f"""<!DOCTYPE html>
 <html>
@@ -127,8 +142,9 @@ def build_html(newsletter, recipient_email=""):
     </div>
 
     {articles_html}
+    {product_cta_html}
 
-    <div style="margin-top:40px; padding-top:16px; border-top:1px solid #ebebea;
+    <div style="margin-top:28px; padding-top:16px; border-top:1px solid #ebebea;
                 font-size:0.75rem; color:#b0aeab; text-align:center;">
         Curated daily for builders · Powered by Claude<br><br>
         To keep getting this newsletter, add <strong>newsletter@aiinnews.space</strong> to your contacts.

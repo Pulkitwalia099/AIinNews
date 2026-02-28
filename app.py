@@ -76,6 +76,16 @@ def init_db():
     # Feedback enrichment columns
     cur.execute("ALTER TABLE article_feedback ADD COLUMN IF NOT EXISTS comment TEXT")
     cur.execute("ALTER TABLE article_feedback ADD COLUMN IF NOT EXISTS feedback_category TEXT")
+    cur.execute("ALTER TABLE article_feedback ADD COLUMN IF NOT EXISTS liked_aspects TEXT")
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS product_feedback (
+            id SERIAL PRIMARY KEY,
+            feedback_type TEXT NOT NULL,
+            comment TEXT,
+            subscriber_email TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
     # PM tables
     cur.execute("""
         CREATE TABLE IF NOT EXISTS pm_reports (
@@ -239,68 +249,101 @@ def feedback():
     except Exception as e:
         print(f"[feedback] DB error: {e}")
 
-    emoji = "👍" if rating == "up" else "👎"
     safe_url = html_lib.escape(article_url)
     safe_email = html_lib.escape(subscriber_email)
 
-    return f"""<!DOCTYPE html>
+    _shared_css = """
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:-apple-system,BlinkMacSystemFont,sans-serif; max-width:400px;
+           margin:48px auto; padding:0 24px; color:#37352f; background:#FAFAF9; }
+    .emoji { font-size:1.8rem; margin-bottom:6px; text-align:center; }
+    h2 { font-size:0.98rem; font-weight:600; margin-bottom:4px; text-align:center; }
+    .sub { font-size:0.82rem; color:#6b6b6b; margin-bottom:18px; text-align:center; }
+    textarea { width:100%; padding:9px 12px; font-size:0.83rem; font-family:inherit;
+               border:1px solid #ddd; border-radius:8px; resize:none; height:56px;
+               margin-bottom:11px; color:#37352f; }
+    textarea:focus { outline:none; border-color:#7b78e8; }
+    .btn-send { background:#1d1d1f; color:#fff; border:none; padding:10px 0;
+                border-radius:8px; font-size:0.85rem; font-weight:600;
+                cursor:pointer; font-family:inherit; width:100%; }
+    .btn-send:hover { background:#3a3a3c; }
+    .skip { display:block; margin-top:9px; font-size:0.74rem; color:#b0aeab;
+            text-decoration:none; text-align:center; }
+    .skip:hover { color:#6b6b6b; }"""
+
+    if rating == "up":
+        return f"""<!DOCTYPE html>
 <html><head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thanks!</title>
-  <style>
-    *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
-    body {{ font-family:-apple-system,BlinkMacSystemFont,sans-serif; max-width:460px;
-            margin:56px auto; padding:0 24px; color:#37352f; background:#FAFAF9; }}
-    .emoji {{ font-size:2.2rem; margin-bottom:10px; text-align:center; }}
-    h2 {{ font-size:1.05rem; font-weight:600; margin-bottom:6px; text-align:center; }}
-    .sub {{ font-size:0.86rem; color:#6b6b6b; margin-bottom:22px; text-align:center; line-height:1.6; }}
-    .radio-grid {{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px; }}
-    .radio-grid label {{
-      display:flex; align-items:center; gap:8px;
-      background:#fff; border:1px solid #e0e0e0; border-radius:8px;
-      padding:10px 13px; font-size:0.86rem; cursor:pointer;
-      transition:border-color 0.15s, background 0.15s;
-    }}
-    .radio-grid label:hover {{ border-color:#7b78e8; background:#f8f7ff; }}
-    .radio-grid input[type=radio] {{ accent-color:#7b78e8; flex-shrink:0; }}
-    .radio-grid label:has(input:checked) {{ border-color:#7b78e8; background:#eceafb; }}
-    textarea {{
-      width:100%; padding:10px 13px; font-size:0.86rem; font-family:inherit;
-      border:1px solid #ddd; border-radius:8px; resize:vertical;
-      min-height:68px; margin-bottom:13px; color:#37352f;
-    }}
-    textarea:focus {{ outline:none; border-color:#7b78e8; }}
-    .btn-send {{
-      background:#1d1d1f; color:#fff; border:none; padding:10px 22px;
-      border-radius:8px; font-size:0.88rem; font-weight:600;
-      cursor:pointer; font-family:inherit; width:100%;
-      transition:background 0.15s;
-    }}
-    .btn-send:hover {{ background:#3a3a3c; }}
-    .skip {{
-      display:block; margin-top:12px; font-size:0.78rem; color:#b0aeab;
-      text-decoration:none; text-align:center;
-    }}
-    .skip:hover {{ color:#6b6b6b; }}
+  <style>{_shared_css}
+    .chips {{ display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px; }}
+    .chip {{ background:#fff; border:1px solid #e0e0e0; border-radius:20px;
+             padding:7px 13px; font-size:0.81rem; color:#37352f; cursor:pointer;
+             font-family:inherit; transition:all 0.12s; }}
+    .chip:hover {{ border-color:#7b78e8; background:#f0effe; }}
+    .chip.active {{ background:#eceafb; border-color:#7b78e8; color:#4240b8; font-weight:500; }}
   </style>
 </head><body>
-  <div class="emoji">{emoji}</div>
-  <h2>Thanks for your feedback!</h2>
-  <p class="sub">Want to add context? It takes 10 seconds<br>and helps improve the newsletter.</p>
+  <div class="emoji">&#128077;</div>
+  <h2>Glad it was useful!</h2>
+  <p class="sub">What resonated? <span style="color:#b0aeab;font-size:0.78rem;">(optional, pick any)</span></p>
   <form action="/feedback/comment" method="POST">
     <input type="hidden" name="article_url" value="{safe_url}">
     <input type="hidden" name="subscriber_email" value="{safe_email}">
-    <div class="radio-grid">
-      <label><input type="radio" name="feedback_category" value="bug"> 🐛 Bug report</label>
-      <label><input type="radio" name="feedback_category" value="feature"> ✨ Feature request</label>
-      <label><input type="radio" name="feedback_category" value="general"> 💬 General feedback</label>
-      <label><input type="radio" name="feedback_category" value="question"> ❓ Question</label>
+    <input type="hidden" name="liked_aspects" id="liked-input" value="">
+    <div class="chips">
+      <button type="button" class="chip" data-v="relevant">Relevant to my work</button>
+      <button type="button" class="chip" data-v="new">Learned something new</button>
+      <button type="button" class="chip" data-v="mix">Good mix of topics</button>
+      <button type="button" class="chip" data-v="writing">Well written</button>
     </div>
-    <textarea name="comment" placeholder="Optional: tell us more..."></textarea>
-    <button class="btn-send" type="submit">Send feedback</button>
+    <textarea name="comment" placeholder="Anything else... (optional)"></textarea>
+    <button class="btn-send" type="submit">Send &#8594;</button>
   </form>
-  <a class="skip" href="https://aiinnews.space">No thanks, back to the newsletter →</a>
+  <a class="skip" href="https://aiinnews.space">No thanks &#8594;</a>
+  <script>
+    document.querySelectorAll('.chip').forEach(function(c) {{
+      c.addEventListener('click', function() {{
+        c.classList.toggle('active');
+        var vals = [];
+        document.querySelectorAll('.chip.active').forEach(function(a) {{ vals.push(a.dataset.v); }});
+        document.getElementById('liked-input').value = vals.join(',');
+      }});
+    }});
+  </script>
+</body></html>"""
+
+    else:
+        return f"""<!DOCTYPE html>
+<html><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanks!</title>
+  <style>{_shared_css}
+    select {{ width:100%; padding:9px 12px; font-size:0.83rem; font-family:inherit;
+              border:1px solid #ddd; border-radius:8px; background:#fff;
+              margin-bottom:11px; color:#37352f; }}
+    select:focus {{ outline:none; border-color:#7b78e8; }}
+  </style>
+</head><body>
+  <div class="emoji">&#128078;</div>
+  <h2>Thanks for letting us know.</h2>
+  <p class="sub">What went wrong? <span style="color:#b0aeab;font-size:0.78rem;">(optional)</span></p>
+  <form action="/feedback/comment" method="POST">
+    <input type="hidden" name="article_url" value="{safe_url}">
+    <input type="hidden" name="subscriber_email" value="{safe_email}">
+    <select name="feedback_category">
+      <option value="">Select a reason&#8230;</option>
+      <option value="not_relevant">Not relevant to my work</option>
+      <option value="too_basic">Already knew most of this</option>
+      <option value="too_advanced">Hard to follow</option>
+      <option value="inaccurate">Something seemed off</option>
+      <option value="broken_link">Broken link</option>
+    </select>
+    <textarea name="comment" placeholder="Tell us more... (optional)"></textarea>
+    <button class="btn-send" type="submit">Send &#8594;</button>
+  </form>
+  <a class="skip" href="https://aiinnews.space">No thanks &#8594;</a>
 </body></html>"""
 
 
@@ -310,6 +353,7 @@ def feedback_comment():
     subscriber_email = request.form.get("subscriber_email", "").strip()
     comment = request.form.get("comment", "").strip()
     feedback_category = request.form.get("feedback_category", "").strip()
+    liked_aspects = request.form.get("liked_aspects", "").strip()
 
     if article_url:
         try:
@@ -317,12 +361,13 @@ def feedback_comment():
             cur = con.cursor()
             cur.execute("""
                 UPDATE article_feedback
-                SET comment = %s, feedback_category = %s
+                SET comment = %s, feedback_category = %s, liked_aspects = %s
                 WHERE article_url = %s
                   AND (subscriber_email = %s OR (subscriber_email IS NULL AND %s = ''))
             """, (
                 comment[:1000] if comment else None,
                 feedback_category if feedback_category else None,
+                liked_aspects[:500] if liked_aspects else None,
                 article_url,
                 subscriber_email,
                 subscriber_email
@@ -333,7 +378,121 @@ def feedback_comment():
         except Exception as e:
             print(f"[feedback_comment] DB error: {e}")
 
-    return redirect("https://aiinnews.space")
+    return """<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thanks!</title><style>
+  body { font-family:-apple-system,BlinkMacSystemFont,sans-serif; max-width:320px;
+         margin:80px auto; padding:0 24px; text-align:center; color:#37352f; background:#FAFAF9; }
+  .emoji { font-size:2rem; margin-bottom:10px; }
+  p { font-size:0.86rem; color:#6b6b6b; margin-bottom:16px; line-height:1.6; }
+  a { font-size:0.78rem; color:#b0aeab; text-decoration:none; }
+  a:hover { color:#37352f; }
+</style></head><body>
+  <div class="emoji">&#127881;</div>
+  <p>Thanks! Your feedback helps make AI in News better.</p>
+  <a href="https://aiinnews.space">Back to the newsletter &rarr;</a>
+</body></html>"""
+
+
+@app.route("/feedback/product", methods=["GET", "POST"])
+def feedback_product():
+    if request.method == "POST":
+        feedback_type = request.form.get("feedback_type", "general").strip()
+        comment = request.form.get("comment", "").strip()
+        subscriber_email = request.form.get("subscriber_email", "").strip()
+
+        if feedback_type not in ("bug", "feature", "general", "question"):
+            feedback_type = "general"
+
+        try:
+            con = get_db()
+            cur = con.cursor()
+            cur.execute("""
+                INSERT INTO product_feedback (feedback_type, comment, subscriber_email)
+                VALUES (%s, %s, %s)
+            """, (feedback_type, comment[:2000] if comment else None, subscriber_email or None))
+            con.commit()
+            cur.close()
+            con.close()
+        except Exception as e:
+            print(f"[feedback_product] DB error: {e}")
+
+        return """<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thanks!</title><style>
+  body { font-family:-apple-system,BlinkMacSystemFont,sans-serif; max-width:400px;
+         margin:60px auto; padding:0 24px; text-align:center; color:#37352f; background:#FAFAF9; }
+  .emoji { font-size:2rem; margin-bottom:10px; }
+  h2 { font-size:0.98rem; font-weight:600; margin-bottom:8px; }
+  p { font-size:0.84rem; color:#6b6b6b; margin-bottom:16px; line-height:1.6; }
+  a { font-size:0.78rem; color:#b0aeab; text-decoration:none; }
+  a:hover { color:#37352f; }
+</style></head><body>
+  <div class="emoji">&#127881;</div>
+  <h2>Thanks for the feedback!</h2>
+  <p>We read every submission. This helps make AI in News better for you.</p>
+  <a href="https://aiinnews.space">&larr; Back to the newsletter</a>
+</body></html>"""
+
+    # GET — show form
+    feedback_type = request.args.get("type", "general")
+    subscriber_email = request.args.get("email", "")
+    safe_email = html_lib.escape(subscriber_email)
+
+    type_labels = {
+        "bug":      "&#128027; Bug report",
+        "feature":  "&#10024; Feature request",
+        "general":  "&#128172; General feedback",
+        "question": "&#10067; Question",
+    }
+    if feedback_type not in type_labels:
+        feedback_type = "general"
+
+    options_html = ""
+    for val, label in type_labels.items():
+        selected = " selected" if val == feedback_type else ""
+        options_html += f'<option value="{val}"{selected}>{label}</option>'
+
+    return f"""<!DOCTYPE html>
+<html><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Share feedback &#8212; AI in News</title>
+  <style>
+    *, *::before, *::after {{ box-sizing:border-box; margin:0; padding:0; }}
+    body {{ font-family:-apple-system,BlinkMacSystemFont,sans-serif; max-width:440px;
+            margin:48px auto; padding:0 24px; color:#37352f; background:#FAFAF9; }}
+    .brand {{ font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;
+              color:#9b9a97; margin-bottom:28px; }}
+    h1 {{ font-size:1.05rem; font-weight:600; margin-bottom:5px; }}
+    .sub {{ font-size:0.83rem; color:#6b6b6b; margin-bottom:22px; }}
+    label {{ display:block; font-size:0.78rem; font-weight:500; color:#6b6b6b;
+             margin-bottom:5px; text-transform:uppercase; letter-spacing:0.06em; }}
+    select, textarea {{ width:100%; padding:10px 13px; font-size:0.85rem; font-family:inherit;
+                        border:1px solid #ddd; border-radius:8px; color:#37352f;
+                        background:#fff; margin-bottom:16px; }}
+    select:focus, textarea:focus {{ outline:none; border-color:#7b78e8; }}
+    textarea {{ resize:vertical; min-height:100px; }}
+    .btn-send {{ background:#1d1d1f; color:#fff; border:none; padding:11px 0;
+                 border-radius:8px; font-size:0.88rem; font-weight:600;
+                 cursor:pointer; font-family:inherit; width:100%; margin-bottom:10px; }}
+    .btn-send:hover {{ background:#3a3a3c; }}
+    .cancel {{ display:block; font-size:0.76rem; color:#b0aeab; text-decoration:none; text-align:center; }}
+    .cancel:hover {{ color:#37352f; }}
+  </style>
+</head><body>
+  <p class="brand">AI in News</p>
+  <h1>Share feedback</h1>
+  <p class="sub">Got something to report, suggest, or ask? We read everything.</p>
+  <form method="POST" action="/feedback/product">
+    <input type="hidden" name="subscriber_email" value="{safe_email}">
+    <label>Type</label>
+    <select name="feedback_type">{options_html}</select>
+    <label>Tell us more <span style="color:#b0aeab;font-size:0.75em;text-transform:none;">(optional)</span></label>
+    <textarea name="comment" placeholder="Describe the bug, feature idea, or question&#8230;"></textarea>
+    <button class="btn-send" type="submit">Send feedback</button>
+  </form>
+  <a class="cancel" href="https://aiinnews.space">&larr; Cancel</a>
+</body></html>"""
 
 
 @app.route("/resend-webhook", methods=["POST"])
@@ -484,11 +643,12 @@ KEY PATTERNS (follow exactly):
 
 DB SCHEMA (current):
 - subscribers(id, email, is_technical, goals, created_at)
-- article_feedback(id, newsletter_date, article_url, rating, subscriber_email, comment, feedback_category, created_at)
+- article_feedback(id, newsletter_date, article_url, rating, subscriber_email, comment, feedback_category, liked_aspects, created_at)
 - email_events(id, event_type, email_id, subscriber_email, clicked_url, newsletter_date, created_at)
 - events(id, title, url, source, location, start_time, description, created_at)
 - pm_reports(id, report_date, report_md, recommendations_json JSONB, status, created_at)
 - pm_plans(id, report_id, plan_date, plan_md, status, created_at)
+- product_feedback(id, feedback_type, comment, subscriber_email, created_at)
 """
 
 

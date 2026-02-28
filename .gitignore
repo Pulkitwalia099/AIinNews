@@ -4,3 +4,4 @@ debug.txt
 .DS_Store
 subscribers.db
 .env
+.vercel

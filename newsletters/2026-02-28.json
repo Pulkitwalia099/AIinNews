@@ -1,0 +1,166 @@
+{
+  "date": "2026-02-28",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "ChatGPT reaches 900M weekly active users",
+      "url": "https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users/",
+      "source": "TechCrunch AI",
+      "hn_score": 4,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI disclosed 900M weekly active users alongside its $110B funding announcement. At this scale, ChatGPT is approaching true mass-market consumer infrastructure \u2014 comparable to major social platforms. The distribution moat is widening faster than any competitor can close.",
+      "founders_lens": "At 900M WAU, OpenAI is becoming the default UI layer for AI \u2014 building on top of it is increasingly leveraged, but so is the platform risk. Evaluate now whether your product is differentiated enough to survive being a ChatGPT plugin vs. owning the user relationship directly.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Employees at Google and OpenAI support Anthropic's Pentagon stand in open letter",
+      "url": "https://techcrunch.com/2026/02/27/employees-at-google-and-openai-support-anthropics-pentagon-stand-in-open-letter/",
+      "source": "TechCrunch AI",
+      "hn_score": 6,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Employees across rival AI labs signed an open letter backing Anthropic's refusal to allow its models to be used for mass domestic surveillance or fully autonomous weapons \u2014 even as competitors comply. This signals a rare cross-company alignment on AI ethics red lines, with real commercial consequences. The rift between safety-first and compliance-first labs is becoming a structural market divide.",
+      "founders_lens": "Defense and govtech founders should model two distinct procurement tracks: safety-constrained vendors (Anthropic) vs. full-compliance vendors (OpenAI, Google). This bifurcation creates a wedge opportunity for startups that can serve the compliance track with specialized, auditable AI tooling that the major labs won't build themselves.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "OpenAI raises $110B in one of the largest private funding rounds in history",
+      "url": "https://techcrunch.com/2026/02/27/openai-raises-110b-in-one-of-the-largest-private-funding-rounds-in-history/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI closed $110B at a $730B pre-money valuation, with Amazon ($50B), Nvidia ($30B), and SoftBank ($30B) as lead investors. The Amazon investment deepens AWS as the default inference cloud for OpenAI workloads, while Nvidia's stake is a direct hedge against the compute disruption it faces. This round effectively makes OpenAI the gravitational center of the entire AI capital stack.",
+      "founders_lens": "Nvidia's $30B investment in a potential customer is a tell \u2014 they're buying loyalty as custom silicon alternatives (TPUs, Trainium, Tenstorrent) become credible. If you're making infrastructure bets, the Amazon-OpenAI axis will have preferential pricing and integration depth on AWS \u2014 factor that into your cloud cost and vendor lock-in models.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Trump orders all federal agencies to drop Anthropic after the AI company refused to bend its terms for the Pentagon",
+      "url": "https://the-decoder.com/trump-orders-all-federal-agencies-to-drop-anthropic-after-the-ai-company-refused-to-bend-its-terms-in-for-the-pentagon/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "The Trump administration invoked the Defense Production Act \u2014 a Korean War-era statute \u2014 to compel Anthropic's cooperation on Pentagon AI use cases; Anthropic refused and faces a full federal contract ban. This is the first time a major AI lab has been excluded from federal procurement on policy grounds, not capability ones. It creates an immediate vacuum worth billions in federal AI spend.",
+      "founders_lens": "Federal AI contract opportunity just opened up for any startup or integrator that can serve DoD use cases without Anthropic's constraints \u2014 this is an 'act now' moment for govtech founders with FedRAMP-ready infrastructure or ATO experience. Simultaneously, if your enterprise customers include regulated industries, document your own AI use-case boundaries before regulators or procurement officers ask.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "OpenAI's up to $110 billion raise lines up almost exactly with the $111 billion it just added to its cash burn forecast",
+      "url": "https://the-decoder.com/openais-up-to-110-billion-raise-lines-up-almost-exactly-with-the-111-billion-it-just-added-to-its-cash-burn-forecast/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI's $110B raise nearly exactly matches the $111B it added to its projected cash burn forecast, suggesting the capital will be consumed by infrastructure and operations rather than creating a war chest. This implies OpenAI's valuation is predicated on sustained capital injection rather than near-term profitability. The company is essentially running a capital-intensive infrastructure buildout dressed as a software business.",
+      "founders_lens": "If OpenAI is burning capital at this rate to maintain its position, API pricing cuts may slow or reverse \u2014 now is the time to lock in committed-use contracts or model your unit economics under a scenario where inference costs increase 2-3x in 18 months. Diversifying your model provider mix is no longer just a reliability strategy; it's a margin protection strategy.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "Meta signs multi-billion dollar deal to rent Google's TPUs in a direct challenge to Nvidia's AI chip dominance",
+      "url": "https://the-decoder.com/meta-signs-multi-billion-dollar-deal-to-rent-googles-tpus-in-a-direct-challenge-to-nvidias-ai-chip-dominance/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption",
+        "Cost Driver",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Meta has signed a multi-billion dollar agreement to train its AI models on Google's TPUs, marking the first major cross-hyperscaler compute deal and a direct shot at Nvidia's training monopoly. This validates TPUs as a credible alternative for frontier model training, not just inference. The deal restructures the assumption that GPU = AI compute and signals a multi-vendor hardware future.",
+      "founders_lens": "For AI infrastructure startups and ML platform builders: TPU availability through Google Cloud is about to get more competitive and potentially more expensive as Meta consumes capacity \u2014 but the bigger signal is that hardware abstraction layers (training orchestration, multi-chip portability) are now a must-have, not a nice-to-have. Frameworks that make workloads portable across GPU/TPU/custom silicon are moving from research tooling to critical infrastructure.",
+      "impact_level": "watch",
+      "technical_detail": "Google TPUs (likely v5p or v6 generation) are being used for large-scale model training workloads; TPU pods offer high-bandwidth interconnects and custom matrix multiply units optimized for transformer architectures, with Google claiming competitive cost-per-FLOP vs. H100/H200 at scale."
+    },
+    {
+      "title": "Please, please, please stop using passkeys for encrypting user data",
+      "url": "https://simonwillison.net/2026/Feb/27/passkeys/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 17,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Identity expert Tim Cappalli is urging developers to stop using passkeys as encryption keys for user data because passkey loss \u2014 which is common \u2014 results in permanent, irrecoverable data loss. Passkeys were designed for authentication, not key derivation, and conflating the two creates catastrophic UX failure modes. Several AI apps storing user data with passkey-based encryption are silently exposing users to unrecoverable data loss.",
+      "founders_lens": "If your AI app or SaaS product has implemented passkey-based data encryption \u2014 often done to market 'zero-knowledge' or 'privacy-first' features \u2014 audit this immediately. The liability and churn from users losing access to their data permanently is severe; use passkeys for auth only, and handle encryption keys through a separate, recoverable key management system.",
+      "impact_level": "act",
+      "technical_detail": "The PRF (Pseudo-Random Function) extension to WebAuthn can derive cryptographic keys from passkeys, but unlike passwords, passkeys are device-bound and non-recoverable by design \u2014 making them unsuitable as root keys for encrypting persistent user data without a robust key escrow or recovery mechanism."
+    },
+    {
+      "title": "Google API Keys Weren't Secrets. But then Gemini Changed the Rules.",
+      "url": "https://simonwillison.net/2026/Feb/26/google-api-keys/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 1571,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Google Maps API keys were historically designed to be public and embedded in client-side code \u2014 but Gemini API keys share the same key format and infrastructure, meaning publicly exposed Maps keys can be exploited to access Gemini and make billable AI API calls. This is a systemic API key architecture flaw that has put an unknown number of organizations at risk for both data exposure and unexpected billing. The HN score of 1571 signals this is a high-urgency, widely-relevant security issue.",
+      "founders_lens": "If your product or any of your dependencies uses Google API keys \u2014 especially if you inherited a codebase with Maps integration \u2014 audit for key exposure immediately via TruffleHog or similar secret scanning tools. Any publicly committed or client-embedded Google API key should be rotated now and restricted by API scope in the Google Cloud Console to prevent Gemini access.",
+      "impact_level": "act",
+      "technical_detail": "Google's unified API key infrastructure means a single key can grant access to multiple Google services including Gemini; keys should be restricted to specific APIs via the Google Cloud Console's 'API restrictions' setting, and server-side keys should never be embedded in client-side JavaScript or committed to public repos \u2014 standard secret scanning with tools like TruffleHog or GitGuardian would catch these."
+    },
+    {
+      "title": "Joint Statement from OpenAI and Microsoft",
+      "url": "https://openai.com/index/continuing-microsoft-partnership",
+      "source": "OpenAI Blog",
+      "hn_score": 66,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI and Microsoft issued a joint statement emphasizing their partnership remains intact despite the Amazon investment, which could be read as a competitive encroachment on Microsoft's preferred cloud position. The statement is notable for what it doesn't say: there are no new commitments, exclusivity terms, or product announcements. Reading between the lines, the relationship is being managed \u2014 not deepened.",
+      "founders_lens": "The Microsoft-OpenAI relationship is showing its first structural stress fractures as Amazon becomes a major stakeholder and inference partner \u2014 if you've standardized on Azure OpenAI Service for its supposed exclusivity benefits, those advantages may erode. Start evaluating AWS Bedrock's OpenAI model availability as a credible alternative or parallel path.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Scaling AI for everyone",
+      "url": "https://openai.com/index/scaling-ai-for-everyone",
+      "source": "OpenAI Blog",
+      "hn_score": 16,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI's official announcement of $110B in funding from SoftBank, Nvidia, and Amazon frames the raise around democratizing AI access globally \u2014 but the investor mix tells the real story: Amazon for distribution, Nvidia to lock in GPU supply, SoftBank for geopolitical reach into Asia and the Middle East. This is a strategic supply chain and distribution deal as much as a capital raise. The $730B pre-money valuation implies OpenAI must become a multi-hundred-billion revenue business within a few years.",
+      "founders_lens": "The SoftBank component likely opens OpenAI's aggressive expansion into Japan, Southeast Asia, and Gulf sovereign wealth markets \u2014 if you're building AI applications targeting those geographies, expect OpenAI-subsidized competition or partnered local deployments within 12-18 months. Get to distribution and localization depth now before the category gets commoditized by OpenAI's capital.",
+      "impact_level": "watch",
+      "technical_detail": null
+    }
+  ]
+}

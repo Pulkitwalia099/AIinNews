@@ -3,13 +3,22 @@
 {% block content %}
 <h2 style="font-size: 1.1rem; font-weight: 600; color: #1d1d1f; margin-bottom: 24px;">Archive</h2>
 
-{% if dates %}
-  {% for date in dates %}
-    <div style="background:#fff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.06); padding:14px 18px; margin-bottom:8px;">
-      <a href="/{{ date }}" style="color:#37352f; text-decoration:none; font-size:0.9rem; font-weight:500;">
-        {{ date }}
-      </a>
+{% if summaries %}
+  {% for s in summaries %}
+  <a href="/{{ s.date }}" class="archive-card" style="display:block; text-decoration:none; color:inherit; background:#fff; border-radius:10px; box-shadow:0 1px 3px rgba(0,0,0,0.06); padding:18px 20px; margin-bottom:10px; transition: box-shadow 0.15s;">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+      <span data-date="{{ s.date }}" class="archive-date" style="font-size:0.9rem; font-weight:600; color:#1d1d1f;">{{ s.date }}</span>
+      <span style="font-size:0.75rem; color:#9b9a97;">{{ s.count }} stories</span>
     </div>
+    {% if s.top_headline %}
+    <p style="font-size:0.84rem; color:#6b6b6b; margin:0 0 8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ s.top_headline }}</p>
+    {% endif %}
+    <div style="font-size:0.72rem; color:#9b9a97;">
+      {% for section, count in s.breakdown.items() %}
+        {{ count }} {{ section.replace(' Layer', '') }}{% if not loop.last %} · {% endif %}
+      {% endfor %}
+    </div>
+  </a>
   {% endfor %}
 {% else %}
   <p style="color:#9b9a97; font-size:0.9rem;">No issues yet.</p>

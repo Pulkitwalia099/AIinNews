@@ -159,7 +159,24 @@ def events():
 @app.route("/archive")
 def archive():
     dates = get_all_dates()
-    return render_template("archive.html", dates=dates)
+    summaries = []
+    for d in dates:
+        nl = load_newsletter(d)
+        if not nl:
+            continue
+        articles = nl.get("articles", [])
+        top = max(articles, key=lambda a: a.get("hn_score", 0), default=None)
+        counts = {}
+        for a in articles:
+            s = a.get("section", "Other")
+            counts[s] = counts.get(s, 0) + 1
+        summaries.append({
+            "date": d,
+            "count": len(articles),
+            "top_headline": top["title"] if top else "",
+            "breakdown": counts
+        })
+    return render_template("archive.html", summaries=summaries)
 
 
 @app.route("/<date>")

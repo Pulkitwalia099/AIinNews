@@ -87,12 +87,12 @@
 </div>
 {% endif %}
 
-<p class="date">{{ newsletter.date }}</p>
+<p class="date" data-date="{{ newsletter.date }}">{{ newsletter.date }}</p>
 
 {% set sections = [
-  ("Foundation Layer",     "foundation",    "Core model research, breakthroughs & new capabilities"),
+  ("Application Layer",    "application",   "Real-world products, deployments & company moves"),
   ("Infrastructure Layer", "infra",         "Tools, APIs, compute & platforms builders rely on"),
-  ("Application Layer",    "application",   "Real-world products, deployments & company moves")
+  ("Foundation Layer",     "foundation",    "Core model research, breakthroughs & new capabilities")
 ] %}
 
 {% for section_name, section_class, section_desc in sections %}
@@ -117,6 +117,10 @@
           {% if article.hn_score and article.hn_score >= 10 %}
             <span class="hype-badge">🔥 {{ article.hn_score }}</span>
           {% endif %}
+          <button class="share-btn" aria-label="Share this story" data-url="{{ article.url }}" data-title="{{ article.title }}" onclick="shareStory(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            <span class="share-tooltip">Copied!</span>
+          </button>
         </div>
 
         <div class="tags">
@@ -127,6 +131,9 @@
         </div>
 
         <p class="summary">{{ article.summary }}</p>
+        <div class="read-source-row">
+          <a class="read-source" href="{{ article.url }}" target="_blank" rel="noopener noreferrer">Read source &rarr;</a>
+        </div>
 
         {% if article.founders_lens %}
         <div class="founders-lens">
@@ -140,4 +147,10 @@
   </details>
   {% endif %}
 {% endfor %}
+
+<div class="bottom-cta">
+  <p class="bottom-cta-heading">That's today's briefing.</p>
+  <p class="bottom-cta-sub">Get it in your inbox every morning — free.</p>
+  <button class="subscribe-trigger" onclick="openModal()">Subscribe — it's free</button>
+</div>
 {% endblock %}

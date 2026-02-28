@@ -49,12 +49,13 @@
       font-size: 0.82rem;
       color: #6b6b6b;
       text-decoration: none;
-      padding: 5px 12px;
+      padding: 10px 12px;
       border-radius: 6px;
       transition: background 0.15s, color 0.15s;
     }
 
     nav a:hover { background: #f4f4f2; color: #1d1d1f; }
+    nav a.nav-active { color: #1d1d1f; font-weight: 600; }
 
     /* Main content */
     .container {
@@ -68,9 +69,23 @@
       font-size: 0.8rem;
       color: #9b9a97;
       letter-spacing: 0.04em;
-      text-transform: uppercase;
       margin-bottom: 36px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
+
+    .date-badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 20px;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .date-badge.today { background: #22c55e; color: #fff; }
+    .date-badge.yesterday { background: #6b7280; color: #fff; }
+    .date-badge.older { background: #6b7280; color: #fff; }
 
     /* Newsletter intro */
     .newsletter-intro {
@@ -189,7 +204,7 @@
     .subscribe-input {
       width: 100%;
       padding: 10px 14px;
-      font-size: 0.9rem;
+      font-size: 16px;
       border: 1px solid #ddd;
       border-radius: 8px;
       outline: none;
@@ -400,6 +415,89 @@
       margin-bottom: 4px;
     }
 
+    /* Read source link */
+    .read-source-row { text-align: right; margin-bottom: 14px; }
+    .read-source {
+      font-size: 0.78rem;
+      color: #9b9a97;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .read-source:hover { color: #1d1d1f; text-decoration: underline; }
+
+    /* Share button */
+    .share-btn {
+      position: relative;
+      background: none;
+      border: none;
+      color: #b0aeab;
+      cursor: pointer;
+      padding: 2px 4px;
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      transition: color 0.15s;
+    }
+    .share-btn:hover { color: #6b6b6b; }
+    .share-tooltip {
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1d1d1f;
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .share-tooltip.show { opacity: 1; }
+
+    /* Bottom CTA */
+    .bottom-cta {
+      text-align: center;
+      padding: 48px 0 16px;
+      margin-top: 24px;
+      border-top: 1px solid #ebebea;
+    }
+    .bottom-cta-heading {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #1d1d1f;
+      margin-bottom: 6px;
+    }
+    .bottom-cta-sub {
+      font-size: 0.86rem;
+      color: #6b6b6b;
+      margin-bottom: 20px;
+    }
+
+    /* Footer links */
+    .footer-links {
+      margin-top: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+    .footer-links a {
+      font-size: 0.76rem;
+      color: #b0aeab;
+      text-decoration: none;
+    }
+    .footer-links a:hover { color: #6b6b6b; }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      .article { padding: 18px 16px; }
+      .event-card { padding: 16px 14px; }
+      .subscribe-bar { flex-direction: column; gap: 10px; text-align: center; }
+      .subscribe-trigger { width: 100%; }
+    }
+
     /* Events strip (homepage) */
     .events-strip {
       background: #fff;
@@ -554,6 +652,9 @@
       margin: 0;
     }
 
+    /* Archive cards */
+    .archive-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
     /* Footer */
     footer {
       border-top: 1px solid #ebebea;
@@ -581,7 +682,13 @@
   </div>
 
   <footer>
-    Curated daily for founders &middot; Powered by Claude
+    <div>Curated daily for founders &middot; Powered by Claude</div>
+    <div class="footer-links">
+      <a href="/">Latest</a>
+      <a href="/archive">Archive</a>
+      <a href="/events">Events</a>
+      <a href="javascript:void(0)" onclick="openModal()">Subscribe</a>
+    </div>
   </footer>
 
 <script>
@@ -633,6 +740,72 @@
 
     form.submit();
   }
+
+  // Share button handler
+  function shareStory(btn) {
+    var url = btn.getAttribute('data-url');
+    var title = btn.getAttribute('data-title');
+    if (navigator.share) {
+      navigator.share({ title: title, url: url }).catch(function() {});
+    } else {
+      navigator.clipboard.writeText(url).then(function() {
+        var tip = btn.querySelector('.share-tooltip');
+        tip.classList.add('show');
+        setTimeout(function() { tip.classList.remove('show'); }, 1500);
+      });
+    }
+  }
+
+  // Active nav highlight
+  (function() {
+    var path = window.location.pathname;
+    document.querySelectorAll('nav a').forEach(function(a) {
+      var href = a.getAttribute('href');
+      if (href === '/' && (path === '/' || /^\/\d{4}-\d{2}-\d{2}$/.test(path))) {
+        a.classList.add('nav-active');
+      } else if (href !== '/' && path.startsWith(href)) {
+        a.classList.add('nav-active');
+      }
+    });
+  })();
+
+  // Format YYYY-MM-DD dates into human-readable text with relative badge
+  (function() {
+    var fmt = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+    function relativeBadge(dateStr) {
+      var parts = dateStr.split('-');
+      var d = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+      var now = new Date();
+      var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      var diff = Math.round((today - d) / 86400000);
+
+      if (diff === 0) return '<span class="date-badge today">Today</span>';
+      if (diff === 1) return '<span class="date-badge yesterday">Yesterday</span>';
+      if (diff > 1) return '<span class="date-badge older">' + diff + ' days ago</span>';
+      return '';
+    }
+
+    function formatDate(dateStr) {
+      var parts = dateStr.split('-');
+      var d = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+      return d.toLocaleDateString('en-US', fmt);
+    }
+
+    // Homepage date header
+    document.querySelectorAll('.date[data-date]').forEach(function(el) {
+      var ds = el.getAttribute('data-date');
+      el.innerHTML = formatDate(ds) + ' ' + relativeBadge(ds);
+    });
+
+    // Archive date links
+    document.querySelectorAll('.archive-date[data-date]').forEach(function(el) {
+      var ds = el.getAttribute('data-date');
+      el.innerHTML = formatDate(ds);
+      var badge = relativeBadge(ds);
+      if (badge) el.insertAdjacentHTML('afterend', badge);
+    });
+  })();
 </script>
 </body>
 </html>

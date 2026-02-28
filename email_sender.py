@@ -116,7 +116,8 @@ def build_html(newsletter):
 
     <div style="margin-top:40px; padding-top:16px; border-top:1px solid #ebebea;
                 font-size:0.75rem; color:#b0aeab; text-align:center;">
-        Curated daily for builders · Powered by Claude
+        Curated daily for builders · Powered by Claude<br><br>
+        To keep getting this newsletter, add <strong>newsletter@aiinnews.space</strong> to your contacts.
     </div>
 </body>
 </html>"""
@@ -159,6 +160,10 @@ def send_newsletter(newsletter):
                 "to": [email],
                 "subject": f"AI in News — {date_str}",
                 "html": html,
+                "headers": {
+                    "List-Unsubscribe": "<mailto:unsubscribe@aiinnews.space>",
+                    "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+                },
             })
             sent += 1
         except Exception as e:

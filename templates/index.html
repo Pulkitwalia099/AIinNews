@@ -36,17 +36,8 @@
   }
   .fb-chip:hover { border-color: #7b78e8; background: #f0effe; }
   .fb-chip.active { background: #eceafb; border-color: #7b78e8; color: #4240b8; font-weight: 500; }
-  .fb-select {
-    width: 100%;
-    padding: 7px 10px;
-    font-size: 0.78rem;
-    font-family: inherit;
-    border: 1px solid #ddd;
-    border-radius: 7px;
-    background: #fff;
-    margin-bottom: 7px;
-    color: #37352f;
-  }
+  .fb-chip.down:hover { border-color: #d96a3a; background: #fff5f0; }
+  .fb-chip.down.active { background: #fff0eb; border-color: #d96a3a; color: #b84a1e; font-weight: 500; }
   .fb-textarea {
     width: 100%;
     padding: 7px 10px;
@@ -59,7 +50,7 @@
     margin-bottom: 7px;
     color: #37352f;
   }
-  .fb-textarea:focus, .fb-select:focus { outline: none; border-color: #7b78e8; }
+  .fb-textarea:focus { outline: none; border-color: #7b78e8; }
   .fb-actions { display: flex; align-items: center; gap: 12px; }
   .fb-send {
     background: #1d1d1f;
@@ -103,19 +94,29 @@
   }
   .pfb-heading { font-size: 0.9rem; font-weight: 600; color: #1d1d1f; margin-bottom: 5px; }
   .pfb-sub { font-size: 0.8rem; color: #6b6b6b; margin-bottom: 14px; }
-  .pfb-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-  .pfb-btn {
-    display: inline-block;
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    color: #37352f;
-    text-decoration: none;
-    padding: 7px 14px;
-    border-radius: 20px;
+  .pfb-form { display: flex; gap: 7px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .pfb-select {
+    padding: 7px 10px;
     font-size: 0.78rem;
-    transition: border-color 0.12s, background 0.12s;
+    font-family: inherit;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    background: #fff;
+    color: #37352f;
   }
-  .pfb-btn:hover { border-color: #7b78e8; background: #f8f7ff; }
+  .pfb-select:focus { outline: none; border-color: #7b78e8; }
+  .pfb-submit {
+    background: #1d1d1f;
+    color: #fff;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 7px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .pfb-submit:hover { background: #3a3a3c; }
 </style>
 <div class="newsletter-intro">
   <p class="intro-tagline">What's actually happening in AI — explained for people who build things.</p>
@@ -298,12 +299,15 @@
 <div class="product-feedback-card">
   <p class="pfb-heading">Help us improve AI in News</p>
   <p class="pfb-sub">Got a suggestion, bug report, or question?</p>
-  <div class="pfb-btns">
-    <a href="/feedback/product?type=bug" class="pfb-btn">🐛 Bug</a>
-    <a href="/feedback/product?type=feature" class="pfb-btn">✨ Feature</a>
-    <a href="/feedback/product?type=general" class="pfb-btn">💬 Feedback</a>
-    <a href="/feedback/product?type=question" class="pfb-btn">❓ Question</a>
-  </div>
+  <form class="pfb-form" action="/feedback/product" method="get">
+    <select name="type" class="pfb-select">
+      <option value="general">💬 General feedback</option>
+      <option value="bug">🐛 Bug report</option>
+      <option value="feature">✨ Feature request</option>
+      <option value="question">❓ Question</option>
+    </select>
+    <button type="submit" class="pfb-submit">Share →</button>
+  </form>
 </div>
 
 <script>
@@ -331,6 +335,7 @@ function showFeedbackPopup(container, rating, articleUrl) {
   var popup = document.createElement('div');
   popup.className = 'fb-popup';
   popup.dataset.articleUrl = articleUrl;
+  popup.dataset.rating = rating;
 
   if (rating === 'up') {
     popup.innerHTML =
@@ -349,14 +354,12 @@ function showFeedbackPopup(container, rating, articleUrl) {
   } else {
     popup.innerHTML =
       '<p class="fb-popup-title">What went wrong? <span style="font-weight:400;color:#b0aeab;font-size:0.8em">optional</span></p>' +
-      '<select class="fb-select">' +
-        '<option value="">Select a reason\u2026</option>' +
-        '<option value="not_relevant">Not relevant to my work</option>' +
-        '<option value="too_basic">Already knew most of this</option>' +
-        '<option value="too_advanced">Hard to follow</option>' +
-        '<option value="inaccurate">Something seemed off</option>' +
-        '<option value="broken_link">Broken link</option>' +
-      '</select>' +
+      '<div class="fb-chips">' +
+        '<button type="button" class="fb-chip down" data-v="not_relevant">Not relevant to my work</button>' +
+        '<button type="button" class="fb-chip down" data-v="too_basic">Already knew this</button>' +
+        '<button type="button" class="fb-chip down" data-v="too_advanced">Hard to follow</button>' +
+        '<button type="button" class="fb-chip down" data-v="inaccurate">Something seemed off</button>' +
+      '</div>' +
       '<textarea class="fb-textarea" placeholder="Tell us more... (optional)"></textarea>' +
       '<div class="fb-actions">' +
         '<button type="button" class="fb-send" onclick="submitFeedbackPopup(this)">Send \u2192</button>' +
@@ -376,11 +379,11 @@ function showFeedbackPopup(container, rating, articleUrl) {
 function submitFeedbackPopup(btn) {
   var popup = btn.closest('.fb-popup');
   var articleUrl = popup.dataset.articleUrl;
+  var rating = popup.dataset.rating || '';
 
-  var chips = popup.querySelectorAll('.fb-chip.active');
-  var likedAspects = Array.from(chips).map(function(c) { return c.dataset.v; }).join(',');
-  var selectEl = popup.querySelector('.fb-select');
-  var feedbackCategory = selectEl ? selectEl.value : '';
+  var activeChips = Array.from(popup.querySelectorAll('.fb-chip.active')).map(function(c) { return c.dataset.v; }).join(',');
+  var likedAspects = rating === 'up' ? activeChips : '';
+  var feedbackCategory = rating === 'down' ? activeChips : '';
   var textareaEl = popup.querySelector('.fb-textarea');
   var comment = textareaEl ? textareaEl.value.trim() : '';
 

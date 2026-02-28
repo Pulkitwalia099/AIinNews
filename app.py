@@ -320,30 +320,41 @@ def feedback():
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thanks!</title>
   <style>{_shared_css}
-    select {{ width:100%; padding:9px 12px; font-size:0.83rem; font-family:inherit;
-              border:1px solid #ddd; border-radius:8px; background:#fff;
-              margin-bottom:11px; color:#37352f; }}
-    select:focus {{ outline:none; border-color:#7b78e8; }}
+    .chips {{ display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px; }}
+    .chip {{ background:#fff; border:1px solid #e0e0e0; border-radius:20px;
+             padding:7px 13px; font-size:0.81rem; color:#37352f; cursor:pointer;
+             font-family:inherit; transition:all 0.12s; }}
+    .chip:hover {{ border-color:#d96a3a; background:#fff5f0; }}
+    .chip.active {{ background:#fff0eb; border-color:#d96a3a; color:#b84a1e; font-weight:500; }}
   </style>
 </head><body>
   <div class="emoji">&#128078;</div>
   <h2>Thanks for letting us know.</h2>
-  <p class="sub">What went wrong? <span style="color:#b0aeab;font-size:0.78rem;">(optional)</span></p>
+  <p class="sub">What went wrong? <span style="color:#b0aeab;font-size:0.78rem;">(optional, pick any)</span></p>
   <form action="/feedback/comment" method="POST">
     <input type="hidden" name="article_url" value="{safe_url}">
     <input type="hidden" name="subscriber_email" value="{safe_email}">
-    <select name="feedback_category">
-      <option value="">Select a reason&#8230;</option>
-      <option value="not_relevant">Not relevant to my work</option>
-      <option value="too_basic">Already knew most of this</option>
-      <option value="too_advanced">Hard to follow</option>
-      <option value="inaccurate">Something seemed off</option>
-      <option value="broken_link">Broken link</option>
-    </select>
+    <input type="hidden" name="feedback_category" id="category-input" value="">
+    <div class="chips">
+      <button type="button" class="chip" data-v="not_relevant">Not relevant to my work</button>
+      <button type="button" class="chip" data-v="too_basic">Already knew this</button>
+      <button type="button" class="chip" data-v="too_advanced">Hard to follow</button>
+      <button type="button" class="chip" data-v="inaccurate">Something seemed off</button>
+    </div>
     <textarea name="comment" placeholder="Tell us more... (optional)"></textarea>
     <button class="btn-send" type="submit">Send &#8594;</button>
   </form>
   <a class="skip" href="https://aiinnews.space">No thanks &#8594;</a>
+  <script>
+    document.querySelectorAll('.chip').forEach(function(c) {{
+      c.addEventListener('click', function() {{
+        c.classList.toggle('active');
+        var vals = [];
+        document.querySelectorAll('.chip.active').forEach(function(a) {{ vals.push(a.dataset.v); }});
+        document.getElementById('category-input').value = vals.join(',');
+      }});
+    }});
+  </script>
 </body></html>"""
 
 
@@ -467,11 +478,12 @@ def feedback_product():
     .sub {{ font-size:0.83rem; color:#6b6b6b; margin-bottom:22px; }}
     label {{ display:block; font-size:0.78rem; font-weight:500; color:#6b6b6b;
              margin-bottom:5px; text-transform:uppercase; letter-spacing:0.06em; }}
-    select, textarea {{ width:100%; padding:10px 13px; font-size:0.85rem; font-family:inherit;
+    select, textarea, input[type=email] {{ width:100%; padding:10px 13px; font-size:0.85rem; font-family:inherit;
                         border:1px solid #ddd; border-radius:8px; color:#37352f;
                         background:#fff; margin-bottom:16px; }}
-    select:focus, textarea:focus {{ outline:none; border-color:#7b78e8; }}
+    select:focus, textarea:focus, input[type=email]:focus {{ outline:none; border-color:#7b78e8; }}
     textarea {{ resize:vertical; min-height:100px; }}
+    input[type=email]::placeholder {{ color:#b0aeab; }}
     .btn-send {{ background:#1d1d1f; color:#fff; border:none; padding:11px 0;
                  border-radius:8px; font-size:0.88rem; font-weight:600;
                  cursor:pointer; font-family:inherit; width:100%; margin-bottom:10px; }}
@@ -484,11 +496,12 @@ def feedback_product():
   <h1>Share feedback</h1>
   <p class="sub">Got something to report, suggest, or ask? We read everything.</p>
   <form method="POST" action="/feedback/product">
-    <input type="hidden" name="subscriber_email" value="{safe_email}">
     <label>Type</label>
     <select name="feedback_type">{options_html}</select>
     <label>Tell us more <span style="color:#b0aeab;font-size:0.75em;text-transform:none;">(optional)</span></label>
     <textarea name="comment" placeholder="Describe the bug, feature idea, or question&#8230;"></textarea>
+    <label>Your email <span style="color:#b0aeab;font-size:0.75em;text-transform:none;">(optional — we'll let you know when we act on it)</span></label>
+    <input type="email" name="subscriber_email" value="{safe_email}" placeholder="you@example.com">
     <button class="btn-send" type="submit">Send feedback</button>
   </form>
   <a class="cancel" href="https://aiinnews.space">&larr; Cancel</a>

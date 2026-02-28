@@ -28,6 +28,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPICVSCODE }}
           RESEND_API_KEY: ${{ secrets.RESENDKEYAINEWLETTER }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: python generate.py
 
       - name: Commit new newsletter to repo

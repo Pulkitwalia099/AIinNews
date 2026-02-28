@@ -3,3 +3,4 @@ __pycache__/
 debug.txt
 .DS_Store
 subscribers.db
+.env

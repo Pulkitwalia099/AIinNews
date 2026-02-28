@@ -3,6 +3,9 @@ import json
 import psycopg2
 import resend
 from datetime import date
+from dotenv import load_dotenv
+
+load_dotenv()
 
 with open("config.json") as f:
     config = json.load(f)
@@ -121,6 +124,7 @@ def build_html(newsletter):
 def get_subscribers():
     database_url = os.environ.get("DATABASE_URL")
     if not database_url:
+        print("  [subscribers] DATABASE_URL not set — falling back to config email")
         return [config["recipient_email"]]
     try:
         con = psycopg2.connect(database_url)
@@ -130,8 +134,14 @@ def get_subscribers():
         cur.close()
         con.close()
         emails = [row[0] for row in rows]
-        return emails if emails else [config["recipient_email"]]
-    except Exception:
+        if emails:
+            print(f"  [subscribers] Found {len(emails)} subscriber(s) in database")
+            return emails
+        else:
+            print("  [subscribers] No subscribers in database — falling back to config email")
+            return [config["recipient_email"]]
+    except Exception as e:
+        print(f"  [subscribers] Database error: {e} — falling back to config email")
         return [config["recipient_email"]]
 
 
@@ -141,7 +151,7 @@ def send_newsletter(newsletter):
     recipients = get_subscribers()
 
     params: resend.Emails.SendParams = {
-        "from": "AI in News <onboarding@resend.dev>",
+        "from": "AI in News <newsletter@aiinnews.space>",
         "to": recipients,
         "subject": f"AI in News — {date_str}",
         "html": html,

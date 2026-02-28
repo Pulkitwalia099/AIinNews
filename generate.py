@@ -1,6 +1,10 @@
 import json
 import os
 from datetime import date
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from fetch import fetch_articles
 from fetch_github import fetch_github_trending
 from process import process_articles

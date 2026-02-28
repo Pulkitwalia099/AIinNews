@@ -107,6 +107,10 @@ def init_db():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
+    cur.execute("ALTER TABLE pm_plans ADD COLUMN IF NOT EXISTS rec_index INTEGER DEFAULT 0")
+    cur.execute("ALTER TABLE pm_plans ADD COLUMN IF NOT EXISTS shipped_note TEXT")
+    cur.execute("ALTER TABLE product_feedback ADD COLUMN IF NOT EXISTS plan_id INTEGER")
+    cur.execute("ALTER TABLE product_feedback ADD COLUMN IF NOT EXISTS acknowledged_at TIMESTAMP")
     con.commit()
     cur.close()
     con.close()
@@ -660,8 +664,8 @@ DB SCHEMA (current):
 - email_events(id, event_type, email_id, subscriber_email, clicked_url, newsletter_date, created_at)
 - events(id, title, url, source, location, start_time, description, created_at)
 - pm_reports(id, report_date, report_md, recommendations_json JSONB, status, created_at)
-- pm_plans(id, report_id, plan_date, plan_md, status, created_at)
-- product_feedback(id, feedback_type, comment, subscriber_email, created_at)
+- pm_plans(id, report_id, plan_date, plan_md, status, rec_index, shipped_note, created_at)
+- product_feedback(id, feedback_type, comment, subscriber_email, plan_id, acknowledged_at, created_at)
 """
 
 
@@ -799,14 +803,14 @@ def send_plan_email(plan_id, plan_date, plan_title, plan_md):
     </p>
 
     <p style="font-size:0.88rem; line-height:1.65; margin-bottom:8px;">
-      <strong>After shipping, mark it done</strong> so the AI PM measures impact next Saturday:
+      <strong>After shipping, mark it done</strong> so the AI PM measures impact next Saturday
+      and notifies any users whose feedback inspired this change:
     </p>
-    <p style="font-size:0.82rem; color:#6b6b6b; margin-bottom:6px;">
-      Go to <strong>supabase.com</strong> → your project → SQL Editor → run:
-    </p>
-    <div style="background:#fff; border:1px solid #c8e6c9; border-radius:6px;
-                padding:10px 16px; font-family:monospace; font-size:0.85rem; color:#1d1d1f;">
-      UPDATE pm_plans SET status = 'shipped' WHERE id = {plan_id};
+    <div style="background:#fff; border:1px solid #c8e6c9; border-radius:6px; padding:10px 16px;">
+      <a href="https://aiinnews.space/pm?secret={html_lib.escape(os.environ.get('PM_SECRET', ''))}"
+         style="font-size:0.88rem; color:#156038; font-weight:600; text-decoration:none;">
+        → Open PM Dashboard and click "Mark as Shipped"
+      </a>
     </div>
   </div>
 
@@ -821,6 +825,66 @@ def send_plan_email(plan_id, plan_date, plan_title, plan_md):
 </body></html>""",
     })
     print(f"[plan_email] Sent: {plan_title}")
+
+
+def send_acknowledgment_email(to_email, feedback_type, comment, shipped_note):
+    """Thank a feedback giver whose suggestion has been shipped."""
+    type_labels = {
+        "bug": "bug report", "feature": "feature request",
+        "general": "feedback", "question": "question",
+    }
+    type_label = type_labels.get(feedback_type, "feedback")
+    quoted = (
+        f'<blockquote style="border-left:3px solid #e0e0e0; padding:4px 12px; margin:12px 0; '
+        f'color:#6b6b6b; font-style:italic; font-size:0.88rem;">'
+        f'{html_lib.escape(comment[:300])}</blockquote>'
+        if comment else
+        f'<p style="color:#6b6b6b; font-style:italic; font-size:0.86rem;">({type_label})</p>'
+    )
+    what_changed = (
+        f'<p style="font-size:0.88rem; line-height:1.7; margin-top:6px;">'
+        f'Here\'s what changed: {html_lib.escape(shipped_note)}</p>'
+        if shipped_note else
+        '<p style="font-size:0.88rem; line-height:1.7; margin-top:6px;">'
+        'This improvement is now live in AI in News.</p>'
+    )
+    try:
+        resend_lib.api_key = os.environ["RESEND_API_KEY"]
+        resend_lib.Emails.send({
+            "from": "AI in News <newsletter@aiinnews.space>",
+            "to": [to_email],
+            "subject": "Your feedback shaped AI in News \u2728",
+            "html": f"""<!DOCTYPE html>
+<html><head><meta charset="UTF-8"></head>
+<body style="font-family:-apple-system,BlinkMacSystemFont,sans-serif; max-width:540px;
+             margin:0 auto; padding:32px 16px; background:#FAFAF9; color:#37352f;">
+  <p style="font-size:0.7rem; font-weight:700; text-transform:uppercase;
+             letter-spacing:0.12em; color:#9b9a97; margin-bottom:20px;">AI in News</p>
+  <p style="font-size:1rem; font-weight:600; color:#1d1d1f; margin-bottom:6px;">
+    Your feedback shaped something real.
+  </p>
+  <p style="font-size:0.88rem; color:#6b6b6b; line-height:1.65; margin-bottom:4px;">
+    You submitted a {type_label} for AI in News:
+  </p>
+  {quoted}
+  <p style="font-size:0.88rem; line-height:1.7; margin-top:16px;">
+    Our AI PM flagged it, a plan was made, and we shipped it.
+  </p>
+  {what_changed}
+  <p style="font-size:0.88rem; line-height:1.7; margin-top:18px; color:#37352f;">
+    Thank you — suggestions like yours are how AI in News gets better for builders.
+  </p>
+  <div style="margin-top:28px; padding-top:16px; border-top:1px solid #ebebea;
+              font-size:0.75rem; color:#b0aeab;">
+    <a href="https://aiinnews.space" style="color:#b0aeab; text-decoration:none;">
+      Back to the newsletter &rarr;
+    </a>
+  </div>
+</body></html>""",
+        })
+        print(f"[ack_email] Sent to {to_email}")
+    except Exception as e:
+        print(f"[ack_email] Failed to {to_email}: {e}")
 
 
 # ---------------------------------------------------------------------------
@@ -842,6 +906,14 @@ def pm_dashboard():
             FROM pm_reports ORDER BY created_at DESC LIMIT 1
         """)
         row = cur.fetchone()
+        cur.execute("""
+            SELECT p.id, p.plan_date, p.status, p.shipped_note,
+                   r.recommendations_json, p.rec_index
+            FROM pm_plans p
+            JOIN pm_reports r ON r.id = p.report_id
+            ORDER BY p.created_at DESC LIMIT 10
+        """)
+        plan_rows = cur.fetchall()
         cur.close()
         con.close()
     except Exception as e:
@@ -857,7 +929,20 @@ def pm_dashboard():
         "recommendations": row[3] if row[3] else [],
         "status": row[4],
     }
-    return render_template("pm.html", report=report, secret=secret)
+    plans = []
+    for r in plan_rows:
+        pid, plan_date, status, shipped_note, recs_json, rec_idx = r
+        title = f"Plan #{pid}"
+        if recs_json and rec_idx is not None and rec_idx < len(recs_json):
+            title = recs_json[rec_idx].get("title", title)
+        plans.append({
+            "id": pid,
+            "plan_date": plan_date,
+            "status": status,
+            "shipped_note": shipped_note or "",
+            "title": title,
+        })
+    return render_template("pm.html", report=report, plans=plans, secret=secret)
 
 
 @app.route("/pm/approve-quick")
@@ -937,11 +1022,23 @@ def _do_approve(report_id, rec_index, refinement_notes="", secret=""):
         con = get_db()
         cur = con.cursor()
         cur.execute("""
-            INSERT INTO pm_plans (report_id, plan_date, plan_md, status)
-            VALUES (%s, %s, %s, 'pending') RETURNING id
-        """, (report_id, plan_date, plan_md))
+            INSERT INTO pm_plans (report_id, plan_date, plan_md, status, rec_index)
+            VALUES (%s, %s, %s, 'pending', %s) RETURNING id
+        """, (report_id, plan_date, plan_md, rec_index))
         plan_id = cur.fetchone()[0]
         cur.execute("UPDATE pm_reports SET status = 'approved' WHERE id = %s", (report_id,))
+        # Link any product_feedback rows this recommendation attributed to the plan
+        feedback_ids = []
+        for x in selected_rec.get("feedback_ids", []):
+            try:
+                feedback_ids.append(int(x))
+            except (TypeError, ValueError):
+                pass
+        if feedback_ids:
+            cur.execute("""
+                UPDATE product_feedback SET plan_id = %s
+                WHERE id = ANY(%s) AND plan_id IS NULL
+            """, (plan_id, feedback_ids))
         con.commit()
         cur.close()
         con.close()
@@ -982,6 +1079,84 @@ def _do_approve(report_id, rec_index, refinement_notes="", secret=""):
   </div>
   <a href="{back_link}">&larr; Back to PM Dashboard</a>
   <div class="plan-box">{safe_plan}</div>
+</body></html>"""
+
+
+@app.route("/pm/ship", methods=["POST"])
+def pm_ship():
+    """Mark a plan as shipped and send acknowledgment emails to feedback givers."""
+    secret = request.form.get("secret", "")
+    pm_secret = os.environ.get("PM_SECRET", "")
+    if not pm_secret or secret != pm_secret:
+        return "Forbidden", 403
+
+    try:
+        plan_id = int(request.form.get("plan_id", ""))
+    except ValueError:
+        return "Invalid plan_id.", 400
+
+    shipped_note = request.form.get("shipped_note", "").strip()
+
+    # 1. Mark plan as shipped
+    try:
+        con = get_db()
+        cur = con.cursor()
+        cur.execute("""
+            UPDATE pm_plans SET status = 'shipped', shipped_note = %s WHERE id = %s
+        """, (shipped_note or None, plan_id))
+        con.commit()
+        cur.close()
+        con.close()
+    except Exception as e:
+        return f"DB error: {e}", 500
+
+    # 2. Find linked feedback rows that have emails and haven't been acknowledged yet
+    try:
+        con = get_db()
+        cur = con.cursor()
+        cur.execute("""
+            SELECT id, feedback_type, comment, subscriber_email
+            FROM product_feedback
+            WHERE plan_id = %s AND subscriber_email IS NOT NULL AND acknowledged_at IS NULL
+        """, (plan_id,))
+        rows = cur.fetchall()
+        cur.close()
+        con.close()
+    except Exception as e:
+        print(f"[ship] DB error fetching feedback: {e}")
+        rows = []
+
+    # 3. Send emails and mark acknowledged
+    sent = 0
+    for fb_id, feedback_type, comment, email in rows:
+        send_acknowledgment_email(email, feedback_type, comment, shipped_note)
+        try:
+            con = get_db()
+            cur = con.cursor()
+            cur.execute("UPDATE product_feedback SET acknowledged_at = NOW() WHERE id = %s", (fb_id,))
+            con.commit()
+            cur.close()
+            con.close()
+        except Exception as e:
+            print(f"[ship] DB error marking acknowledged for id={fb_id}: {e}")
+        sent += 1
+
+    back_link = f"/pm?secret={html_lib.escape(secret)}"
+    msg = html_lib.escape(
+        "✅ Plan marked as shipped." +
+        (f" Acknowledgment email sent to {sent} feedback giver(s)." if sent
+         else " No emails to send (no linked feedback with email addresses).")
+    )
+    return f"""<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+  body {{ font-family:-apple-system,sans-serif; max-width:480px; margin:60px auto;
+          padding:0 24px; color:#37352f; background:#FAFAF9; }}
+  .success {{ background:#f0fdf4; border-left:3px solid #34C759; border-radius:0 8px 8px 0;
+              padding:14px 18px; margin-bottom:20px; font-size:0.88rem; line-height:1.7; }}
+  a {{ color:#1d1d1f; font-size:0.85rem; }}
+</style></head><body>
+  <div class="success">{msg}</div>
+  <a href="{back_link}">&larr; Back to PM Dashboard</a>
 </body></html>"""
 
 

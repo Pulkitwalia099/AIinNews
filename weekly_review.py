@@ -104,6 +104,32 @@ def fetch_feedback_stats(days=7):
     }
 
 
+def fetch_product_feedback_items(days=30):
+    """Return recent unacknowledged product_feedback rows with IDs for PM attribution."""
+    try:
+        con = get_db()
+        cur = con.cursor()
+        since = (date.today() - timedelta(days=days)).isoformat()
+        cur.execute("""
+            SELECT id, feedback_type, comment, subscriber_email IS NOT NULL AS has_email,
+                   EXTRACT(DAY FROM NOW() - created_at)::int AS days_ago
+            FROM product_feedback
+            WHERE created_at >= %s AND acknowledged_at IS NULL
+            ORDER BY created_at DESC LIMIT 20
+        """, (since,))
+        rows = cur.fetchall()
+        cur.close()
+        con.close()
+        return [
+            {"id": r[0], "feedback_type": r[1], "comment": r[2] or "",
+             "has_email": r[3], "days_ago": r[4]}
+            for r in rows
+        ]
+    except Exception as e:
+        print(f"  [product_feedback] Error: {e}")
+        return []
+
+
 def fetch_email_stats(days=7):
     """Open/click counts and most-clicked URLs."""
     con = get_db()
@@ -244,6 +270,7 @@ def build_pm_prompt(stats_bundle):
     pw = stats_bundle["prev_week"]
     shipped = stats_bundle["shipped_plans"]
     report_date = stats_bundle["report_date"]
+    product_fb_items = stats_bundle.get("product_feedback", [])
 
     # Trend helpers
     def trend(now, prev):
@@ -276,6 +303,16 @@ def build_pm_prompt(stats_bundle):
         for cat, cnt in fb["category_counts"].items():
             cat_ctx += f"  {cat}: {cnt}\n"
 
+    # Product feedback items (form submissions with IDs for attribution)
+    product_fb_ctx = "\nPRODUCT FEEDBACK (form submissions, unaddressed — include relevant IDs in feedback_ids):\n"
+    if product_fb_items:
+        for item in product_fb_items:
+            email_note = "has email" if item["has_email"] else "no email"
+            comment_snippet = f'"{item["comment"][:120]}"' if item["comment"] else "(no comment)"
+            product_fb_ctx += f'  [id={item["id"]}] {item["feedback_type"]} | {comment_snippet} | {email_note} | {item["days_ago"]}d ago\n'
+    else:
+        product_fb_ctx += "  (none in the last 30 days)\n"
+
     # Most clicked URLs
     clicked_ctx = ""
     if em["most_clicked_urls"]:
@@ -299,7 +336,7 @@ TOP ARTICLES (most thumbs-up):
 
 BOTTOM ARTICLES (most thumbs-down):
 {json.dumps(fb["bottom_articles"], indent=2)}
-{cat_ctx}{comments_ctx}
+{cat_ctx}{comments_ctx}{product_fb_ctx}
 
 EMAIL ENGAGEMENT:
   Opens: {em["opens"]} ({trend(em["opens"], pw["opens"])})
@@ -352,13 +389,15 @@ Return ONLY valid JSON with this exact structure (no markdown fences, no text be
       "why": "1-2 sentences: what data signal drives this.",
       "what_to_build": "2-3 sentences: concrete enough for a developer to start.",
       "impact_estimate": "Expected measurable outcome.",
+      "feedback_ids": [],
       "approval_token": ""
     }}
   ]
 }}
 
 Produce exactly 3 recommendations ordered by expected impact (highest first).
-Focus on changes achievable in 1-3 days of work."""
+Focus on changes achievable in 1-3 days of work.
+For feedback_ids: include the IDs of any PRODUCT FEEDBACK items (from the section above) that this recommendation directly addresses. Leave as empty array [] if none apply."""
 
 
 def call_ai_pm(prompt):
@@ -738,6 +777,7 @@ def run():
         "subscribers": fetch_subscriber_stats(days=7),
         "prev_week": fetch_prev_week_stats(),
         "shipped_plans": fetch_shipped_plans(days=7),
+        "product_feedback": fetch_product_feedback_items(days=30),
     }
     fb = stats_bundle["feedback"]
     em = stats_bundle["email"]

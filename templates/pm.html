@@ -114,6 +114,30 @@
       font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
       letter-spacing: 0.06em; color: #c4680a; margin: 32px 0 12px;
     }
+
+    /* Plans section */
+    .status-shipped { background: #e6f7ed; color: #156038; }
+    .plan-card {
+      background: #fff; border-radius: 10px; padding: 20px 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 12px;
+      border-left: 4px solid #34C759;
+    }
+    .plan-card.shipped { border-left-color: #e0e0e0; opacity: 0.7; }
+    .plan-card h4 { font-size: 0.94rem; font-weight: 600; color: #1d1d1f; margin-bottom: 4px; }
+    .plan-meta { font-size: 0.78rem; color: #9b9a97; margin-bottom: 14px; }
+    .shipped-note { font-size: 0.82rem; color: #6b6b6b; margin-top: 6px; font-style: italic; }
+    .ship-textarea {
+      width: 100%; font-size: 0.84rem; font-family: inherit;
+      border: 1px solid #ddd; border-radius: 6px; padding: 8px 12px;
+      resize: vertical; min-height: 52px; margin-bottom: 10px; color: #37352f;
+    }
+    .ship-textarea:focus { outline: none; border-color: #34C759; }
+    .btn-ship {
+      background: #156038; color: #fff; border: none; padding: 9px 20px;
+      border-radius: 8px; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; font-family: inherit; transition: background 0.15s;
+    }
+    .btn-ship:hover { background: #0e4227; }
   </style>
 </head>
 <body>
@@ -193,6 +217,37 @@
     <p style="font-size:0.88rem; color:#9b9a97; font-style:italic;">
       No recommendations in this report yet.
     </p>
+    {% endif %}
+
+    <!-- Implementation Plans -->
+    {% if plans %}
+    <div style="margin-top: 48px;">
+      <span class="section-label">Implementation Plans</span>
+
+      {% for plan in plans %}
+      <div class="plan-card {{ 'shipped' if plan.status == 'shipped' else '' }}">
+        <h4>{{ plan.title }}</h4>
+        <p class="plan-meta">
+          {{ plan.plan_date }}
+          <span class="status-badge status-{{ plan.status }}" style="margin-left:8px;">{{ plan.status }}</span>
+        </p>
+
+        {% if plan.status == 'shipped' %}
+          {% if plan.shipped_note %}
+          <p class="shipped-note">"{{ plan.shipped_note }}"</p>
+          {% endif %}
+        {% else %}
+          <form action="/pm/ship" method="POST">
+            <input type="hidden" name="plan_id" value="{{ plan.id }}">
+            <input type="hidden" name="secret" value="{{ secret }}">
+            <textarea name="shipped_note" class="ship-textarea"
+              placeholder="What changed? (optional — shown to feedback givers in their thank-you email)"></textarea>
+            <button class="btn-ship" type="submit">Mark as Shipped ✓</button>
+          </form>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
     {% endif %}
 
   </div>

@@ -1,5 +1,6 @@
 import os
 import json
+import time
 import psycopg2
 import resend
 from datetime import date
@@ -163,6 +164,7 @@ def send_newsletter(newsletter):
         except Exception as e:
             print(f"  [send] Failed to send to {email}: {e}")
             failed += 1
+        time.sleep(0.6)  # stay under 2 req/sec rate limit
 
     print(f"Email sent to {sent}/{len(recipients)} subscriber(s)" + (f" ({failed} failed)" if failed else ""))
 

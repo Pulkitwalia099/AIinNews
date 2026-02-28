@@ -147,6 +147,12 @@
           {{ lens }}
         </div>
         {% endif %}
+
+        <div class="article-feedback">
+          <span class="feedback-label">Was this useful?</span>
+          <a href="/feedback?date={{ newsletter.date }}&url={{ article.url | urlencode }}&rating=up" class="feedback-btn up" title="Yes">👍</a>
+          <a href="/feedback?date={{ newsletter.date }}&url={{ article.url | urlencode }}&rating=down" class="feedback-btn down" title="No">👎</a>
+        </div>
       </div>
       {% endfor %}
     </div>

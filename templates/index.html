@@ -146,15 +146,18 @@
     </div>
   </details>
   {% else %}
-  <div class="section-empty">
-    <div class="section-summary">
+  <details class="section-details {{ section_class }}">
+    <summary class="section-summary">
       <div class="section-summary-inner">
         <span class="section-label {{ section_class }}">{{ section_name }}</span>
         <span class="section-desc">{{ section_desc }}</span>
       </div>
+      <span class="section-count">0</span>
+    </summary>
+    <div class="section-articles">
+      <p class="section-empty-msg">No {{ section_name.replace(' Layer', '').lower() }}-level stories made the cut today. We only surface what's worth your time.</p>
     </div>
-    <p class="section-empty-msg">Nothing noteworthy across our sources today. We only include stories worth your time.</p>
-  </div>
+  </details>
   {% endif %}
 {% endfor %}
 

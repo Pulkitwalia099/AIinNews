@@ -84,16 +84,68 @@
     font-family: inherit;
     line-height: 1;
   }
-  /* --- Product feedback card --- */
-  .product-feedback-card {
-    margin: 28px 0;
-    padding: 20px 22px;
-    background: #f4f4f2;
-    border-radius: 10px;
-    text-align: center;
+  /* --- Feedback Widget (floating side popup) --- */
+  .pfb-widget {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+    font-family: inherit;
   }
+  .pfb-widget-toggle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #7b78e8;
+    border: none;
+    cursor: pointer;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+    transition: transform 0.15s, background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pfb-widget-toggle:hover { background: #6461d4; transform: scale(1.07); }
+  .pfb-widget-panel {
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    width: 230px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.13);
+    padding: 18px 16px 16px;
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    transform-origin: bottom right;
+  }
+  .pfb-widget-panel.open {
+    display: flex;
+    animation: pfbSlideIn 0.18s ease;
+  }
+  @keyframes pfbSlideIn {
+    from { opacity: 0; transform: scale(0.9) translateY(8px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .pfb-widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .pfb-widget-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #aaa;
+    padding: 0;
+    line-height: 1;
+  }
+  .pfb-widget-close:hover { color: #333; }
   .pfb-heading { font-size: 0.9rem; font-weight: 600; color: #1d1d1f; margin-bottom: 5px; }
-  .pfb-sub { font-size: 0.8rem; color: #6b6b6b; margin-bottom: 14px; }
+  .pfb-sub { font-size: 0.8rem; color: #6b6b6b; margin-bottom: 2px; font-weight: 600; }
   .pfb-btns { display: flex; gap: 7px; justify-content: center; flex-wrap: wrap; }
   .pfb-btn {
     display: inline-block; background: #fff; border: 1px solid #e0e0e0;
@@ -280,18 +332,30 @@
   <button class="subscribe-trigger" onclick="openModal()">Subscribe — it's free</button>
 </div>
 
-<div class="product-feedback-card">
-  <p class="pfb-heading">Help us improve AI in News</p>
-  <p class="pfb-sub"><strong>Got a suggestion, bug report, or question?</strong></p>
-  <div class="pfb-btns">
-    <a href="/feedback/product?type=bug" class="pfb-btn">🐛 Bug</a>
-    <a href="/feedback/product?type=feature" class="pfb-btn">✨ Feature</a>
-    <a href="/feedback/product?type=general" class="pfb-btn">💬 Feedback</a>
-    <a href="/feedback/product?type=question" class="pfb-btn">❓ Question</a>
+
+<!-- Feedback Widget -->
+<div class="pfb-widget">
+  <button class="pfb-widget-toggle" onclick="toggleFeedbackWidget()" title="Give feedback">💬</button>
+  <div class="pfb-widget-panel" id="pfbPanel">
+    <div class="pfb-widget-header">
+      <p class="pfb-heading">Help us improve AI in News</p>
+      <button class="pfb-widget-close" onclick="toggleFeedbackWidget()">✕</button>
+    </div>
+    <p class="pfb-sub"><strong>Got a suggestion, bug report, or question?</strong></p>
+    <div class="pfb-btns">
+      <a href="/feedback/product?type=bug" class="pfb-btn">🐛 Bug</a>
+      <a href="/feedback/product?type=feature" class="pfb-btn">✨ Feature</a>
+      <a href="/feedback/product?type=general" class="pfb-btn">💬 Feedback</a>
+      <a href="/feedback/product?type=question" class="pfb-btn">❓ Question</a>
+    </div>
   </div>
 </div>
 
 <script>
+function toggleFeedbackWidget() {
+  document.getElementById('pfbPanel').classList.toggle('open');
+}
+
 function handleFeedback(btn, rating) {
   var container = btn.closest('.article-feedback');
   if (container.dataset.voted) return;

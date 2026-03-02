@@ -1,0 +1,135 @@
+{
+  "date": "2026-03-02",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Anthropic's Claude rises to No. 1 in the App Store following Pentagon dispute",
+      "url": "https://techcrunch.com/2026/03/01/anthropics-claude-rises-to-no-2-in-the-app-store-following-pentagon-dispute/",
+      "source": "TechCrunch AI",
+      "hn_score": 43,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Opportunity",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Claude hit #1 in the App Store after Anthropic's public friction with the Pentagon generated significant press attention. Controversy-driven installs signal that brand narrative \u2014 not just product quality \u2014 is now a meaningful user acquisition vector for AI consumer apps. Anthropic's positioning as a safety-conscious alternative to OpenAI is resonating with a broad consumer base.",
+      "builders_lens": "If you're building on top of Claude's API, rising consumer brand awareness means less education overhead when pitching Claude-powered products to end users. Watch whether this translates to sustained API demand or just a news cycle spike before committing deeper integration. For consumer AI app builders, this is a reminder that regulatory and political positioning can function as free top-of-funnel.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "ChatGPT reaches 900M weekly active users",
+      "url": "https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users/",
+      "source": "TechCrunch AI",
+      "hn_score": 4,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI disclosed 900M weekly active users alongside a $110B funding raise at a $300B+ valuation, cementing ChatGPT as the largest consumer AI platform in history. At this scale, OpenAI is no longer just a model provider \u2014 it's a distribution layer that rivals Google Search in reach. This changes the calculus for any application-layer startup competing for attention on AI-native surfaces.",
+      "builders_lens": "At 900M WAU, OpenAI's consumer surface is becoming a platform risk for startups building adjacent AI tools \u2014 if OpenAI ships a native feature, your TAM can disappear overnight. Conversely, this scale validates that AI-native workflows have crossed the mainstream chasm, making now the right time to go deep on verticalized use cases OpenAI won't prioritize. The $110B raise signals OpenAI will be spending aggressively on compute and product \u2014 factor that into any competitive roadmap.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "AI is rewiring how the world's best Go players think",
+      "url": "https://www.technologyreview.com/2026/02/27/1133624/ai-is-rewiring-how-the-worlds-best-go-players-think/",
+      "source": "MIT Technology Review",
+      "hn_score": 5,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Top professional Go players are fundamentally restructuring their cognitive and training frameworks around AI-generated move analysis, with younger players raised on AI intuition now outperforming those who learned pre-AI. This is a leading indicator for how AI will reshape expert knowledge work more broadly \u2014 the skill premium shifts from domain mastery to AI-augmented judgment. Go is the clearest long-run case study we have for human-AI co-evolution in a high-stakes cognitive domain.",
+      "builders_lens": "This pattern \u2014 AI reshaping how domain experts think, not just what they produce \u2014 is the real unlock for vertical AI products. Builders targeting professional knowledge workers (law, medicine, engineering) should study the Go case: the winning product isn't the one that replaces the expert, it's the one that becomes the training substrate for the next generation. Consider how your product's usage patterns will reshape user cognition over 2-3 years, not just task completion rates today.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Google quantum-proofs HTTPS by squeezing 15kB of data into 700-byte space",
+      "url": "https://arstechnica.com/security/2026/02/google-is-using-clever-math-to-quantum-proof-https-certificates/",
+      "source": "Ars Technica",
+      "hn_score": 2,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Google is deploying Merkle Tree Certificates in Chrome to compress post-quantum cryptographic certificate data from ~15kB to ~700 bytes, making quantum-resistant HTTPS practical at web scale. This is infrastructure-level future-proofing that will eventually be mandatory for all TLS-dependent services. The compression approach solves the critical performance bottleneck that had made post-quantum cert migration impractical.",
+      "builders_lens": "If you operate any TLS-dependent infrastructure \u2014 which is everyone \u2014 start auditing your certificate pipeline and TLS library versions now; post-quantum migration windows will compress once Chrome enforces this broadly. For security-adjacent startups (PKI, certificate management, zero-trust networking), this creates a near-term product opportunity as enterprises scramble to audit and update their cryptographic posture. The 95% size reduction via Merkle Trees is a meaningful latency win that may accelerate enterprise adoption faster than the quantum threat alone would.",
+      "impact_level": "watch",
+      "technical_detail": "Merkle Tree Certificate architecture compresses post-quantum certificate payloads from ~15kB (standard ML-DSA/Dilithium signatures) to ~700 bytes by batching certificates into a transparency log and serving only inclusion proofs, with native support already shipping in Chrome."
+    },
+    {
+      "title": "An AI agent coding skeptic tries AI agent coding, in excessive detail",
+      "url": "https://simonwillison.net/2026/Feb/27/ai-agent-coding-in-excessive-detail/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 67,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Enabler",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Max Woolf, a self-described coding agent skeptic, documents a progression from simple agentic scripts to genuinely complex multi-step engineering projects, concluding that coding agents crossed a capability threshold around November 2025. The 'skeptic converts' genre of post is itself a signal \u2014 it means the technology has cleared the bar for practitioners who demand rigor, not just hype. This is one of the most technically honest accounts of where coding agents actually stand.",
+      "builders_lens": "If your team hasn't run a structured 30-day coding agent experiment with Claude Code, Cursor, or similar, you're now behind \u2014 the conversion of vocal skeptics is the leading indicator of workflow-level adoption. The practical takeaway from Woolf's piece: start with well-scoped, output-verifiable tasks (data pipelines, scrapers, API wrappers) and let complexity grow as you build trust in the agent loop. Teams that internalize agentic coding workflows now will have a compounding productivity advantage over the next 12 months.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "Hoard things you know how to do",
+      "url": "https://simonwillison.net/guides/agentic-engineering-patterns/hoard-things-you-know-how-to-do/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 452,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Simon Willison articulates a core agentic engineering pattern: systematically documenting and templating everything you know how to do so coding agents can execute it reliably. The insight is that domain knowledge \u2014 knowing what's possible \u2014 remains the scarce human input in an agentic loop, and externalizing it into agent-readable artifacts multiplies its leverage. This is the highest-engagement piece in today's set (HN: 452), signaling it struck a deep nerve with practitioners.",
+      "builders_lens": "The immediate action: build a personal or team 'recipe book' of solved problems as structured markdown or YAML that you can drop into agent context \u2014 think of it as an institutional memory layer that makes every agent session start from a higher baseline. For tooling startups, the gap Willison describes \u2014 between what an expert knows and what an agent can execute \u2014 is a product surface: structured knowledge capture and retrieval for agentic workflows is an unsolved problem at the team and enterprise level. This pattern also implies that senior engineers who document well will see disproportionate leverage from agents vs. those who keep knowledge tacit.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "Our agreement with the Department of War",
+      "url": "https://openai.com/index/our-agreement-with-the-department-of-war",
+      "source": "OpenAI Blog",
+      "hn_score": 641,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "New Market",
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI has signed a formal contract with the U.S. Department of Defense (rebranded 'Department of War'), detailing safety red lines, legal protections, and deployment parameters for AI in classified environments. This is the most significant government AI contract disclosed publicly to date, and it normalizes frontier model deployment in national security contexts. The HN score of 641 reflects how consequential \u2014 and contested \u2014 this moment is for the AI safety and policy communities.",
+      "builders_lens": "This contract creates a template and a precedent: expect Anthropic, Google DeepMind, and defense-adjacent startups to face immediate pressure to either match or publicly differentiate from OpenAI's terms. For founders building in govtech, defense-tech, or AI safety tooling, this is a forcing function \u2014 the 'classified environment deployment' problem (air-gapped inference, audit trails, red-line enforcement) is now a real procurement category with a major anchor customer. Study the disclosed safety red lines carefully; they'll become the baseline compliance checklist for any government AI contract for the next 3-5 years.",
+      "impact_level": "act",
+      "technical_detail": "Contract specifies deployment of AI systems in classified environments, implying air-gapped or FedRAMP High/IL5+ equivalent infrastructure with model-level usage restriction enforcement \u2014 architectural details not yet public but will drive significant cleared-cloud infrastructure demand."
+    },
+    {
+      "title": "Scaling AI for everyone",
+      "url": "https://openai.com/index/scaling-ai-for-everyone",
+      "source": "OpenAI Blog",
+      "hn_score": 16,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Cost Driver",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI announced $110B in new funding at a $730B pre-money valuation, with anchor investments from SoftBank ($30B), NVIDIA ($30B), and Amazon ($50B). The NVIDIA and Amazon participation is strategically significant \u2014 it ties compute supply chain and cloud distribution directly into OpenAI's capital structure. At this valuation, OpenAI is pricing in a platform-level future, not just a model API business.",
+      "builders_lens": "Amazon's $50B stake makes AWS the de facto preferred cloud for OpenAI workloads \u2014 if you're running OpenAI API calls at scale, watch for AWS-specific pricing incentives or latency advantages that could affect your infrastructure decisions. NVIDIA's $30B position creates a structural alignment between GPU supply allocation and OpenAI's roadmap, which could further tighten compute access for non-OpenAI-aligned startups during the next capacity crunch. For founders fundraising in AI, this round resets valuation anchors upward but also signals that LPs are fully deployed into the top of the stack \u2014 differentiated vertical plays will attract capital while undifferentiated 'wrapper' businesses face a much harder environment.",
+      "impact_level": "watch",
+      "technical_detail": null
+    }
+  ]
+}

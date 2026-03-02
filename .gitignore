@@ -5,3 +5,4 @@ debug.txt
 subscribers.db
 .env
 .vercel
+.playwright-mcp

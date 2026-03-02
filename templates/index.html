@@ -84,7 +84,9 @@
     font-family: inherit;
     line-height: 1;
   }
-  /* --- Feedback Widget (floating side popup) --- */
+  /* --- Feedback Widget --- */
+
+  /* Desktop: always-expanded fixed card, bottom-right */
   .pfb-widget {
     position: fixed;
     bottom: 24px;
@@ -92,58 +94,23 @@
     z-index: 1000;
     font-family: inherit;
   }
-  .pfb-widget-toggle {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: #7b78e8;
-    border: none;
-    cursor: pointer;
-    font-size: 1.3rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.18);
-    transition: transform 0.15s, background 0.15s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .pfb-widget-toggle:hover { background: #6461d4; transform: scale(1.07); }
+  .pfb-widget-toggle { display: none; } /* no toggle button on desktop */
   .pfb-widget-panel {
-    position: absolute;
-    bottom: 60px;
-    right: 0;
-    width: 230px;
+    width: 220px;
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.13);
     padding: 18px 16px 16px;
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 12px;
-    transform-origin: bottom right;
-  }
-  .pfb-widget-panel.open {
-    display: flex;
-    animation: pfbSlideIn 0.18s ease;
-  }
-  @keyframes pfbSlideIn {
-    from { opacity: 0; transform: scale(0.9) translateY(8px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
   }
   .pfb-widget-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
   }
-  .pfb-widget-close {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 0.85rem;
-    color: #aaa;
-    padding: 0;
-    line-height: 1;
-  }
-  .pfb-widget-close:hover { color: #333; }
+  .pfb-widget-close { display: none; } /* no close on desktop */
   .pfb-heading { font-size: 0.9rem; font-weight: 600; color: #1d1d1f; margin-bottom: 5px; }
   .pfb-sub { font-size: 0.8rem; color: #6b6b6b; margin-bottom: 2px; font-weight: 600; }
   .pfb-btns { display: flex; gap: 7px; justify-content: center; flex-wrap: wrap; }
@@ -153,6 +120,61 @@
     border-radius: 20px; font-size: 0.76rem; transition: border-color 0.12s, background 0.12s;
   }
   .pfb-btn:hover { border-color: #7b78e8; background: #f0effe; }
+
+  /* Mobile: hide widget entirely, show timed modal instead */
+  @media (max-width: 767px) {
+    .pfb-widget { display: none; }
+
+    /* Overlay backdrop */
+    .pfb-mobile-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 1100;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .pfb-mobile-overlay.show {
+      display: flex;
+      animation: pfbFadeIn 0.2s ease;
+    }
+    @keyframes pfbFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* Bottom sheet modal */
+    .pfb-mobile-sheet {
+      background: #fff;
+      width: 100%;
+      border-radius: 16px 16px 0 0;
+      padding: 24px 20px 32px;
+      text-align: center;
+      animation: pfbSlideUp 0.25s ease;
+    }
+    @keyframes pfbSlideUp {
+      from { transform: translateY(60px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .pfb-mobile-sheet .pfb-heading { font-size: 1rem; margin-bottom: 6px; }
+    .pfb-mobile-sheet .pfb-sub { font-size: 0.85rem; margin-bottom: 16px; }
+    .pfb-mobile-sheet .pfb-btns { justify-content: center; gap: 9px; margin-bottom: 18px; }
+    .pfb-mobile-sheet .pfb-btn { padding: 8px 16px; font-size: 0.82rem; }
+
+    .pfb-mobile-skip {
+      display: block;
+      width: 100%;
+      background: none;
+      border: none;
+      color: #999;
+      font-size: 0.85rem;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 4px;
+    }
+    .pfb-mobile-skip:hover { color: #333; }
+  }
 </style>
 <div class="newsletter-intro">
   <p class="intro-tagline">What's actually happening in AI — explained for people who build things.</p>
@@ -333,13 +355,11 @@
 </div>
 
 
-<!-- Feedback Widget -->
+<!-- Feedback Widget (desktop: always expanded) -->
 <div class="pfb-widget">
-  <button class="pfb-widget-toggle" onclick="toggleFeedbackWidget()" title="Give feedback">💬</button>
-  <div class="pfb-widget-panel" id="pfbPanel">
+  <div class="pfb-widget-panel">
     <div class="pfb-widget-header">
       <p class="pfb-heading">Help us improve AI in News</p>
-      <button class="pfb-widget-close" onclick="toggleFeedbackWidget()">✕</button>
     </div>
     <p class="pfb-sub"><strong>Got a suggestion, bug report, or question?</strong></p>
     <div class="pfb-btns">
@@ -351,10 +371,41 @@
   </div>
 </div>
 
+<!-- Feedback Modal (mobile: appears after 5 min) -->
+<div class="pfb-mobile-overlay" id="pfbMobileOverlay">
+  <div class="pfb-mobile-sheet">
+    <p class="pfb-heading">Help us improve AI in News</p>
+    <p class="pfb-sub"><strong>Got a suggestion, bug report, or question?</strong></p>
+    <div class="pfb-btns">
+      <a href="/feedback/product?type=bug" class="pfb-btn">🐛 Bug</a>
+      <a href="/feedback/product?type=feature" class="pfb-btn">✨ Feature</a>
+      <a href="/feedback/product?type=general" class="pfb-btn">💬 Feedback</a>
+      <a href="/feedback/product?type=question" class="pfb-btn">❓ Question</a>
+    </div>
+    <button class="pfb-mobile-skip" onclick="closeMobileFeedback()">No thanks, skip</button>
+  </div>
+</div>
+
 <script>
-function toggleFeedbackWidget() {
-  document.getElementById('pfbPanel').classList.toggle('open');
+// Mobile feedback modal — show after 5 minutes on mobile only
+(function() {
+  if (window.innerWidth < 768) {
+    setTimeout(function() {
+      var overlay = document.getElementById('pfbMobileOverlay');
+      if (overlay) overlay.classList.add('show');
+    }, 5 * 60 * 1000);
+  }
+})();
+
+function closeMobileFeedback() {
+  var overlay = document.getElementById('pfbMobileOverlay');
+  if (overlay) overlay.classList.remove('show');
 }
+
+// Close if user taps the backdrop (outside the sheet)
+document.getElementById('pfbMobileOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeMobileFeedback();
+});
 
 function handleFeedback(btn, rating) {
   var container = btn.closest('.article-feedback');

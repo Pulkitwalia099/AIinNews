@@ -52,33 +52,111 @@ Every morning at 8am EST, the pipeline:
 
 ---
 
-## Feedback Loop
+## Feedback Loops
 
-Reader signals feed back into tomorrow's curation — the pipeline learns what builders care about.
+There are two separate feedback loops — one that improves curation daily, and one that autonomously improves the product weekly.
+
+### Loop 1 — Daily Curation Feedback
+
+Reader votes (👍/👎) feed back into tomorrow's article selection.
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│                      FEEDBACK LOOP                           │
+│                   DAILY CURATION LOOP                        │
 │                                                              │
-│   Reader receives email                                      │
-│       │                                                      │
-│       ├── Clicks article → tracked in email_events table     │
-│       ├── Thumbs 👍/👎   → stored in article_feedback table  │
-│       └── Product feedback (bug/feature/question)            │
-│               → stored in product_feedback table             │
+│   Reader clicks 👍 / 👎 on an article                        │
 │       │                                                      │
 │       ▼                                                      │
-│   Next day's pipeline reads last 14 days of feedback         │
+│   Stored in article_feedback table                           │
 │       │                                                      │
 │       ▼                                                      │
-│   Claude Haiku selection prompt is enriched with:            │
-│       • Which articles readers liked / disliked              │
-│       • What topics got engagement                           │
+│   Next day's pipeline reads last 14 days of votes            │
 │       │                                                      │
 │       ▼                                                      │
-│   Better curation tomorrow                                   │
+│   Claude Haiku selection prompt enriched with:               │
+│       • Which topics/articles scored highest                 │
+│       • What readers didn't find useful                      │
+│       │                                                      │
+│       ▼                                                      │
+│   Better article selection tomorrow                          │
 └──────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+### Loop 2 — Weekly Self-Improvement Loop
+
+Every week, reader product feedback (bug reports, feature requests, questions) flows through a fully autonomous loop — from raw feedback all the way to a shipped improvement and a 7-day impact check. A human approves at one point, everything else is AI-driven.
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│              WEEKLY SELF-IMPROVEMENT LOOP                           │
+│                                                                     │
+│  COLLECT                                                            │
+│  ─────────────────────────────────────────────────────────────────  │
+│  Readers submit product feedback on the site                        │
+│  (Bug / Feature / Feedback / Question)                              │
+│      │                                                              │
+│      ▼                                                              │
+│  Stored in product_feedback table                                   │
+│      │                                                              │
+│                                                                     │
+│  ANALYSE  (every Tuesday)                                           │
+│  ─────────────────────────────────────────────────────────────────  │
+│      ▼                                                              │
+│  AI PM (Claude Sonnet) reads:                                       │
+│      • All recent product feedback                                  │
+│      • Last 7 days of article votes + email engagement              │
+│      Writes a structured report with 3 prioritised                  │
+│      recommendations (what to build, why, estimated impact)         │
+│      │                                                              │
+│      ▼                                                              │
+│  Report saved + reminder email sent to admin                        │
+│      │                                                              │
+│                                                                     │
+│  APPROVE  (human in the loop)                                       │
+│  ─────────────────────────────────────────────────────────────────  │
+│      ▼                                                              │
+│  Admin reads report on PM dashboard                                 │
+│  Picks one recommendation, adds optional refinement notes           │
+│  Clicks "Approve & Generate Plan"                                   │
+│      │                                                              │
+│                                                                     │
+│  BUILD                                                              │
+│  ─────────────────────────────────────────────────────────────────  │
+│      ▼                                                              │
+│  AI Engineer/Architect (Claude Sonnet) generates a                  │
+│  step-by-step implementation plan and emails it to admin            │
+│      │                                                              │
+│      ▼                                                              │
+│  Admin builds the feature / fix                                     │
+│  Clicks "Mark as Shipped" on the PM dashboard                       │
+│      │                                                              │
+│                                                                     │
+│  CLOSE THE LOOP                                                     │
+│  ─────────────────────────────────────────────────────────────────  │
+│      ▼                                                              │
+│  For every feedback giver who left an email:                        │
+│  Claude Sonnet writes a personalised thank-you email                │
+│      • Quotes their original feedback                               │
+│      • Explains what was built because of it                        │
+│      • Sent via Resend                                              │
+│      │                                                              │
+│                                                                     │
+│  MEASURE  (7 days after shipping)                                   │
+│  ─────────────────────────────────────────────────────────────────  │
+│      ▼                                                              │
+│  AI PM reads engagement data from the week after the ship           │
+│  Writes an impact report:                                           │
+│      • Did ratings improve?                                         │
+│      • Did engagement change?                                       │
+│      • Was the original hypothesis correct?                         │
+│  Report emailed to admin                                            │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+The result: every piece of reader feedback has a traceable path from submission → analysis → decision → build → thank-you → measured outcome. No feedback disappears into a void.
 
 ---
 

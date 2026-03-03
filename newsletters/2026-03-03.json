@@ -1,0 +1,135 @@
+{
+  "date": "2026-03-03",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Cursor has reportedly surpassed $2B in annualized revenue",
+      "url": "https://techcrunch.com/2026/03/02/cursor-has-reportedly-surpassed-2b-in-annualized-revenue/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Opportunity",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Cursor crossed $2B ARR with its run rate doubling in just three months \u2014 one of the fastest revenue ramps in enterprise SaaS history. This validates AI-native developer tooling as a category, not a feature. The velocity suggests deep workflow integration and strong net revenue retention among engineering teams.",
+      "builders_lens": "The $0\u2192$2B ARR trajectory in ~4 years is the benchmark to study for any AI-native productivity tool. The white space is vertical-specific coding assistants (biotech, embedded systems, legal code) where Cursor's generalist approach leaves room for specialists with tighter context and compliance. If you're building dev tools, the question is no longer adoption \u2014 it's which niche Cursor won't bother to own.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "ChatGPT uninstalls surged by 295% after DoD deal",
+      "url": "https://techcrunch.com/2026/03/02/chatgpt-uninstalls-surged-by-295-after-dod-deal/",
+      "source": "TechCrunch AI",
+      "hn_score": 18,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "ChatGPT saw a 295% spike in uninstalls following news of OpenAI's Department of Defense contract, with Claude directly capturing displaced downloads to reach #1 in the App Store. This is a measurable political-brand bleed event \u2014 consumer AI product loyalty is shallower than assumed. Anthropic's 'responsible AI' positioning is converting into real user acquisition with no paid spend required.",
+      "builders_lens": "Brand trust is now a differentiated moat in consumer AI \u2014 not just a PR nicety. If you're building on top of OpenAI APIs or distributing an OpenAI-powered product, this is a signal to audit your exposure to OpenAI's brand risk and consider multi-model routing. Conversely, products that lead with safety and transparency narratives have a genuine acquisition angle right now.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Anthropic's Claude rises to No. 1 in the App Store following Pentagon dispute",
+      "url": "https://techcrunch.com/2026/03/01/anthropics-claude-rises-to-no-2-in-the-app-store-following-pentagon-dispute/",
+      "source": "TechCrunch AI",
+      "hn_score": 43,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Claude reached #1 in the App Store as consumers actively migrated away from ChatGPT in response to OpenAI's Pentagon deal \u2014 an organic acquisition surge Anthropic didn't pay for. This is the first major evidence that geopolitical/ethical positioning can produce measurable consumer switching behavior in AI. Anthropic is converting its constitutional AI narrative into market share.",
+      "builders_lens": "This is a signal that the 'safe AI' narrative is no longer just enterprise sales positioning \u2014 it drives consumer behavior too. Startups building consumer-facing AI products should be explicit about data use, military contracts, and ethics policy; it's now a conversion factor. Consider whether your product's model provider association is a liability or an asset in your specific user demographic.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "The billion-dollar infrastructure deals powering the AI boom",
+      "url": "https://techcrunch.com/2026/02/28/billion-dollar-infrastructure-deals-ai-boom-data-centers-openai-oracle-nvidia-microsoft-google-meta/",
+      "source": "TechCrunch AI",
+      "hn_score": 1,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Meta, Oracle, Microsoft, Google, and OpenAI are all committed to multi-billion-dollar AI infrastructure buildouts \u2014 data centers, power, and custom silicon at a scale that will reshape compute availability and pricing over the next 2-3 years. The concentration of capital in infrastructure creates both a supply tailwind (more compute available) and a moat risk (hyperscalers can cross-subsidize AI at a loss). This is the physical layer that all AI product economics rest on.",
+      "builders_lens": "The infrastructure arms race is a forcing function for startups to lock in compute contracts early \u2014 spot pricing volatility is a real business risk. Watch for second-order opportunities: power infrastructure, cooling, networking, and the tooling to manage heterogeneous GPU fleets are all unsolved at scale. If your product's unit economics depend on inference costs falling, model this infrastructure buildout timeline into your 2026-2027 projections.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "An AI agent coding skeptic tries AI agent coding, in excessive detail",
+      "url": "https://simonwillison.net/2026/Feb/27/ai-agent-coding-in-excessive-detail/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 68,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "A well-documented account of a skeptic progressively deploying coding agents on real projects \u2014 from simple scrapers to ambitious multi-file codebases \u2014 and finding them genuinely capable as of late 2025. This joins a growing corpus of 'agents went production-ready in November' first-person accounts that are shifting practitioner consensus. The detail level makes it a reliable signal, not hype.",
+      "builders_lens": "If you're still treating coding agents as a productivity curiosity rather than a core workflow primitive, you're falling behind a cohort that's now shipping 10x faster. The actionable move is to run a structured 2-week internal experiment: assign a real, scoped project to an agent pipeline and measure output quality versus time-to-complete. The capability curve has likely crossed your threshold since you last checked.",
+      "impact_level": "act",
+      "technical_detail": "The post documents agent performance on multi-file Python projects including YouTube metadata scraping and more complex codebases, using unspecified frontier models in agentic loops with tool use \u2014 no benchmark numbers cited, but qualitative complexity matches mid-tier engineering tasks."
+    },
+    {
+      "title": "Our agreement with the Department of War",
+      "url": "https://openai.com/index/our-agreement-with-the-department-of-war",
+      "source": "OpenAI Blog",
+      "hn_score": 647,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI has formalized a contract with the Department of Defense, publishing explicit safety red lines, legal frameworks, and deployment protocols for AI in classified environments \u2014 a significant escalation in frontier AI's role in national security. The 647 HN score reflects deep industry concern: this is OpenAI crossing a line many in the AI safety community considered a bright one. The deal normalizes defense deployment of frontier models and will pressure competitors to take a position.",
+      "builders_lens": "This is a bifurcation moment for the AI ecosystem: defense/govtech AI is now a validated, hyperscale market with OpenAI as the reference customer. If you're building in compliance, security, or AI governance tooling, DoD-grade requirements are the new high-water mark and a credentialing opportunity. If you're building consumer or open-source AI products, your stance on military AI is now a product decision \u2014 the ChatGPT uninstall data makes this commercially consequential, not just ethical.",
+      "impact_level": "act",
+      "technical_detail": "The agreement details deployment of AI systems in classified environments with defined safety red lines \u2014 implies air-gapped or sovereign deployment infrastructure, likely fine-tuned model variants with restricted capability sets, though specific model architectures and classification levels are not disclosed."
+    },
+    {
+      "title": "Joint Statement from OpenAI and Microsoft",
+      "url": "https://openai.com/index/continuing-microsoft-partnership",
+      "source": "OpenAI Blog",
+      "hn_score": 66,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI and Microsoft issued a joint statement reaffirming their partnership across research, engineering, and product \u2014 likely a response to market speculation about tension given OpenAI's new funding round and independent compute ambitions. The timing alongside the $730B valuation announcement suggests this is as much about calming enterprise buyers as it is about technical alignment. The partnership structure underpins Azure AI's entire go-to-market.",
+      "builders_lens": "If your stack runs on Azure OpenAI Service, this statement is reassurance that the API surface isn't going anywhere near-term \u2014 but the $110B funding round signals OpenAI is actively building infrastructure independence from Microsoft, which introduces long-term pricing and availability risk. Now is the time to abstract your model provider layer if you haven't already; multi-model routing via a middleware layer (LiteLLM, etc.) is cheap insurance against a future renegotiation.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Scaling AI for everyone",
+      "url": "https://openai.com/index/scaling-ai-for-everyone",
+      "source": "OpenAI Blog",
+      "hn_score": 16,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Cost Driver",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI announced $110B in new investment at a $730B pre-money valuation, led by SoftBank ($30B), NVIDIA ($30B), and Amazon ($50B). NVIDIA and Amazon's participation is strategically significant \u2014 NVIDIA is betting on OpenAI as the demand anchor for its silicon roadmap, and Amazon is hedging its Anthropic position. At $730B, OpenAI is pricing in AGI-level outcomes; this is now the most expensive bet in tech history.",
+      "builders_lens": "The NVIDIA and Amazon co-investment is the most important signal here: it means OpenAI gets preferential GPU allocation and AWS infrastructure terms, creating a structural compute advantage over well-funded competitors. For builders, this accelerates the case for building applications on OpenAI's platform \u2014 but also increases lock-in risk as OpenAI's incentives shift toward its own application layer. The $730B valuation implies aggressive enterprise and consumer expansion; expect OpenAI to move into more application categories directly, increasing surface area for competitive conflict with startups built on their APIs.",
+      "impact_level": "act",
+      "technical_detail": null
+    }
+  ]
+}

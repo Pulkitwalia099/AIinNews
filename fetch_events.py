@@ -170,7 +170,7 @@ def fetch_luma_boston():
         "&pagination_limit=50"
     )
 
-    # Keywords that signal an AI / VC / startup / tech event
+    # Keywords that signal an AI / VC / startup / tech / builder event
     KEYWORDS = re.compile(
         r"\b("
         r"ai|artificial.intelligence|machine.learning|deep.learning|llm|gpt|genai|generative.ai"
@@ -178,6 +178,8 @@ def fetch_luma_boston():
         r"|venture.capital|vc|angel.invest|seed.fund|series.[a-d]"
         r"|tech|technology|software|saas|devops|cloud|data.science|robotics|biotech"
         r"|hackathon|hack.night|build.night|dev|developer|engineering|cto|product"
+        r"|hardware|embedded|xr|vr|ar|web3|blockchain|crypto|dao|decentralized"
+        r"|innovation|research|science|conference|summit|expo|coding"
         r")\b",
         re.IGNORECASE,
     )
@@ -200,12 +202,13 @@ def fetch_luma_boston():
         slug = ev.get("url", "")
         start_at = ev.get("start_at")
 
-        # Build a text blob to match keywords against (name + calendar name + host names)
-        calendar_name = (entry.get("calendar", {}) or {}).get("name", "")
+        # Build a text blob to match keywords against
+        calendar_name = (entry.get("calendar", {}) or {}).get("name", "") or ""
+        calendar_desc = (entry.get("calendar", {}) or {}).get("description_short", "") or ""
         host_names = " ".join(
             (h.get("name") or "" for h in (entry.get("hosts") or [])),
         )
-        search_text = f"{name} {calendar_name} {host_names}"
+        search_text = f"{name} {calendar_name} {calendar_desc} {host_names}"
 
         if not KEYWORDS.search(search_text):
             continue

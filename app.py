@@ -188,9 +188,10 @@ def subscribe():
     is_technical = request.form.get("is_technical", "")
     goals = json.dumps(request.form.getlist("goals"))
 
-    if not email:
+    if not email or "@" not in email or "." not in email.split("@")[-1]:
         return redirect("/?status=error")
 
+    con = None
     try:
         con = get_db()
         cur = con.cursor()
@@ -200,10 +201,15 @@ def subscribe():
         )
         con.commit()
         cur.close()
-        con.close()
         return redirect("/?status=subscribed")
     except psycopg2.IntegrityError:
         return redirect("/?status=exists")
+    except Exception as e:
+        print(f"[subscribe] DB error: {e}")
+        return redirect("/?status=error")
+    finally:
+        if con:
+            con.close()
 
 
 @app.route("/debug-db")
@@ -239,6 +245,7 @@ def feedback():
     if rating not in ("up", "down") or not article_url:
         return "Invalid feedback.", 400
 
+    con = None
     try:
         con = get_db()
         cur = con.cursor()
@@ -249,9 +256,11 @@ def feedback():
         """, (date_str, article_url, rating, subscriber_email or None))
         con.commit()
         cur.close()
-        con.close()
     except Exception as e:
         print(f"[feedback] DB error: {e}")
+    finally:
+        if con:
+            con.close()
 
     safe_url = html_lib.escape(article_url)
     safe_email = html_lib.escape(subscriber_email)
@@ -371,6 +380,7 @@ def feedback_comment():
     liked_aspects = request.form.get("liked_aspects", "").strip()
 
     if article_url:
+        con = None
         try:
             con = get_db()
             cur = con.cursor()
@@ -389,9 +399,11 @@ def feedback_comment():
             ))
             con.commit()
             cur.close()
-            con.close()
         except Exception as e:
             print(f"[feedback_comment] DB error: {e}")
+        finally:
+            if con:
+                con.close()
 
     return """<!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -419,6 +431,7 @@ def feedback_product():
         if feedback_type not in ("bug", "feature", "general", "question"):
             feedback_type = "general"
 
+        con = None
         try:
             con = get_db()
             cur = con.cursor()
@@ -428,9 +441,11 @@ def feedback_product():
             """, (feedback_type, comment[:2000] if comment else None, subscriber_email or None))
             con.commit()
             cur.close()
-            con.close()
         except Exception as e:
             print(f"[feedback_product] DB error: {e}")
+        finally:
+            if con:
+                con.close()
 
         return """<!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -542,15 +557,21 @@ def resend_webhook():
                 newsletter_date = m.group(1)
 
         if event_type in ("email.opened", "email.clicked"):
-            con = get_db()
-            cur = con.cursor()
-            cur.execute("""
-                INSERT INTO email_events (event_type, email_id, subscriber_email, clicked_url, newsletter_date)
-                VALUES (%s, %s, %s, %s, %s)
-            """, (event_type, email_id, subscriber_email, clicked_url, newsletter_date))
-            con.commit()
-            cur.close()
-            con.close()
+            con = None
+            try:
+                con = get_db()
+                cur = con.cursor()
+                cur.execute("""
+                    INSERT INTO email_events (event_type, email_id, subscriber_email, clicked_url, newsletter_date)
+                    VALUES (%s, %s, %s, %s, %s)
+                """, (event_type, email_id, subscriber_email, clicked_url, newsletter_date))
+                con.commit()
+                cur.close()
+            except Exception as e:
+                print(f"[resend-webhook] DB insert error: {e}")
+            finally:
+                if con:
+                    con.close()
     except Exception as e:
         print(f"[resend-webhook] Error: {e}")
 
@@ -610,9 +631,12 @@ def api_generate():
 
 @app.route("/<date>")
 def issue(date):
+    # Validate date format to prevent path traversal and XSS
+    if not re.match(r"^\d{4}-\d{2}-\d{2}$", date):
+        return "Not found.", 404
     newsletter = load_newsletter(date)
     if not newsletter:
-        return f"No newsletter found for {date}.", 404
+        return f"No newsletter found for {html_lib.escape(date)}.", 404
     return render_template("index.html", newsletter=newsletter, status=None, upcoming_events=[])
 
 

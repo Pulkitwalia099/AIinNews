@@ -85,7 +85,11 @@ def fetch_ticketmaster():
 
 
 def fetch_tnt_events():
-    """Scrape upcoming startup events from TNT's MIT & Harvard calendar (tnt.so/calendar)."""
+    """Scrape upcoming startup events from TNT's MIT & Harvard calendar (tnt.so/calendar).
+
+    Parses <a class="bse-event-card"> HTML elements directly — this gives us real
+    external event URLs and all 60+ events (vs. the JSON-LD which only has ~45 and no URLs).
+    """
     TNT_URL = "https://tnt.so/calendar"
     req = urllib.request.Request(TNT_URL, headers={"User-Agent": "AIinNews/1.0"})
 
@@ -96,91 +100,66 @@ def fetch_tnt_events():
         print(f"TNT calendar fetch failed: {e}")
         return []
 
-    # Extract JSON-LD structured data from <script type="application/ld+json"> tags
-    ld_blocks = re.findall(
-        r'<script[^>]*type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
+    # Each event is rendered as <a class="bse-event-card ..."> in the HTML
+    card_blocks = re.findall(
+        r'(<a\s[^>]*class="[^"]*bse-event-card[^"]*"[^>]*>.*?</a>)',
         html, re.DOTALL,
     )
 
     now = datetime.now(timezone.utc).date()
     events = []
 
-    for block in ld_blocks:
-        try:
-            data = json.loads(block)
-        except json.JSONDecodeError:
+    for block in card_blocks:
+        # Real external event URL and date are attributes on the <a> tag
+        href_m = re.search(r'\bhref="([^"]+)"', block)
+        date_m = re.search(r'\bdata-date="([^"]+)"', block)
+        if not href_m or not date_m:
             continue
 
-        # JSON-LD can be a single object or a list; normalise to list
-        items = data if isinstance(data, list) else [data]
+        url = href_m.group(1)
+        date_str = date_m.group(1)
 
-        # Handle CollectionPage → mainEntity → itemListElement nesting
-        for item in list(items):
-            main_entity = item.get("mainEntity", {})
-            if main_entity.get("@type") == "ItemList":
-                items.extend(main_entity.get("itemListElement", []))
-            if item.get("@type") in ("ItemList", "CollectionPage"):
-                items.extend(item.get("itemListElement", []))
+        try:
+            start_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+        except ValueError:
+            continue
 
-        for item in items:
-            if item.get("@type") != "Event":
-                continue
+        if start_date < now:
+            continue
 
-            name = item.get("name", "").strip()
-            start_date_str = item.get("startDate", "")
-            if not name or not start_date_str:
-                continue
+        # Title from <h3>
+        title_m = re.search(r'<h3[^>]*>(.*?)</h3>', block, re.DOTALL)
+        if not title_m:
+            continue
+        title = re.sub(r'<[^>]+>', '', title_m.group(1)).strip()
+        if not title:
+            continue
 
-            # Parse date (could be YYYY-MM-DD or full ISO datetime)
-            try:
-                start_date = datetime.fromisoformat(start_date_str.replace("Z", "+00:00")).date()
-            except Exception:
-                try:
-                    start_date = datetime.strptime(start_date_str[:10], "%Y-%m-%d").date()
-                except Exception:
-                    continue
+        # Description from <p>
+        desc_m = re.search(r'<p[^>]*>(.*?)</p>', block, re.DOTALL)
+        description = re.sub(r'<[^>]+>', '', desc_m.group(1)).strip() if desc_m else ""
 
-            # Skip past events
-            if start_date < now:
-                continue
+        # Location: 2nd span inside bse-meta div (1st span = date range, 2nd = location)
+        location = "Boston, MA"
+        meta_m = re.search(r'class="bse-meta"[^>]*>(.*?)</div>', block, re.DOTALL)
+        if meta_m:
+            spans = re.findall(r'<span[^>]*>(.*?)</span>', meta_m.group(1), re.DOTALL)
+            clean_spans = [re.sub(r'<[^>]+>', '', s).strip() for s in spans if s.strip()]
+            clean_spans = [s for s in clean_spans if s]
+            if len(clean_spans) >= 2:
+                location = clean_spans[1]
 
-            # Build location string from nested Place object
-            loc = item.get("location", {})
-            if isinstance(loc, dict):
-                place_name = loc.get("name", "")
-                address = loc.get("address", "")
-                if isinstance(address, dict):
-                    address = address.get("addressLocality", "")
-                location = f"{place_name}, {address}" if place_name and address else place_name or address or "Boston, MA"
-            else:
-                location = str(loc) if loc else "Boston, MA"
+        events.append({
+            "title": title,
+            "url": url,
+            "source": "TNT",
+            "location": location,
+            "start_time": f"{date_str}T12:00:00Z",
+            "description": description,
+        })
 
-            # Build a unique URL using the event name as a fragment
-            slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
-            event_url = f"{TNT_URL}#{slug}"
-
-            events.append({
-                "title": name,
-                "url": event_url,
-                "source": "TNT",
-                "location": location,
-                "start_time": f"{start_date_str}T12:00:00Z" if "T" not in start_date_str else start_date_str,
-                "description": "",
-            })
-
-    # Deduplicate by normalized title (keeps first occurrence, which is usually cleaner)
-    seen_titles = set()
-    deduped = []
-    for ev in events:
-        normalized = re.sub(r"[\s\(\$,\)]+", " ", ev["title"]).strip().lower()
-        if normalized not in seen_titles:
-            seen_titles.add(normalized)
-            deduped.append(ev)
-    if len(deduped) < len(events):
-        print(f"Deduplicated {len(events) - len(deduped)} near-duplicate TNT event(s).")
-
-    print(f"Fetched {len(deduped)} upcoming events from TNT calendar (scraped).")
-    return deduped
+    print(f"Fetched {len(events)} upcoming events from TNT calendar (scraped).")
+    return events
 
 
 def fetch_luma_boston():
@@ -260,19 +239,16 @@ def fetch_luma_boston():
 
 
 def cleanup_stale_tnt_events():
-    """Delete old hardcoded TNT events (non-scraped URLs) that are now superseded."""
+    """Delete all existing TNT events so they can be replaced by freshly scraped ones."""
     con = get_db()
     cur = con.cursor()
-    cur.execute("""
-        DELETE FROM events
-        WHERE source = 'TNT' AND url NOT LIKE 'https://tnt.so/calendar%'
-    """)
+    cur.execute("DELETE FROM events WHERE source = 'TNT'")
     deleted = cur.rowcount
     con.commit()
     cur.close()
     con.close()
     if deleted:
-        print(f"Removed {deleted} stale hardcoded TNT event(s) from DB.")
+        print(f"Cleared {deleted} old TNT event(s) from DB.")
 
 
 def save_events(events):
@@ -309,10 +285,12 @@ def save_events(events):
 
 if __name__ == "__main__":
     init_events_table()
-    cleanup_stale_tnt_events()
 
-    all_events = []
-    all_events += fetch_tnt_events()
+    tnt_events = fetch_tnt_events()
+    if tnt_events:
+        cleanup_stale_tnt_events()  # only wipe old rows if scrape succeeded
+
+    all_events = tnt_events[:]
     all_events += fetch_ticketmaster()
     all_events += fetch_luma_boston()
 

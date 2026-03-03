@@ -168,8 +168,19 @@ def fetch_tnt_events():
                 "description": "",
             })
 
-    print(f"Fetched {len(events)} upcoming events from TNT calendar (scraped).")
-    return events
+    # Deduplicate by normalized title (keeps first occurrence, which is usually cleaner)
+    seen_titles = set()
+    deduped = []
+    for ev in events:
+        normalized = re.sub(r"[\s\(\$,\)]+", " ", ev["title"]).strip().lower()
+        if normalized not in seen_titles:
+            seen_titles.add(normalized)
+            deduped.append(ev)
+    if len(deduped) < len(events):
+        print(f"Deduplicated {len(events) - len(deduped)} near-duplicate TNT event(s).")
+
+    print(f"Fetched {len(deduped)} upcoming events from TNT calendar (scraped).")
+    return deduped
 
 
 def fetch_luma_boston():
@@ -248,6 +259,22 @@ def fetch_luma_boston():
     return events
 
 
+def cleanup_stale_tnt_events():
+    """Delete old hardcoded TNT events (non-scraped URLs) that are now superseded."""
+    con = get_db()
+    cur = con.cursor()
+    cur.execute("""
+        DELETE FROM events
+        WHERE source = 'TNT' AND url NOT LIKE 'https://tnt.so/calendar%'
+    """)
+    deleted = cur.rowcount
+    con.commit()
+    cur.close()
+    con.close()
+    if deleted:
+        print(f"Removed {deleted} stale hardcoded TNT event(s) from DB.")
+
+
 def save_events(events):
     if not events:
         print("No events to save.")
@@ -282,6 +309,7 @@ def save_events(events):
 
 if __name__ == "__main__":
     init_events_table()
+    cleanup_stale_tnt_events()
 
     all_events = []
     all_events += fetch_tnt_events()

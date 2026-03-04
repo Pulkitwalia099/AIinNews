@@ -6,9 +6,17 @@
   <p style="font-size: 0.86rem; color: #6b6b6b;">Upcoming AI, VC, and startup events at Harvard, MIT, and across Boston — pulled from Luma, TNT, and Ticketmaster.</p>
 </div>
 
+<!-- Tag filter bar -->
+<div id="tag-filters" style="display:flex; flex-wrap:wrap; gap:8px; margin:0 0 28px; justify-content:center;">
+    <button class="tag-pill active" data-filter="all"
+            style="padding:8px 18px; border-radius:20px; border:1px solid #8B0000; background:#8B0000;
+                   color:#fff; font-size:0.8rem; font-weight:600; cursor:pointer; font-family:inherit;
+                   transition:all 0.15s;">All Events</button>
+</div>
+
 {% if events %}
   {% for event in events %}
-  <div class="event-card">
+  <div class="event-card" data-tags="{{ event.tags }}">
     <div class="event-date-block">
       <span class="event-month">{{ event.start_time.strftime('%b') if event.start_time else '—' }}</span>
       <span class="event-day">{{ event.start_time.strftime('%-d') if event.start_time else '—' }}</span>
@@ -37,4 +45,83 @@
     <p style="font-size: 0.86rem;">Run <code>fetch_events.py</code> to pull the latest from Eventbrite and MIT.</p>
   </div>
 {% endif %}
+
+<script>
+(function() {
+    var cards = document.querySelectorAll('[data-tags]');
+    var tagSet = {};
+    cards.forEach(function(card) {
+        var tags = card.getAttribute('data-tags').split(',');
+        tags.forEach(function(t) {
+            t = t.trim();
+            if (t) tagSet[t] = (tagSet[t] || 0) + 1;
+        });
+    });
+
+    var order = ['MIT', 'Harvard', 'Boston',
+                 'AI', 'Startups', 'VC / Funding', 'Healthcare', 'Climate / Energy',
+                 'Competition', 'Hackathon', 'Conference', 'Talk', 'Workshop',
+                 'Networking', 'Demo Day', 'Summit'];
+    var sortedTags = order.filter(function(t) { return tagSet[t]; });
+    Object.keys(tagSet).forEach(function(t) {
+        if (sortedTags.indexOf(t) === -1) sortedTags.push(t);
+    });
+
+    if (sortedTags.length === 0) {
+        document.getElementById('tag-filters').style.display = 'none';
+        return;
+    }
+
+    var container = document.getElementById('tag-filters');
+    sortedTags.forEach(function(tag) {
+        var btn = document.createElement('button');
+        btn.className = 'tag-pill';
+        btn.setAttribute('data-filter', tag);
+        btn.textContent = tag;
+        btn.style.cssText = 'padding:8px 16px; border-radius:20px; border:1px solid #e0e0e0; ' +
+            'background:#fff; color:#37352f; font-size:0.8rem; font-weight:500; cursor:pointer; ' +
+            'font-family:inherit; transition:all 0.15s;';
+        container.appendChild(btn);
+    });
+
+    container.addEventListener('click', function(e) {
+        var btn = e.target;
+        if (!btn.classList.contains('tag-pill')) return;
+
+        container.querySelectorAll('.tag-pill').forEach(function(b) {
+            b.classList.remove('active');
+            b.style.background = '#fff';
+            b.style.color = '#37352f';
+            b.style.borderColor = '#e0e0e0';
+        });
+        btn.classList.add('active');
+        btn.style.background = '#8B0000';
+        btn.style.color = '#fff';
+        btn.style.borderColor = '#8B0000';
+
+        var filter = btn.getAttribute('data-filter');
+
+        cards.forEach(function(card) {
+            if (filter === 'all') {
+                card.style.display = '';
+            } else {
+                var cardTags = card.getAttribute('data-tags');
+                card.style.display = cardTags.indexOf(filter) !== -1 ? '' : 'none';
+            }
+        });
+
+        document.querySelectorAll('.month-header').forEach(function(header) {
+            var next = header.nextElementSibling;
+            var hasVisible = false;
+            while (next && !next.classList.contains('month-header')) {
+                if (next.hasAttribute('data-tags') && next.style.display !== 'none') {
+                    hasVisible = true;
+                }
+                next = next.nextElementSibling;
+            }
+            header.style.display = hasVisible ? '' : 'none';
+        });
+    });
+})();
+</script>
 {% endblock %}

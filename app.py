@@ -51,6 +51,17 @@ def init_db():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
+    cur.execute("ALTER TABLE events ADD COLUMN IF NOT EXISTS tags TEXT")
+    # Backfill tags for existing events that have NULL tags
+    cur.execute("SELECT id, title, location, description FROM events WHERE tags IS NULL OR tags = ''")
+    backfill_rows = cur.fetchall()
+    if backfill_rows:
+        from fetch_events import classify_event_regex
+        for row in backfill_rows:
+            event = {"title": row[1] or "", "location": row[2] or "", "description": row[3] or "", "source": ""}
+            tags = classify_event_regex(event)
+            cur.execute("UPDATE events SET tags = %s WHERE id = %s", (tags, row[0]))
+        print(f"Backfilled tags for {len(backfill_rows)} existing events.")
     cur.execute("""
         CREATE TABLE IF NOT EXISTS article_feedback (
             id SERIAL PRIMARY KEY,
@@ -143,7 +154,7 @@ def get_events(limit=None):
         cur = con.cursor()
         if limit:
             cur.execute("""
-                SELECT title, url, source, location, start_time, description
+                SELECT title, url, source, location, start_time, description, tags
                 FROM events
                 WHERE start_time > NOW()
                 ORDER BY start_time ASC
@@ -151,7 +162,7 @@ def get_events(limit=None):
             """, (limit,))
         else:
             cur.execute("""
-                SELECT title, url, source, location, start_time, description
+                SELECT title, url, source, location, start_time, description, tags
                 FROM events
                 WHERE start_time > NOW()
                 ORDER BY start_time ASC
@@ -162,7 +173,8 @@ def get_events(limit=None):
         return [
             {
                 "title": r[0], "url": r[1], "source": r[2],
-                "location": r[3], "start_time": r[4], "description": r[5]
+                "location": r[3], "start_time": r[4], "description": r[5],
+                "tags": r[6] or ""
             }
             for r in rows
         ]

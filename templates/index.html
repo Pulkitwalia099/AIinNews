@@ -148,6 +148,46 @@
     margin-top: 4px;
   }
   .pfb-mobile-skip:hover { color: #333; }
+
+  /* --- Floating feedback widget (bottom-right) --- */
+  .pfb-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #7b78e8;
+    color: #fff;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    transition: transform 0.15s, background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pfb-fab:hover { background: #5b58d8; transform: scale(1.08); }
+  .pfb-fab-popup {
+    display: none;
+    position: fixed;
+    bottom: 84px;
+    right: 24px;
+    z-index: 1001;
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.16);
+    text-align: center;
+    animation: pfbFadeIn 0.15s ease;
+  }
+  .pfb-fab-popup.show { display: block; }
+  .pfb-fab-popup .pfb-heading { font-size: 0.85rem; margin-bottom: 4px; }
+  .pfb-fab-popup .pfb-sub { font-size: 0.75rem; margin-bottom: 12px; }
+  .pfb-fab-popup .pfb-btns { flex-direction: column; gap: 6px; }
+  .pfb-fab-popup .pfb-btn { width: 100%; text-align: center; }
 </style>
 <div class="newsletter-intro">
   <p class="intro-tagline">What's actually happening in AI — explained for people who build things.</p>
@@ -354,6 +394,33 @@
     <button class="pfb-mobile-skip" onclick="closeMobileFeedback()">No thanks, skip</button>
   </div>
 </div>
+
+<!-- Floating feedback widget (bottom-right) -->
+<button class="pfb-fab" id="pfbFab" onclick="toggleFabPopup()" aria-label="Send feedback">💬</button>
+<div class="pfb-fab-popup" id="pfbFabPopup">
+  <p class="pfb-heading">Send feedback</p>
+  <p class="pfb-sub">Help us improve AI in News</p>
+  <div class="pfb-btns">
+    <a href="/feedback/product?type=bug" class="pfb-btn">🐛 Bug</a>
+    <a href="/feedback/product?type=feature" class="pfb-btn">✨ Feature</a>
+    <a href="/feedback/product?type=general" class="pfb-btn">💬 Feedback</a>
+    <a href="/feedback/product?type=question" class="pfb-btn">❓ Question</a>
+  </div>
+</div>
+
+<script>
+function toggleFabPopup() {
+  document.getElementById('pfbFabPopup').classList.toggle('show');
+}
+// Close popup when clicking outside
+document.addEventListener('click', function(e) {
+  var popup = document.getElementById('pfbFabPopup');
+  var fab = document.getElementById('pfbFab');
+  if (popup.classList.contains('show') && !popup.contains(e.target) && e.target !== fab) {
+    popup.classList.remove('show');
+  }
+});
+</script>
 
 <script>
 // Mobile feedback popup — show after 3 minutes on mobile only

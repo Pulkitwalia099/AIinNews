@@ -1,0 +1,135 @@
+{
+  "date": "2026-03-04",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "ChatGPT uninstalls surged by 295% after DoD deal",
+      "url": "https://techcrunch.com/2026/03/02/chatgpt-uninstalls-surged-by-295-after-dod-deal/",
+      "source": "TechCrunch AI",
+      "hn_score": 45,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "ChatGPT app uninstalls jumped 295% following OpenAI's DoD deal announcement, with measurable consumer migration toward Claude. This is a rare, quantified signal of brand trust acting as a switching trigger in a market previously thought to be sticky. Privacy-conscious and politically averse user segments are now actively in play.",
+      "builders_lens": "Consumer AI apps positioned around privacy, neutrality, or non-military use cases have a real acquisition window right now \u2014 this is the moment to run campaigns targeting lapsed ChatGPT users. Anthropic is capturing this organically, but there's room for smaller players in vertical-specific AI tools (legal, healthcare, education) to convert this sentiment into durable user relationships.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "OpenAI's \"compromise\" with the Pentagon is what Anthropic feared",
+      "url": "https://www.technologyreview.com/2026/03/02/1133850/openais-compromise-with-the-pentagon-is-what-anthropic-feared/",
+      "source": "MIT Technology Review",
+      "hn_score": 3,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI struck a rushed deal with the Pentagon to deploy AI in classified settings, reportedly triggered by the DoD's public pressure on Anthropic. Altman admitted the negotiations were accelerated, raising questions about the robustness of safety commitments embedded in the agreement. This marks a structural bifurcation in the frontier model market: military-aligned vs. safety-first positioning.",
+      "builders_lens": "Enterprise and government AI is now a distinct market segment with its own compliance, procurement, and reputational calculus \u2014 builders targeting federal or defense adjacencies need to pick a lane early, as neutrality is no longer viable. If you're building on OpenAI APIs for sensitive enterprise use cases, audit your terms-of-service exposure given the classified deployment precedent.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "LLMs can unmask pseudonymous users at scale with surprising accuracy",
+      "url": "https://arstechnica.com/security/2026/03/llms-can-unmask-pseudonymous-users-at-scale-with-surprising-accuracy/",
+      "source": "Ars Technica",
+      "hn_score": 137,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Disruption",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Research demonstrates that LLMs can de-anonymize pseudonymous users at scale by correlating writing style, behavioral patterns, and contextual signals across datasets. This breaks a foundational assumption of privacy-preserving design \u2014 that pseudonymity provides meaningful protection. The capability exists now and is accessible to any actor with API access and a corpus of user-generated content.",
+      "builders_lens": "Any product storing or processing user-generated text \u2014 forums, reviews, anonymous feedback tools, whistleblower platforms \u2014 needs to reassess its privacy guarantees immediately; pseudonymity as a privacy promise is now legally and technically fragile. This also opens a legitimate market for LLM-powered identity verification, fraud detection, and cross-platform attribution tools that previously required expensive manual analysis.",
+      "impact_level": "act",
+      "technical_detail": "LLM-based stylometric analysis achieves de-anonymization at scale across pseudonymous corpora, leveraging cross-platform writing style correlation without fine-tuning \u2014 pure prompting and retrieval pipelines suffice."
+    },
+    {
+      "title": "Anthropic nears $20 billion revenue run rate despite Pentagon feud",
+      "url": "https://the-decoder.com/anthropic-nears-20-billion-revenue-run-rate-despite-pentagon-feud/",
+      "source": "The Decoder",
+      "hn_score": 15,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Opportunity",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Anthropic is approaching a $20B annualized revenue run rate, demonstrating that its refusal to pursue military contracts has not materially damaged its commercial trajectory. This validates that the \"safety-first\" brand positioning is a viable \u2014 and potentially superior \u2014 enterprise GTM strategy. The Pentagon feud appears to have functioned as a marketing event that differentiated Anthropic rather than handicapped it.",
+      "builders_lens": "For founders choosing which frontier API to build on, Anthropic's revenue trajectory signals both platform durability and enterprise buyer preference \u2014 particularly in regulated industries where military associations are a liability. The data point also suggests that $20B ARR is achievable in AI infrastructure without a government anchor contract, which resets assumptions about where the revenue ceiling is for safety-positioned AI companies.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Gemini 3.1 Flash-Lite",
+      "url": "https://simonwillison.net/2026/Mar/3/gemini-31-flash-lite/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 86,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Google released Gemini 3.1 Flash-Lite at $0.025/M input tokens and $0.15/M output tokens \u2014 one-eighth the cost of Gemini 3.1 Pro \u2014 with four configurable thinking levels. This continues the rapid commoditization of capable inference, compressing margins for any business built on token arbitrage. For high-volume, latency-tolerant workloads, the cost calculus has shifted materially again.",
+      "builders_lens": "Re-benchmark your current inference stack against Flash-Lite today \u2014 at 1/8th Pro pricing with tunable reasoning depth, it likely displaces your current cost-optimized model for classification, extraction, and summarization tasks. The four thinking levels are particularly interesting for agentic pipelines where you want to dial reasoning intensity per task type rather than paying Pro prices across the board.",
+      "impact_level": "act",
+      "technical_detail": "Gemini 3.1 Flash-Lite priced at $0.025/M input and $0.15/M output tokens, supports four discrete thinking/reasoning levels, positioned as 1/8th cost of Gemini 3.1 Pro in the same model family."
+    },
+    {
+      "title": "An AI agent coding skeptic tries AI agent coding, in excessive detail",
+      "url": "https://simonwillison.net/2026/Feb/27/ai-agent-coding-in-excessive-detail/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 69,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Max Woolf's detailed account of converting from AI coding skeptic to practitioner documents a progression from simple scripts to ambitious multi-component projects, joining a growing body of evidence that coding agents crossed a capability threshold around late 2025. The piece is notable because it comes from a skeptic with high technical standards, not an early adopter. The \"it got good\" inflection point is now being confirmed by the mainstream technical population.",
+      "builders_lens": "If your team hasn't seriously re-evaluated AI-assisted development workflows in the last three months, you're likely operating with outdated priors \u2014 the capability gap between power users and non-users of coding agents is compounding weekly. For founders, this also signals that the cost to build MVP-stage software continues to fall, which compresses the moat from \"we can build this\" and accelerates the premium on distribution, data, and domain expertise.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "Our agreement with the Department of War",
+      "url": "https://openai.com/index/our-agreement-with-the-department-of-war",
+      "source": "OpenAI Blog",
+      "hn_score": 651,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Platform Shift",
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI has formalized a contract with the Department of Defense for AI deployment in classified environments, with stated safety red lines and legal carve-outs \u2014 the highest HN score in this batch at 651, indicating significant community attention. This is the first public, detailed framework from a frontier lab for military AI deployment, and it sets a precedent that competitors will be measured against. The naming of the agency as \"Department of War\" in the post title is itself a notable editorial signal.",
+      "builders_lens": "The existence of a public safety framework for classified military AI deployment creates a template that defense-adjacent startups and government contractors can now reference, adapt, or compete against \u2014 this is the first concrete \"rules of the road\" document for this market segment. Builders in govtech, defense tech, or AI safety tooling should read the full agreement: the red lines OpenAI accepted define both the compliance floor and the commercial opportunity space for specialized military AI vendors.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "OpenAI and Amazon announce strategic partnership",
+      "url": "https://openai.com/index/amazon-partnership",
+      "source": "OpenAI Blog",
+      "hn_score": 10,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI's Frontier platform is coming to AWS, alongside custom model development and enterprise AI agent capabilities \u2014 a significant distribution expansion that embeds OpenAI deeper into existing enterprise cloud contracts. For Amazon, this is a hedge against Anthropic (which they've heavily backed) and a way to offer frontier model optionality to AWS customers. For OpenAI, this unlocks enterprise procurement channels that would otherwise require years of direct sales.",
+      "builders_lens": "If you're building enterprise AI products, the AWS distribution channel for OpenAI models means procurement friction drops significantly \u2014 enterprises already on AWS EDP can now fold OpenAI spend into existing commitments, which accelerates deals. Watch for Amazon to use this to pressure Anthropic on pricing or exclusivity terms; the multi-model cloud dynamic benefits builders through competition but complicates vendor dependency strategy.",
+      "impact_level": "watch",
+      "technical_detail": "Partnership brings OpenAI's Frontier platform to AWS infrastructure, with provisions for custom model development and enterprise-grade AI agent deployment at scale."
+    }
+  ]
+}

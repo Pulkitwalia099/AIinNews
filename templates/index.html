@@ -280,7 +280,13 @@
 </div>
 {% endif %}
 
-<p class="date" data-date="{{ newsletter.date }}">{{ newsletter.date }}</p>
+<div class="briefing-header">
+  <span class="briefing-label">Today's Briefing</span>
+  <span class="briefing-meta">
+    <span class="briefing-date" data-date="{{ newsletter.date }}">{{ newsletter.date }}</span>
+    <span class="briefing-count">&middot; {{ newsletter.articles|length }} stories</span>
+  </span>
+</div>
 
 {% set sections = [
   ("Application Layer",    "application",   "Real-world products, deployments & company moves"),
@@ -288,10 +294,32 @@
   ("Foundation Layer",     "foundation",    "Core model research, breakthroughs & new capabilities")
 ] %}
 
+{% set app_count = newsletter.articles | selectattr("section", "equalto", "Application Layer") | list | length %}
+{% set infra_count = newsletter.articles | selectattr("section", "equalto", "Infrastructure Layer") | list | length %}
+{% set foundation_count = newsletter.articles | selectattr("section", "equalto", "Foundation Layer") | list | length %}
+
+<nav class="section-nav">
+  <a href="#application" class="section-nav-tab">
+    <span class="section-nav-dot application"></span>
+    Application
+    <span class="section-nav-count">{{ app_count }}</span>
+  </a>
+  <a href="#infra" class="section-nav-tab">
+    <span class="section-nav-dot infra"></span>
+    Infrastructure
+    <span class="section-nav-count">{{ infra_count }}</span>
+  </a>
+  <a href="#foundation" class="section-nav-tab">
+    <span class="section-nav-dot foundation"></span>
+    Foundation
+    <span class="section-nav-count">{{ foundation_count }}</span>
+  </a>
+</nav>
+
 {% for section_name, section_class, section_desc in sections %}
   {% set section_articles = newsletter.articles | selectattr("section", "equalto", section_name) | list %}
   {% if section_articles %}
-  <details class="section-details {{ section_class }}" open>
+  <details id="{{ section_class }}" class="section-details {{ section_class }}" open>
     <summary class="section-summary">
       <div class="section-summary-inner">
         <span class="section-label {{ section_class }}">{{ section_name }}</span>
@@ -308,7 +336,7 @@
         <div class="meta">
           <span>{{ article.source }}</span>
           {% if article.hn_score and article.hn_score >= 10 %}
-            <span class="hype-badge">🔥 {{ article.hn_score }}</span>
+            <span class="hype-chip" data-tooltip="{{ '{:,}'.format(article.hn_score) }} upvotes on Hacker News">🔥 {{ '{:,}'.format(article.hn_score) }}{% if article.hn_rank %} <span class="hn-rank">&middot; #{{ article.hn_rank }} on HN</span>{% endif %}</span>
           {% endif %}
           <button class="share-btn" aria-label="Share this story" data-url="{{ article.url }}" data-title="{{ article.title }}" onclick="shareStory(this)">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
@@ -346,7 +374,7 @@
     </div>
   </details>
   {% else %}
-  <details class="section-details {{ section_class }}">
+  <details id="{{ section_class }}" class="section-details {{ section_class }}">
     <summary class="section-summary">
       <div class="section-summary-inner">
         <span class="section-label {{ section_class }}">{{ section_name }}</span>

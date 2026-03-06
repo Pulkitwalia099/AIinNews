@@ -1,0 +1,134 @@
+{
+  "date": "2026-03-06",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Jensen Huang says Nvidia is pulling back from OpenAI and Anthropic, but his explanation raises more questions than it answers",
+      "url": "https://techcrunch.com/2026/03/04/jensen-huang-says-nvidia-is-pulling-back-from-openai-and-anthropic-but-his-explanation-raises-more-questions-than-it-answers/",
+      "source": "TechCrunch AI",
+      "hn_score": 324,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Nvidia CEO Jensen Huang signaled the company will stop making equity investments in frontier AI labs like OpenAI and Anthropic. The stated rationale doesn't fully explain the move, suggesting possible strategic repositioning \u2014 Nvidia may be distancing itself from lab-level bets as its hardware moat matures. This raises questions about shifting power dynamics between chip suppliers and model developers.",
+      "builders_lens": "If Nvidia is decoupling from frontier labs, it may signal that the hardware-to-lab integration advantage is weakening \u2014 worth watching whether this frees alternative compute providers to compete. For founders, this could indicate Nvidia sees the lab layer as commoditizing and is protecting its neutrality as a platform vendor to all players. Don't read this as bearish on AI infrastructure \u2014 read it as Nvidia betting on the picks-and-shovels role long-term.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "LLMs can unmask pseudonymous users at scale with surprising accuracy",
+      "url": "https://arstechnica.com/security/2026/03/llms-can-unmask-pseudonymous-users-at-scale-with-surprising-accuracy/",
+      "source": "Ars Technica",
+      "hn_score": 159,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Disruption",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Research demonstrates that LLMs can de-anonymize pseudonymous users at scale by correlating writing style, behavioral patterns, and contextual signals across datasets. This effectively breaks the pseudonymity model that underpins large swaths of online privacy. The capability exists now and is accessible to well-resourced actors without specialized tooling.",
+      "builders_lens": "Any product built on user anonymity or pseudonymity \u2014 think whistleblower platforms, privacy-preserving communities, or anonymous feedback tools \u2014 faces an existential capability risk. There's a real opportunity to build LLM-resistant anonymization tooling or privacy layers that go beyond simple pseudonyms. Compliance and legal teams at data-handling companies should be briefed on this immediately.",
+      "impact_level": "act",
+      "technical_detail": "LLMs performing stylometric and behavioral correlation attacks achieve de-anonymization at scale across large user corpora, suggesting the attack surface scales with model capability rather than dataset size."
+    },
+    {
+      "title": "Introducing GPT\u20115.4",
+      "url": "https://simonwillison.net/2026/Mar/5/introducing-gpt54/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 1599,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI released GPT-5.4 and GPT-5.4-pro, now available via API and in ChatGPT, with a 1 million token context window and an August 2025 knowledge cutoff. This is OpenAI's current flagship for professional workloads and ships alongside Codex CLI integration. The high HN score (1599) reflects this is a meaningful capability jump that the builder community is actively evaluating.",
+      "builders_lens": "The 1M token context window is the most immediately actionable detail \u2014 entire codebases, legal documents, or long-form research corpora can now be processed in a single pass, unlocking new product architectures that weren't viable before. Builders should benchmark gpt-5.4 vs gpt-5.4-pro on their specific workloads immediately; the pro tier may not be worth the cost delta for many use cases. Check llm-prices.com for the latest pricing before committing to either tier in production.",
+      "impact_level": "act",
+      "technical_detail": "GPT-5.4 offers a 1 million token context window, August 31 2025 knowledge cutoff, with a separate gpt-5.4-272k variant suggesting tiered context pricing; both models are available via the OpenAI API and Codex CLI."
+    },
+    {
+      "title": "Something is afoot in the land of Qwen",
+      "url": "https://simonwillison.net/2026/Mar/4/qwen/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 1126,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Disruption",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Alibaba's Qwen team has seen high-profile departures in the past 24 hours, raising concerns about the future of what has been one of the strongest open-weight model families. Qwen 3.5 was already released and is described as remarkable, but the talent exodus introduces real uncertainty about whether development continues at pace. This matters because Qwen has been a cornerstone of the open-weights ecosystem that many builders depend on.",
+      "builders_lens": "If you've built production systems on Qwen models, this is a risk signal worth monitoring \u2014 key person dependency at frontier open-weight labs is real and underappreciated. The departure pattern mirrors early warning signs seen before other research team dissolutions; consider hedging by benchmarking alternatives like Mistral or Meta's Llama family now. On the opportunity side, displaced top-tier Chinese AI researchers may be accessible to well-positioned Western or international startups.",
+      "impact_level": "watch",
+      "technical_detail": "Qwen 3.5 is described as a 'remarkable family of open weight models'; no specific parameter counts or benchmark numbers provided in the source, but the family has historically included models ranging from 0.5B to 72B+ parameters."
+    },
+    {
+      "title": "Gemini 3.1 Flash-Lite",
+      "url": "https://simonwillison.net/2026/Mar/3/gemini-31-flash-lite/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 88,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Google released Gemini 3.1 Flash-Lite at $0.025/M input tokens and $0.15/M output tokens \u2014 1/8th the price of Gemini 3.1 Pro \u2014 with four selectable thinking levels. This continues the aggressive price compression trend at the inference layer. For cost-sensitive, high-volume workloads, this model changes the unit economics calculus.",
+      "builders_lens": "At these price points, Flash-Lite is worth integrating as a tiered fallback or default for classification, extraction, and routing tasks where Pro-level capability isn't required. The four thinking levels are a useful abstraction for latency/quality tradeoffs \u2014 worth building that toggle into your inference layer if you're not already. Run a cost audit on your current inference spend; switching bulk workloads to Flash-Lite could yield 4-8x cost reductions.",
+      "impact_level": "act",
+      "technical_detail": "Gemini 3.1 Flash-Lite is priced at $0.025/M input and $0.15/M output tokens (1/8th the cost of Gemini 3.1 Pro), supports four configurable thinking levels for reasoning depth control."
+    },
+    {
+      "title": "Reasoning models struggle to control their chains of thought, and that's good",
+      "url": "https://openai.com/index/reasoning-models-chain-of-thought-controllability",
+      "source": "OpenAI Blog",
+      "hn_score": 8,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Opportunity"
+      ],
+      "maturity_tag": "Early Research",
+      "summary": "OpenAI's CoT-Control research finds that reasoning models have limited ability to suppress or manipulate their own chains of thought, which the team frames as a safety positive \u2014 the CoT remains a legible signal for monitoring. This is an early but important finding for AI alignment and interpretability research. The low HN score suggests this hasn't broken through to the broader builder community yet, but it's foundationally important.",
+      "builders_lens": "For builders shipping reasoning models in regulated or high-stakes domains, this finding provides an early empirical basis for arguing that CoT logging is a meaningful safety layer \u2014 useful for compliance conversations. Interpretability tooling that surfaces and analyzes CoT outputs is a live product opportunity, especially as enterprises demand auditability. Watch this space: if CoT remains uncontrollable by the model, it becomes the most reliable window into model 'intent' we have.",
+      "impact_level": "watch",
+      "technical_detail": "OpenAI's CoT-Control framework measures reasoning models' ability to suppress or alter chain-of-thought outputs; results show models have limited controllability over their own reasoning traces, suggesting CoT is a relatively honest monitoring channel."
+    },
+    {
+      "title": "OpenAI launches GPT-5.4 with Pro and Thinking versions",
+      "url": "https://techcrunch.com/2026/03/05/openai-launches-gpt-5-4-with-pro-and-thinking-versions/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "TechCrunch's coverage of the GPT-5.4 launch confirms the Pro and Thinking variants and positions the model as OpenAI's flagship for professional work. This is secondary coverage of the same release as Article 3, adding the explicit 'Thinking' variant branding. The zero HN score relative to the Willison post underscores that technical audiences trust curated independent analysis over press coverage.",
+      "builders_lens": "The 'Thinking' variant label suggests OpenAI is formally productizing extended reasoning as a distinct tier \u2014 worth tracking how this is priced and rate-limited versus the base model. If Thinking is priced separately, it creates a new cost optimization axis: route only genuinely complex queries to the Thinking tier. Simon Willison's post (Article 3) is the higher-signal read on this launch.",
+      "impact_level": "watch",
+      "technical_detail": "GPT-5.4 ships in three variants: base, Pro, and Thinking \u2014 the Thinking variant is a formally branded extended reasoning mode, consistent with OpenAI's o-series reasoning architecture lineage."
+    },
+    {
+      "title": "Lio raises $30M from Andreessen Horowitz and others to automate enterprise procurement",
+      "url": "https://techcrunch.com/2026/03/05/lio-ai-series-a-a16z-30m-raise-automate-enterprise-procurement/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Lio closed a $30M Series A led by a16z to build AI-powered enterprise procurement automation. Procurement is a high-friction, document-heavy workflow that is structurally well-suited to LLM-based automation. a16z's lead signals conviction in vertical AI agents attacking back-office enterprise workflows.",
+      "builders_lens": "Procurement is one of several adjacent enterprise workflows (AP/AR, contract management, vendor onboarding) that share the same structural properties \u2014 document-heavy, rule-bound, high error cost \u2014 making them strong targets for vertical AI agents. If you're building in enterprise automation, this raise validates the thesis and raises the competitive bar; differentiate on integration depth and domain-specific accuracy rather than general capability. Watch Lio's go-to-market for signals on which procurement sub-problems (sourcing, PO management, invoice reconciliation) have the fastest enterprise sales cycles.",
+      "impact_level": "context",
+      "technical_detail": null
+    }
+  ]
+}

@@ -162,6 +162,14 @@
       padding: 1px 7px;
       border-radius: 10px;
     }
+    .section-nav-tab.active {
+      color: #37352f;
+      font-weight: 600;
+      border-radius: 8px 8px 0 0;
+    }
+    .section-nav-tab.active[href="#application"] { border-bottom: 2px solid #4a97f0; }
+    .section-nav-tab.active[href="#infra"] { border-bottom: 2px solid #3db87a; }
+    .section-nav-tab.active[href="#foundation"] { border-bottom: 2px solid #7b78e8; }
 
     /* Newsletter intro */
     .newsletter-intro {
@@ -463,7 +471,7 @@
       border-radius: 10px;
     }
 
-    .hype-chip {
+    .hn-badge {
       position: relative;
       display: inline-flex;
       align-items: center;
@@ -477,30 +485,40 @@
       border-radius: 10px;
       cursor: default;
     }
-    .hype-chip .hn-rank {
+    .hn-badge .hn-label {
       font-weight: 400;
-      color: #b0885a;
+      color: #d4945a;
       font-size: 0.68rem;
     }
-    .hype-chip::after {
-      content: attr(data-tooltip);
+    .hn-tooltip {
       position: absolute;
-      bottom: calc(100% + 6px);
+      bottom: calc(100% + 8px);
       left: 50%;
       transform: translateX(-50%);
-      padding: 4px 10px;
-      background: #1d1d1f;
+      padding: 6px 12px;
+      background: #1a1a1a;
       color: #fff;
-      font-size: 0.68rem;
+      font-size: 0.688rem;
       font-weight: 400;
       white-space: nowrap;
       border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.15s;
       z-index: 50;
     }
-    .hype-chip:hover::after {
+    .hn-tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid #1a1a1a;
+    }
+    .hn-badge:hover .hn-tooltip {
       opacity: 1;
     }
 
@@ -1011,6 +1029,30 @@
       var badge = relativeBadge(ds);
       if (badge) el.insertAdjacentHTML('afterend', badge);
     });
+  })();
+
+  // Scroll-aware active tab highlighting
+  (function() {
+    var tabs = document.querySelectorAll('.section-nav-tab');
+    var sections = document.querySelectorAll('#application, #infra, #foundation');
+    if (!tabs.length || !sections.length) return;
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.id;
+          tabs.forEach(function(tab) {
+            if (tab.getAttribute('href') === '#' + id) {
+              tab.classList.add('active');
+            } else {
+              tab.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+
+    sections.forEach(function(s) { observer.observe(s); });
   })();
 </script>
 </body>

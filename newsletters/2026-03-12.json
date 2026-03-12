@@ -1,0 +1,135 @@
+{
+  "date": "2026-03-12",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Hustlers are cashing in on China's OpenClaw AI craze",
+      "url": "https://www.technologyreview.com/2026/03/11/1134179/china-openclaw-gold-rush/",
+      "source": "MIT Technology Review",
+      "hn_score": 3,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Opportunity",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenClaw, a popular open-source Chinese AI agent capable of autonomously taking over devices and completing tasks, is spawning a grassroots entrepreneurial ecosystem in China. A 27-year-old engineer is among many building businesses on top of the platform. This mirrors early App Store or GPT-wrapper gold rush dynamics \u2014 but originating from a Chinese open-source base.",
+      "builders_lens": "Watch OpenClaw closely \u2014 if it gains traction outside China, it could become a competing open-source agent runtime to AutoGPT/browser-use/Playwright-based stacks. The gold rush pattern suggests tooling, distribution, and vertical SaaS layers will be the first monetizable opportunities. Consider whether your agent product is defensible if a free Chinese OSS equivalent captures mindshare.",
+      "impact_level": "watch",
+      "technical_detail": "OpenClaw is described as an open-source device-control agent capable of autonomous task completion; specific model architecture or context window details not disclosed in summary."
+    },
+    {
+      "title": "14,000 routers are infected by malware that's highly resistant to takedowns",
+      "url": "https://arstechnica.com/security/2026/03/14000-routers-are-infected-by-malware-thats-highly-resistant-to-takedowns/",
+      "source": "Ars Technica",
+      "hn_score": 20,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "A persistent malware campaign has compromised ~14,000 Asus routers primarily in the US, using architecture designed to resist law enforcement takedowns \u2014 likely P2P or fast-flux command-and-control. This represents active, hard-to-remediate infrastructure compromise at the edge. For AI builders running inference or agents that rely on consistent outbound connectivity, compromised upstream routing is an underappreciated threat surface.",
+      "builders_lens": "If you're deploying AI agents or automation pipelines that traverse consumer or SMB networks \u2014 including remote employee setups \u2014 treat network-layer integrity as part of your threat model. Edge compromise can enable man-in-the-middle attacks on API calls, credential theft, or agent hijacking. Enforce mutual TLS and certificate pinning on sensitive agent-to-API connections.",
+      "impact_level": "watch",
+      "technical_detail": "Malware targets Asus router firmware and employs takedown-resistant C2 architecture; specific exploit CVEs and persistence mechanism not detailed in summary."
+    },
+    {
+      "title": "Meta unveils four generations of custom AI chips to cut inference costs for billions of users",
+      "url": "https://the-decoder.com/meta-unveils-four-generations-of-custom-ai-chips-to-cut-inference-costs-for-billions-of-users/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Platform Shift",
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Meta has disclosed four generations of custom inference chips designed to serve AI features across its billions of users while reducing dependence on Nvidia and AMD. This is a significant vertical integration move \u2014 Meta joins Google (TPU), Amazon (Trainium/Inferentia), and Microsoft (Maia) in owning its inference silicon. At Meta's scale, even marginal per-token cost reductions translate to hundreds of millions in annual savings.",
+      "builders_lens": "This accelerates the commoditization of inference costs across the industry \u2014 hyperscalers building their own silicon creates competitive pressure on Nvidia margins and ultimately lowers API pricing for everyone. For startups, this is a tailwind: your inference costs will likely continue declining. The strategic risk is that Meta, Google, and Amazon can sustain margins at price points that make third-party inference providers' unit economics difficult.",
+      "impact_level": "watch",
+      "technical_detail": "Meta unveiled four distinct chip generations focused on inference workloads; specific FLOPS, die size, process node, or memory bandwidth figures not available in the summary."
+    },
+    {
+      "title": "Half of AI-written code that passes industry test would get rejected by real developers, new study finds",
+      "url": "https://the-decoder.com/half-of-ai-written-code-that-passes-industry-test-would-get-rejected-by-real-developers-new-study-finds/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Disruption",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "METR research finds that ~50% of AI-generated code solutions passing SWE-bench \u2014 the dominant coding agent benchmark \u2014 would be rejected by actual open-source maintainers in real PR reviews. This exposes a fundamental validity gap: SWE-bench optimizes for test passage, not code quality, readability, or maintainability. It directly undermines capability claims made by coding agent vendors citing SWE-bench scores.",
+      "builders_lens": "If you're building or selling a coding agent, stop leading with SWE-bench scores \u2014 sophisticated buyers now know it's gameable and uncorrelated with production quality. The opportunity here is building evaluation infrastructure that captures real developer preferences: style conformance, diff minimality, test coverage quality, and reviewer simulation. METR's finding is a wedge for a new generation of AI code quality tooling.",
+      "impact_level": "act",
+      "technical_detail": "METR's study evaluated SWE-bench-passing solutions against real maintainer review criteria; ~50% rejection rate observed, though specific model names, sample sizes, and methodology details are not provided in the summary."
+    },
+    {
+      "title": "An AI agent hacked McKinsey's internal AI platform in two hours using a decades-old technique",
+      "url": "https://the-decoder.com/an-ai-agent-hacked-mckinseys-internal-ai-platform-in-two-hours-using-a-decades-old-technique/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Security firm Codewall used an offensive AI agent to breach McKinsey's internal Lilli platform \u2014 used by 43,000+ employees \u2014 in two hours with no credentials or insider knowledge, exploiting a classic technique (likely prompt injection or indirect injection via documents). This is a live, high-profile demonstration that enterprise AI deployments at scale are vulnerable to automated adversarial agents. The attack surface expands proportionally with how much sensitive data the platform can access.",
+      "builders_lens": "Every internal AI platform handling sensitive documents or strategy data is now a target for automated agent-based attacks \u2014 assume your RAG pipeline, document Q&A, or internal copilot has this exposure. Immediate actions: implement output filtering, scope LLM permissions to least-privilege, add human-in-the-loop gates for any action with external side effects, and red-team your system with adversarial prompts before enterprise rollout. This also signals a growing market for AI-native security tooling.",
+      "impact_level": "act",
+      "technical_detail": "Attack leveraged a 'decades-old technique' (likely indirect prompt injection via ingested documents) against McKinsey's Lilli RAG/agent platform; no credentials or human assistance required; full compromise achieved in under two hours."
+    },
+    {
+      "title": "Designing AI agents to resist prompt injection",
+      "url": "https://openai.com/index/designing-agents-to-resist-prompt-injection",
+      "source": "OpenAI Blog",
+      "hn_score": 3,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI published its architectural approach to making ChatGPT agents resistant to prompt injection and social engineering, focusing on action constraints and sensitive data protection in agentic workflows. This is OpenAI codifying defensive patterns it's applying to its own systems \u2014 effectively a public reference architecture for agent security. Coming the same day as the McKinsey hack story, the timing is notable.",
+      "builders_lens": "Read this as OpenAI's current best-practice spec for agent hardening \u2014 even if you're not using OpenAI models, the constraint-based design patterns (limiting risky actions, isolating sensitive context, hierarchical trust) apply universally. If you're building agents that touch external data or take real-world actions, implement these patterns now; the McKinsey breach shows the cost of not doing so is reputational and contractual, not just theoretical.",
+      "impact_level": "act",
+      "technical_detail": "OpenAI's approach involves constraining high-risk action classes at the agent architecture level and implementing data isolation to prevent sensitive information exfiltration via injected instructions; specific implementation details like allow/deny lists or classifier architectures not detailed in summary."
+    },
+    {
+      "title": "Wayfair boosts catalog accuracy and support speed with OpenAI",
+      "url": "https://openai.com/index/wayfair",
+      "source": "OpenAI Blog",
+      "hn_score": 4,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Enabler",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Wayfair deployed OpenAI models to automate support ticket triage and enrich millions of product attributes at scale, improving catalog accuracy and support resolution speed. This is a canonical enterprise AI case study: structured data enrichment and ticket classification are high-volume, low-variance tasks where LLMs reliably outperform rule-based systems. The catalog enrichment use case is particularly replicable across any catalog-heavy e-commerce or marketplace.",
+      "builders_lens": "Catalog enrichment and support triage are two of the fastest-ROI AI deployment patterns in e-commerce \u2014 if you're building for retail, marketplace, or logistics verticals, these are proven entry points with measurable payback. The Wayfair pattern (millions of SKUs, attribute extraction from unstructured specs) is a template you can productize as a vertical SaaS layer for mid-market merchants who can't build this internally.",
+      "impact_level": "watch",
+      "technical_detail": "Wayfair uses OpenAI models (specific versions unspecified) for two distinct pipelines: ticket triage classification and large-scale product attribute extraction/enrichment across millions of catalog items."
+    },
+    {
+      "title": "Services: The New Software",
+      "url": "https://sequoiacap.com/article/services-the-new-software/",
+      "source": "Sequoia Capital",
+      "hn_score": 9,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "New Market",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Sequoia argues that AI is collapsing the distinction between software products and professional services \u2014 AI agents can now deliver outcomes previously requiring human service delivery, creating a new category of 'software-as-a-service-firm.' This is a significant framing shift from a top-tier VC: the investable opportunity is no longer just tools but AI systems that directly replace service revenue. It signals where Sequoia's check-writing attention is focused for the next cycle.",
+      "builders_lens": "This is Sequoia telegraphing what they'll fund: companies that take a defined service category (legal, accounting, consulting, design, QA) and replace the human delivery layer with AI agents priced on outcomes, not seats. If you're building in this space, frame your pitch around TAM expansion \u2014 you're not selling software to service firms, you're eating the service firms' revenue directly. The competitive moat is workflow completeness and liability absorption, not model quality.",
+      "impact_level": "act",
+      "technical_detail": null
+    }
+  ]
+}

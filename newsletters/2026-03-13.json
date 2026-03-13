@@ -1,0 +1,164 @@
+{
+  "date": "2026-03-13",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Claude can now create interactive charts and visualizations directly in chat",
+      "url": "https://the-decoder.com/claude-can-now-create-interactive-charts-and-visualizations-directly-in-chat/",
+      "source": "The Decoder",
+      "hn_score": 318,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Anthropic has launched a beta feature enabling Claude to generate interactive diagrams, charts, and visualizations natively within chat. This closes a key gap versus ChatGPT's Code Interpreter and positions Claude as a more complete data analysis interface. High HN traction (318) signals strong builder and analyst interest.",
+      "builders_lens": "If you're building data tooling or BI adjacent products on top of Claude's API, watch whether this capability becomes API-accessible \u2014 it could replace a layer of your rendering stack. Conversely, if your moat was 'Claude + visualization wrapper,' that layer is now under pressure. Opportunity exists in verticalized visualization agents (finance, healthcare, ops) before incumbents own the default.",
+      "impact_level": "act",
+      "technical_detail": "Feature currently in beta; renders interactive charts likely via Claude-generated React/D3/Vega-Lite code executed in a sandboxed environment within the Claude.ai interface."
+    },
+    {
+      "title": "14,000 routers are infected by malware that's highly resistant to takedowns",
+      "url": "https://arstechnica.com/security/2026/03/14000-routers-are-infected-by-malware-thats-highly-resistant-to-takedowns/",
+      "source": "Ars Technica",
+      "hn_score": 21,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "A botnet of ~14,000 primarily Asus routers in the US is running malware engineered to resist law enforcement takedowns, likely via peer-to-peer C2 architecture. This represents persistent edge-network compromise with implications for AI inference traffic integrity and enterprise security posture. The Asus concentration suggests a specific firmware vulnerability being actively exploited.",
+      "builders_lens": "If you're deploying AI agents or inference endpoints that rely on edge or home-network connectivity (IoT inference, distributed compute), this botnet class is a direct threat vector to data integrity. Security startups building router-level firmware attestation or anomaly detection have a clear wedge here \u2014 the incumbent vendors are clearly not patching fast enough.",
+      "impact_level": "context",
+      "technical_detail": "Malware employs takedown-resistant architecture, likely P2P command-and-control; affects Asus router firmware, specific CVE not disclosed in summary but suggests persistent rootkit-level persistence."
+    },
+    {
+      "title": "A defense official reveals how AI chatbots could be used for targeting decisions",
+      "url": "https://www.technologyreview.com/2026/03/12/1134243/defense-official-military-use-ai-chatbots-targeting-decisions/",
+      "source": "MIT Technology Review",
+      "hn_score": 3,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "A DoD official has disclosed that the US military is exploring generative AI for ranking target lists and making strike recommendations, with human vetting retained. This is the most explicit public confirmation yet of LLMs entering lethal decision-support workflows. It will accelerate both defense AI procurement and regulatory/ethical pushback.",
+      "builders_lens": "Defense AI is a serious capital deployment opportunity \u2014 Palantir, Anduril, and Scale AI have already staked claims, but the middleware layer (audit trails, human-in-the-loop interfaces, explainability tooling for military AI) remains wide open. If you're building in this space, FedRAMP High and IL5/IL6 compliance are table stakes; start the authorization process early as it takes 12-18 months.",
+      "impact_level": "watch",
+      "technical_detail": "Architecture implied is LLM-based ranking/recommendation system operating over structured targeting data with mandatory human approval gates; no specific model or benchmark disclosed."
+    },
+    {
+      "title": "Hustlers are cashing in on China's OpenClaw AI craze",
+      "url": "https://www.technologyreview.com/2026/03/11/1134179/china-openclaw-gold-rush/",
+      "source": "MIT Technology Review",
+      "hn_score": 4,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenClaw, a Chinese open-source AI agent framework for autonomous device control, is spawning a gold rush of small startups and indie builders in China. The dynamic mirrors the early LangChain/AutoGPT wave in the West but compressed and localized. This signals a parallel agentic ecosystem developing outside US tooling dominance.",
+      "builders_lens": "OpenClaw is worth reverse-engineering for architectural ideas \u2014 Chinese OSS AI agent frameworks have historically shipped pragmatic, production-oriented patterns faster than Western academic-leaning alternatives. If you're building agentic products for Asian markets or with Chinese dev teams, getting ahead of this ecosystem now is a 6-month advantage. Watch for OpenClaw forks or ports that surface on GitHub.",
+      "impact_level": "watch",
+      "technical_detail": "OpenClaw is described as an open-source tool enabling autonomous device control and task completion; architecture details not disclosed but implied to be an agent orchestration framework with computer-use capabilities."
+    },
+    {
+      "title": "Future AI chips could be built on glass",
+      "url": "https://www.technologyreview.com/2026/03/13/1134230/future-ai-chips-could-be-built-on-glass/",
+      "source": "MIT Technology Review",
+      "hn_score": 1,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Early Research",
+      "summary": "South Korean company Absolics is beginning commercial production of glass-based substrates designed to replace organic laminates in advanced AI chip packaging. Glass offers better signal integrity, thermal stability, and higher interconnect density than current organic packaging materials. This is a packaging-layer innovation that could meaningfully improve next-gen accelerator performance.",
+      "builders_lens": "This is a 3-5 year infrastructure story, not an immediate builder action item. However, if you're advising on data center capex or chip procurement strategy, glass substrates are a leading indicator of which fabs and chip designers will have density advantages in the 2028+ generation of accelerators. Watch which hyperscalers and AI chip startups partner with Absolics early.",
+      "impact_level": "context",
+      "technical_detail": "Glass substrates enable tighter interconnect pitches and lower signal loss vs. organic laminates; Absolics targeting commercial-scale production in 2026 for advanced AI accelerator packaging applications."
+    },
+    {
+      "title": "Meta delays its next AI model Avocado after internal tests show it can't keep up with Google and OpenAI",
+      "url": "https://the-decoder.com/meta-delays-its-next-ai-model-avocado-after-internal-tests-show-it-cant-keep-up-with-google-and-openai/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Meta is delaying its 'Avocado' model after internal benchmarks showed it underperforming against Google and OpenAI's frontier models. This is a significant signal that Meta's frontier model trajectory is slipping even as its open-source Llama series remains strong. The gap between Meta's closed frontier work and its OSS contributions may be widening.",
+      "builders_lens": "For builders who've bet on Meta/Llama as a hedge against OpenAI/Google dependency, this reinforces that Llama's strength is in the open-weights fine-tuning ecosystem, not frontier capability racing. If your product roadmap requires frontier-class closed models, Meta is not a credible near-term alternative to GPT-4-class or Gemini Ultra-class APIs. This also opens space for Anthropic to consolidate enterprise accounts currently hedging with Meta.",
+      "impact_level": "watch",
+      "technical_detail": "No architectural or parameter details disclosed; model referred to internally as 'Avocado'; underperformed on unspecified internal benchmarks relative to Google and OpenAI frontier models."
+    },
+    {
+      "title": "Bytedance secures access to Nvidia Blackwell cluster in Malaysia, circumventing US export ban on China",
+      "url": "https://the-decoder.com/bytedance-secures-access-to-nvidia-blackwell-cluster-in-malaysia-circumventing-us-export-ban-on-china/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "ByteDance is accessing ~36,000 Nvidia Blackwell GPUs in Malaysia to circumvent US export controls that explicitly ban these chips from reaching China, even under recent Trump-era relaxations. This establishes a third-country compute arbitrage playbook that will be closely watched and likely triggers tighter enforcement. It directly impacts the assumption that export controls are meaningfully constraining Chinese AI capability.",
+      "builders_lens": "This has two builder implications: first, Southeast Asian cloud and colocation providers (Malaysia, Singapore, UAE) are becoming strategic AI compute hubs \u2014 startups building GPU orchestration, MLOps, or inference infrastructure in these regions have a real tailwind. Second, if you're advising enterprise clients on AI supply chain risk, the geopolitical compute map is now more complex than US vs. China binary.",
+      "impact_level": "watch",
+      "technical_detail": "Cluster comprises approximately 36,000 Nvidia Blackwell GPUs (likely H100/B100-class) deployed in Malaysian data centers; US export controls currently prohibit direct shipment of these chips to Chinese entities."
+    },
+    {
+      "title": "Wayfair boosts catalog accuracy and support speed with OpenAI",
+      "url": "https://openai.com/index/wayfair",
+      "source": "OpenAI Blog",
+      "hn_score": 4,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Enabler",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Wayfair is using OpenAI models in production to automate customer support ticket triage and enrich millions of product catalog attributes at scale. This is a clean case study of LLMs delivering measurable ROI in e-commerce operations rather than experimental pilots. The catalog enrichment use case is particularly replicable across any retailer with large, messy product data.",
+      "builders_lens": "Catalog enrichment and support triage are two of the highest-ROI, lowest-risk LLM deployment patterns for mid-market e-commerce \u2014 if you're building vertical AI for retail, these are proven wedge use cases to lead with. The OpenAI blog placement signals this is a reference architecture OpenAI is actively selling; expect competitors to build Wayfair-style case studies on Anthropic/Gemini to compete for this segment.",
+      "impact_level": "context",
+      "technical_detail": "Deployment uses OpenAI models (specific version undisclosed) for structured attribute extraction across millions of SKUs and multi-class ticket classification; scale implies batch inference pipeline rather than real-time."
+    },
+    {
+      "title": "AI chips are pushing everything else off TSMC's most advanced production lines",
+      "url": "https://the-decoder.com/ai-chips-are-pushing-everything-else-off-tsmcs-most-advanced-production-lines/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "SemiAnalysis projects that by 2027, 86% of TSMC's N3 (3nm) capacity will be consumed by AI accelerators, effectively crowding out smartphone and consumer chip production. Smartphone chips are being pushed to N4/N5 as overflow buffers. This is a structural shift in semiconductor allocation with multi-year implications for chip pricing and availability across all categories.",
+      "builders_lens": "For builders evaluating custom silicon or edge AI chips: N3 allocation constraints mean longer lead times and higher costs for anything not AI-labeled. If your product roadmap includes custom ASIC or FPGA work on advanced nodes, add 6-12 months to your timeline assumptions and engage TSMC capacity brokers now. This also structurally advantages hyperscalers with existing fab relationships (Google TPU, AWS Trainium) over startups trying to tape out.",
+      "impact_level": "watch",
+      "technical_detail": "TSMC N3 node projected at 86% AI accelerator allocation by 2027 per SemiAnalysis; displacement pushing mobile SoCs to N4/N5 nodes; constrains non-AI advanced node availability industry-wide."
+    },
+    {
+      "title": "Designing AI agents to resist prompt injection",
+      "url": "https://openai.com/index/designing-agents-to-resist-prompt-injection",
+      "source": "OpenAI Blog",
+      "hn_score": 3,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI has published guidance on architectural patterns for making ChatGPT-based agents resistant to prompt injection and social engineering attacks in agentic workflows. The focus is on constraining high-risk actions and protecting sensitive data at the agent design level. This signals that prompt injection defense is moving from ad-hoc developer patches toward structured architectural standards.",
+      "builders_lens": "If you're shipping agents that touch external data sources, user files, or third-party APIs, this is required reading \u2014 prompt injection is currently the most exploitable attack surface in production agent deployments. The opportunity: a dedicated agent security audit and red-teaming service (like a pen-test firm but for AI agents) is an underserved market as enterprises scale agent deployments. Build your agent security checklist around OpenAI's framework and differentiate on vertical-specific threat models.",
+      "impact_level": "act",
+      "technical_detail": "Defensive architecture involves action-space restriction (limiting what tools/APIs agents can invoke), input sanitization layers for external content ingestion, and privilege separation between agent roles to contain injection blast radius."
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "date": "2026-03-14",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "The wild six weeks for NanoClaw's creator that led to a deal with Docker",
+      "url": "https://techcrunch.com/2026/03/13/the-wild-six-weeks-for-nanoclaws-creator-that-led-to-a-deal-with-docker/",
+      "source": "TechCrunch AI",
+      "hn_score": 87,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Opportunity",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "An open source developer built NanoClaw, gained rapid community traction, and landed a partnership with Docker within six weeks. This follows a pattern where Docker is actively acquiring or partnering with developer tooling projects that complement containerized AI/agent workflows. The speed of the deal signals Docker is moving aggressively to own more of the AI dev toolchain.",
+      "builders_lens": "If you're building open source tooling adjacent to containers, agents, or AI dev workflows, Docker is clearly an active acqui-hire and partnership target right now. Shipping something useful publicly and building community is a viable path to a deal \u2014 not just VC funding. Watch what NanoClaw actually does to identify the whitespace Docker is trying to fill.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Supply-chain attack using invisible code hits GitHub and other repositories",
+      "url": "https://arstechnica.com/security/2026/03/supply-chain-attack-using-invisible-code-hits-github-and-other-repositories/",
+      "source": "Ars Technica",
+      "hn_score": 13,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Attackers are embedding invisible Unicode characters into source code on GitHub and other repositories to hide malicious logic from human reviewers. This is a direct attack on code review workflows and is particularly dangerous in AI-assisted development pipelines where LLMs may also fail to flag invisible characters. Supply-chain integrity is now a harder problem than most security tooling is built for.",
+      "builders_lens": "If you're building AI coding assistants, code review tools, or CI/CD pipelines, you need explicit Unicode normalization and invisible-character detection as a first-class security primitive \u2014 most tools don't have this today. This is a real product gap. For teams using AI-generated or AI-reviewed code at scale, audit your ingestion pipeline for Unicode anomalies immediately.",
+      "impact_level": "act",
+      "technical_detail": "Attack vector exploits zero-width and other invisible Unicode codepoints (e.g., U+200B, U+FEFF) that render identically to empty space in most code editors and diff views but alter program logic at parse or execution time."
+    },
+    {
+      "title": "14,000 routers are infected by malware that's highly resistant to takedowns",
+      "url": "https://arstechnica.com/security/2026/03/14000-routers-are-infected-by-malware-thats-highly-resistant-to-takedowns/",
+      "source": "Ars Technica",
+      "hn_score": 21,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "A botnet of ~14,000 primarily Asus routers \u2014 mostly US-based \u2014 is running malware engineered to survive takedown attempts, suggesting a persistent proxy or relay network. Router-level botnets are increasingly used as residential IP proxies to bypass rate limits, evade detection, and launder AI API abuse. This is relevant to anyone operating AI services that depend on IP-based trust signals.",
+      "builders_lens": "If your AI product uses IP reputation, rate limiting, or geo-based access controls as a security layer, router-level botnets actively erode those defenses \u2014 plan for behavior-based abuse detection instead. For AI API providers, this class of infrastructure is used to distribute credential stuffing and token theft attacks at scale. No immediate action required unless you're seeing anomalous residential IP traffic patterns.",
+      "impact_level": "context",
+      "technical_detail": "Malware employs persistence mechanisms that survive router firmware reboots, likely via modification of non-volatile storage partitions; primary affected hardware is Asus consumer and prosumer routers running vulnerable firmware versions."
+    },
+    {
+      "title": "1M context is now generally available for Opus 4.6 and Sonnet 4.6",
+      "url": "https://simonwillison.net/2026/Mar/13/1m-context/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 1193,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Cost Driver",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Anthropic has made 1M token context windows generally available for Claude Opus 4.6 and Sonnet 4.6 with no long-context pricing premium \u2014 a direct competitive strike at OpenAI and Google, both of whom charge more for extended context. This removes the cost penalty that was forcing builders to implement RAG or chunking workarounds for large-document use cases. It's a meaningful infrastructure cost shift for any product doing document processing, codebase analysis, or long-horizon reasoning.",
+      "builders_lens": "Revisit any architecture decision made to avoid long-context costs \u2014 RAG pipelines, chunking strategies, and summarization layers built purely as cost optimizations may now be unnecessary complexity. For new builds targeting legal, financial, medical, or code analysis, whole-document-in-context is now a viable default on Anthropic's stack. The pricing parity also makes Claude a more credible default over Gemini 1.5 Pro for teams previously choosing Gemini purely for long-context economics.",
+      "impact_level": "act",
+      "technical_detail": "Claude Opus 4.6 and Sonnet 4.6 now support 1M token context at standard per-token input/output pricing (no tiered surcharge), compared to OpenAI GPT-5.4 at 272K and Gemini 1.5 Pro which charges a long-context premium above 128K tokens."
+    },
+    {
+      "title": "Coding After Coders: The End of Computer Programming as We Know It",
+      "url": "https://simonwillison.net/2026/Mar/12/coding-after-coders/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 365,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "A major NYT Magazine feature synthesizing views from 70+ developers at Google, Amazon, Microsoft, and Apple on how AI is restructuring software development workflows. The piece captures a real inflection: AI coding tools are no longer productivity aids but are beginning to change who gets hired, what skills matter, and how software teams are staffed. This is the mainstream narrative crystallizing around a trend that technical readers have been living for 18 months.",
+      "builders_lens": "The narrative shift in mainstream press matters for hiring, fundraising, and enterprise sales \u2014 expect procurement conversations to increasingly include 'how are you using AI to reduce headcount or accelerate output.' If you're building dev tools, this is the tailwind moment to push enterprise deals. If you're a founder hiring engineers, the delta between AI-native and non-AI-native developers is now large enough to make it a first-order hiring filter.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Designing AI agents to resist prompt injection",
+      "url": "https://openai.com/index/designing-agents-to-resist-prompt-injection",
+      "source": "OpenAI Blog",
+      "hn_score": 3,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI published a technical overview of how ChatGPT's agent workflows are designed to defend against prompt injection and social engineering, focusing on constraining risky actions and isolating sensitive data. This is defensive infrastructure research that will eventually propagate into API-level guardrails and agent framework design patterns. The low HN score reflects that it reads more as marketing than novel research, but the design principles are worth extracting.",
+      "builders_lens": "If you're building agents with tool use, web browsing, or multi-step workflows, the design patterns here \u2014 privilege separation, action constraints, context isolation \u2014 are worth implementing now before you hit a production incident. Prompt injection in agentic settings is the #1 underrated security risk for AI product teams shipping in 2026. Treat this post as a checklist, not a research paper.",
+      "impact_level": "watch",
+      "technical_detail": "OpenAI's approach uses a combination of instruction hierarchy enforcement (system prompt privilege over user/tool outputs), action gating for high-risk operations, and redaction of sensitive fields before tool outputs re-enter the context window."
+    },
+    {
+      "title": "Wayfair boosts catalog accuracy and support speed with OpenAI",
+      "url": "https://openai.com/index/wayfair",
+      "source": "OpenAI Blog",
+      "hn_score": 4,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Wayfair is using OpenAI models to automate support ticket triage and enrich product catalog attributes at scale across millions of SKUs. This is a standard enterprise AI deployment case study \u2014 useful as a reference architecture for e-commerce and marketplace operators, but not a signal of a new capability or market shift. The pattern of LLMs for catalog enrichment + support deflection is now table stakes for large retailers.",
+      "builders_lens": "If you're selling AI to e-commerce or marketplace companies, this case study gives you the enterprise proof point and framing \u2014 catalog accuracy and support ticket deflection are the two easiest ROI stories to land. For builders, the more interesting opportunity is building the vertical tooling layer on top of OpenAI/Anthropic that makes this deployment pattern accessible to mid-market retailers who can't staff Wayfair-scale ML teams.",
+      "impact_level": "context",
+      "technical_detail": "Wayfair's implementation uses OpenAI models for structured attribute extraction from unstructured product descriptions at millions-of-SKU scale, combined with classification-based ticket routing to reduce human support queue volume."
+    },
+    {
+      "title": "A defense official reveals how AI chatbots could be used for targeting decisions",
+      "url": "https://www.technologyreview.com/2026/03/12/1134243/defense-official-military-use-ai-chatbots-targeting-decisions/",
+      "source": "MIT Technology Review",
+      "hn_score": 4,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "A Pentagon official disclosed that the US military is exploring generative AI systems to rank and recommend strike targets, with human vetting retained in the loop. This is the most consequential application domain for LLMs going public \u2014 it signals defense budget allocation toward generative AI and raises the regulatory and ethical surface area for all foundation model providers. The disclosure comes amid active Pentagon scrutiny over a recent strike.",
+      "builders_lens": "Defense AI is now a confirmed budget priority at the generative layer, not just classical ML \u2014 this opens a lane for dual-use infrastructure companies (secure inference, on-prem deployment, ITAR-compliant fine-tuning) that can serve this market. For founders not targeting defense, the more immediate concern is regulatory blowback: high-profile military AI use cases tend to accelerate calls for broader AI governance frameworks that affect civilian products. Watch for export control and model access policy changes in the next 12 months.",
+      "impact_level": "watch",
+      "technical_detail": "System described uses generative AI to produce ranked target lists with supporting rationale for human review \u2014 likely a retrieval-augmented or structured-output pipeline over classified ISR data, not a novel architecture but a sensitive deployment context for existing LLM patterns."
+    }
+  ]
+}

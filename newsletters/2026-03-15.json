@@ -1,0 +1,151 @@
+{
+  "date": "2026-03-15",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "US Army announces contract with Anduril worth up to $20B",
+      "url": "https://techcrunch.com/2026/03/14/us-army-announces-contract-with-anduril-worth-up-to-20b/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "The US Army awarded Anduril a single enterprise contract worth up to $20B, consolidating 120+ separate procurement actions under one vendor relationship. This signals a structural shift in how the DoD buys defense tech \u2014 away from fragmented contracting toward platform-style relationships with software-native primes. Anduril is now a defense prime in practice, not just by aspiration.",
+      "builders_lens": "This validates the defense-tech stack play: Anduril wins by owning the integration layer, not just point solutions. Builders targeting government should think in terms of consolidating contract surfaces and becoming enterprise-of-record, not selling individual capabilities. Sub-contractor and API-layer opportunities within Anduril's ecosystem will grow significantly.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "The wild six weeks for NanoClaw's creator that led to a deal with Docker",
+      "url": "https://techcrunch.com/2026/03/13/the-wild-six-weeks-for-nanoclaws-creator-that-led-to-a-deal-with-docker/",
+      "source": "TechCrunch AI",
+      "hn_score": 93,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Opportunity",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Solo developer Gavriel Cohen built NanoClaw as an open source project and within six weeks landed a formal partnership with Docker. The speed of this trajectory \u2014 OSS to platform deal in weeks \u2014 reflects how distribution-hungry infrastructure companies are actively hunting for developer-loved tooling to absorb. Docker is clearly investing in extending its relevance into the AI/container tooling layer.",
+      "builders_lens": "The playbook here is deliberate: build a sharp OSS tool that solves a real infrastructure pain point, get genuine developer traction, and let platforms come to you. If you're building dev tooling adjacent to containers, AI runtimes, or CI/CD, a six-week window from launch to acquisition conversation is now a realistic ceiling. Optimize for GitHub stars and word-of-mouth before monetization.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "The $32B acquisition that one VC is calling the 'Deal of the Decade'",
+      "url": "https://techcrunch.com/video/the-32b-acquisition-that-one-vc-is-calling-the-deal-of-the-decade/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Platform Shift",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Google closed its $32B acquisition of Wiz, the largest venture-backed acquisition in history, after a declined 2024 offer and extended antitrust review. Index Ventures frames Wiz as sitting at the intersection of AI, cloud, and security spend \u2014 three compounding tailwinds. This cements cloud-native security as one of the highest-value categories in enterprise software.",
+      "builders_lens": "The Wiz outcome sets a new exit benchmark and validates that AI-adjacent security infrastructure commands top-tier multiples. Builders should note the formula: cloud-native, multi-platform, security-first, with AI as an accelerant rather than the core pitch. The gap Wiz leaves in the independent cloud security market is a real opening for the next generation of focused security tooling.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Supply-chain attack using invisible code hits GitHub and other repositories",
+      "url": "https://arstechnica.com/security/2026/03/supply-chain-attack-using-invisible-code-hits-github-and-other-repositories/",
+      "source": "Ars Technica",
+      "hn_score": 18,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Attackers are exploiting invisible Unicode characters to embed malicious logic in source code that passes human review and many static analysis tools. The attack surface spans GitHub and other major repositories, making this a supply chain threat that scales with open source adoption. Standard code review workflows are blind to this class of exploit by design.",
+      "builders_lens": "If your product ingests, runs, or distributes third-party code \u2014 including AI-generated code \u2014 this is an active threat vector you need tooling for today. There's a clear product opportunity in Unicode-aware static analysis and repository integrity scanning. Teams using LLM-assisted coding should audit whether their AI tooling introduces or misses this class of hidden characters.",
+      "impact_level": "act",
+      "technical_detail": "The attack leverages Unicode bidirectional control characters and zero-width joiners that render invisibly in most editors and diff views but execute as functional code tokens in compilers and interpreters."
+    },
+    {
+      "title": "14,000 routers are infected by malware that's highly resistant to takedowns",
+      "url": "https://arstechnica.com/security/2026/03/14000-routers-are-infected-by-malware-thats-highly-resistant-to-takedowns/",
+      "source": "Ars Technica",
+      "hn_score": 21,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "A botnet has infected 14,000 routers \u2014 predominantly Asus devices in the US \u2014 with malware designed to resist standard law enforcement takedown techniques. The persistence mechanisms make remediation significantly harder than typical botnet cleanup operations. This infrastructure is typically used for proxying attacks, credential stuffing, and bypassing geo-restrictions.",
+      "builders_lens": "For teams building fraud detection, bot mitigation, or network security products: residential botnet infrastructure is becoming more durable and harder to fingerprint, which degrades IP-reputation-based defenses. If your threat model includes credential stuffing or scraping via residential IPs, assume adversarial infrastructure quality has increased. Consider behavioral signals over network-origin signals.",
+      "impact_level": "watch",
+      "technical_detail": "The malware employs rootkit-level persistence and peer-to-peer C2 communication, making it resistant to sinkholing and single-point takedown operations used in prior botnet disruptions."
+    },
+    {
+      "title": "1M context is now generally available for Opus 4.6 and Sonnet 4.6",
+      "url": "https://simonwillison.net/2026/Mar/13/1m-context/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 1666,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Cost Driver",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Anthropic has made 1M token context generally available for Claude Opus 4.6 and Sonnet 4.6 with no long-context price premium \u2014 standard per-token pricing applies across the full window. This directly undercuts OpenAI and Gemini, both of which charge a premium for extended context. The pricing decision is as significant as the technical capability: it removes the economic barrier that has kept long-context use cases in prototype rather than production.",
+      "builders_lens": "Reprice your entire long-context architecture right now \u2014 workflows you shelved because of cost may be viable today. Use cases like full codebase analysis, large document processing, long-session agents, and multi-document RAG without chunking all need to be re-evaluated. The competitive pressure this creates will force OpenAI and Gemini to respond on pricing, so locking in Anthropic-native integrations now captures a temporary cost advantage.",
+      "impact_level": "act",
+      "technical_detail": "Opus 4.6 and Sonnet 4.6 support a 1,000,000 token context window at standard API pricing (no tiered surcharge), compared to OpenAI GPT-5.4 at 272K and Gemini 3.1 Pro at 200K-1M with premium pricing tiers."
+    },
+    {
+      "title": "Coding After Coders: The End of Computer Programming as We Know It",
+      "url": "https://simonwillison.net/2026/Mar/12/coding-after-coders/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 629,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "A major NYT Magazine piece synthesizing interviews with 70+ developers from Google, Amazon, Microsoft, and Apple documents the structural shift in how software is written under AI assistance. The piece captures a professional identity inflection point \u2014 not just a tooling change \u2014 with credible voices across the spectrum from enthusiastic adopters to serious skeptics. The signal is that this narrative has now crossed from tech-insider to mainstream-elite readership.",
+      "builders_lens": "The more important read here is the market signal: when NYT Magazine runs a 70-source feature on AI coding, enterprise buyers and non-technical founders accelerate adoption. Builders in dev tooling, AI coding assistants, or software education should expect a surge in inbound from the long tail of organizations who just got permission from the cultural narrative to move. Positioning around 'augmentation' rather than 'replacement' continues to convert better with enterprise buyers.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Designing AI agents to resist prompt injection",
+      "url": "https://openai.com/index/designing-agents-to-resist-prompt-injection",
+      "source": "OpenAI Blog",
+      "hn_score": 3,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI published a technical framework for building prompt injection resistance into agent workflows, focusing on constraining risky actions and protecting sensitive data in agentic contexts. This is an acknowledgment that prompt injection is a production-grade problem, not a theoretical one, and that architectural patterns \u2014 not just model training \u2014 are required to address it. The publication signals OpenAI is trying to establish design norms before third-party agents proliferate on their platform.",
+      "builders_lens": "If you're shipping agents that handle sensitive data or take real-world actions, this is required reading for your security architecture review. The specific patterns \u2014 action constraints, data sandboxing, privilege separation \u2014 should be in your threat model today, not post-launch. There's also a product opportunity: security tooling that audits agent designs against these patterns is an underbuilt category with clear enterprise demand.",
+      "impact_level": "act",
+      "technical_detail": "OpenAI's framework recommends tiered tool permission scopes, input sanitization pipelines for untrusted content channels, and constrained output schemas to limit the blast radius of injected instructions in multi-step agent workflows."
+    },
+    {
+      "title": "Wayfair boosts catalog accuracy and support speed with OpenAI",
+      "url": "https://openai.com/index/wayfair",
+      "source": "OpenAI Blog",
+      "hn_score": 4,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Enabler",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Wayfair deployed OpenAI models to automate support ticket triage and enrich millions of product attributes at scale, improving both catalog accuracy and support response speed. This is a canonical enterprise AI deployment case: high-volume, structured data operations where LLMs replace manual labor on tasks that don't require creative reasoning. The case study is notable for the scale \u2014 millions of SKUs \u2014 rather than the novelty of the use case.",
+      "builders_lens": "The Wayfair pattern \u2014 catalog enrichment plus support triage \u2014 is repeatable across any e-commerce, marketplace, or inventory-heavy vertical. If you're building vertical AI for retail, logistics, or marketplace operators, this is the proof-of-concept reference to put in front of enterprise buyers. The real margin is in the data pipeline and fine-tuning layer, not the OpenAI API call itself.",
+      "impact_level": "context",
+      "technical_detail": "Wayfair uses OpenAI models for multi-attribute product classification and structured extraction across millions of catalog entries, integrated with their existing ticket routing and CRM infrastructure."
+    }
+  ]
+}

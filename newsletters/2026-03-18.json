@@ -1,0 +1,166 @@
+{
+  "date": "2026-03-18",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Introducing GPT-5.4 mini and nano",
+      "url": "https://openai.com/index/introducing-gpt-5-4-mini-and-nano",
+      "source": "OpenAI Blog",
+      "hn_score": 372,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Enabler",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI released GPT-5.4 mini and nano, smaller and faster variants of GPT-5.4 explicitly optimized for coding, tool use, multimodal reasoning, and high-volume sub-agent workloads. This continues the tiered model strategy that makes frontier-class reasoning economically viable at scale. For builders running agentic pipelines, this is a direct cost and latency lever.",
+      "builders_lens": "If you're building multi-agent systems or high-throughput API products, evaluate nano for the inner-loop calls and mini for intermediate reasoning steps \u2014 the cost reduction per token at scale is where margins get made. The explicit 'sub-agent' positioning is a signal that OpenAI is designing these for orchestration roles, so architect accordingly. Watch whether tool-use reliability holds up under nano's size constraints before committing it to production agents.",
+      "impact_level": "act",
+      "technical_detail": "Optimized for coding, tool use, and multimodal reasoning; positioned as sub-agent workload models in the GPT-5.4 family, suggesting significantly reduced parameter counts relative to GPT-5.4 base with retained instruction-following fidelity."
+    },
+    {
+      "title": "Subagents",
+      "url": "https://simonwillison.net/guides/agentic-engineering-patterns/subagents/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 416,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Simon Willison's guide on agentic engineering patterns covers subagents as a primary architectural response to context window limits, which have plateaued near 1M tokens despite broad capability gains. The core insight is that decomposing work across specialized subagents is now a first-class engineering discipline, not a workaround. This is becoming the dominant mental model for serious agent system design.",
+      "builders_lens": "This is required reading before architecting any multi-step AI system \u2014 the patterns here will save you weeks of painful refactoring. The context-limit framing matters: assume 1M tokens is your ceiling and design task decomposition around it now rather than hoping for context expansion to bail you out. The 'atom everything' pattern specifically is worth implementing as a default in any pipeline where task scope is variable.",
+      "impact_level": "act",
+      "technical_detail": "Context windows have plateaued near 1M tokens across frontier models; the guide documents subagent decomposition patterns as a structural engineering response, with quality degradation observed in long-context benchmarks motivating the architecture."
+    },
+    {
+      "title": "Supply-chain attack using invisible code hits GitHub and other repositories",
+      "url": "https://arstechnica.com/security/2026/03/supply-chain-attack-using-invisible-code-hits-github-and-other-repositories",
+      "source": "Ars Technica",
+      "hn_score": 18,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Attackers are exploiting invisible Unicode characters to embed malicious code in GitHub and other repositories that is undetectable during normal code review. This is a supply-chain attack vector with particularly high risk for AI-assisted development workflows where LLMs may parse or execute code without flagging invisible characters. The attack surface expands significantly as AI agents gain write access to codebases.",
+      "builders_lens": "If you're building AI coding agents or CI/CD pipelines that ingest third-party repos, add Unicode normalization and invisible-character scanning to your input sanitization layer \u2014 this is a low-effort defense against a high-impact vector. For teams using LLM-generated code in production, audit whether your review tooling renders invisible Unicode. This is also a product opportunity: security tooling purpose-built for AI-generated and AI-processed code pipelines is underdeveloped.",
+      "impact_level": "watch",
+      "technical_detail": "Attack uses invisible Unicode code points (e.g., zero-width characters, bidirectional control characters) embedded in source files to hide malicious logic that evades visual code review across GitHub and similar repository platforms."
+    },
+    {
+      "title": "14,000 routers are infected by malware that's highly resistant to takedowns",
+      "url": "https://arstechnica.com/security/2026/03/14000-routers-are-infected-by-malware-thats-highly-resistant-to-takedowns",
+      "source": "Ars Technica",
+      "hn_score": 21,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "A botnet of ~14,000 primarily Asus routers in the US is infected with malware engineered to survive takedown attempts. The persistence mechanisms make remediation at scale structurally difficult. For builders, this is relevant as edge compute and home-office AI inference deployments expand the attack surface in this device class.",
+      "builders_lens": "If your AI product relies on edge inference or user-side compute (e.g., local model runners, IoT integrations), router-level malware creates a man-in-the-middle risk for model I/O and API key exfiltration. For security-conscious builders, this is a nudge to audit whether your deployment assumes a trusted local network. Limited direct product opportunity here, but good hygiene context.",
+      "impact_level": "context",
+      "technical_detail": "Malware targets Asus routers with takedown-resistant persistence mechanisms; ~14,000 devices compromised, primarily US-based, forming a resilient botnet infrastructure."
+    },
+    {
+      "title": "Encyclopedia Britannica sues OpenAI for training on nearly 100,000 articles without permission",
+      "url": "https://the-decoder.com/encyclopedia-britannica-sues-openai-for-training-on-nearly-100000-articles-without-permission",
+      "source": "The Decoder",
+      "hn_score": 21,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Britannica is suing OpenAI over allegedly training on ~100,000 articles without a license, adding to the growing pile of copyright litigation against foundation model providers. European courts are simultaneously reaching conflicting rulings on whether AI models 'store' copyrighted works. Legal clarity on training data rights remains 18-36 months away at minimum, creating structural uncertainty for any team building on or with foundation models.",
+      "builders_lens": "If you're building a foundation model or fine-tuning on proprietary datasets, the litigation landscape makes provenance tracking and licensing documentation non-optional \u2014 start building data lineage tooling now. For application-layer builders, this increases the probability that OpenAI and others raise API prices to fund settlements and licensing deals, so stress-test your unit economics under a 2-3x cost increase scenario. There's also a real opportunity in data licensing infrastructure and clean-data marketplaces as demand for legally cleared training data accelerates.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "The Pentagon is planning for AI companies to train on classified data, defense official says",
+      "url": "https://www.technologyreview.com/2026/03/17/1134351/the-pentagon-is-planning-for-ai-companies-to-train-on-classified-data-defense-official-says",
+      "source": "MIT Technology Review",
+      "hn_score": 3,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "The Pentagon is designing secure environments (likely air-gapped or FedRAMP-High enclaves) where AI companies could train models on classified military data, creating a new category of defense-specific foundation models. Models like Claude are already deployed for classified analysis including target identification in Iran. This signals that defense AI is moving from inference-only to training-on-classified, a significant escalation in government AI ambition.",
+      "builders_lens": "The emerging defense AI stack \u2014 classified training environments, sovereign model fine-tuning, secure inference \u2014 is a multi-billion dollar infrastructure market that's almost entirely unaddressed by commercial tooling. If you have security clearances or are willing to build toward FedRAMP High / IL5/IL6 compliance, the picks-and-shovels layer (secure MLOps, classified data pipelines, audit tooling) is wide open. This also validates that AI security and compliance tooling is a durable category, not just a checkbox.",
+      "impact_level": "watch",
+      "technical_detail": "Plan involves secure compute enclaves enabling AI model training on classified DoD datasets; existing deployments include Claude-based inference for intelligence analysis tasks at classified classification levels."
+    },
+    {
+      "title": "GTC 2026: With Groq 3 LPX, Nvidia adds dedicated inference hardware to its platform for the first time",
+      "url": "https://the-decoder.com/gtc-2026-with-groq-3-lpx-nvidia-adds-dedicated-inference-hardware-to-its-platform-for-the-first-time",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Cost Driver",
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "At GTC 2026, Nvidia integrated Groq's LPU-based inference hardware (Groq 3 LPX) into the Vera Rubin platform, marking the first time Nvidia has offered dedicated inference silicon alongside its GPU training stack. The move bundles inference OS, agent security software, and open model alliances into a unified platform play. This is a significant competitive signal: Nvidia is now competing directly with inference-specialized clouds rather than just selling training compute.",
+      "builders_lens": "This accelerates the commoditization of inference compute and puts pricing pressure on inference API providers \u2014 if you're building on third-party inference APIs, the underlying cost structure is about to get more competitive, which is good for margin. For infra builders, Nvidia is consolidating the stack (training + inference + orchestration + security) in a way that shrinks the white space for pure-play inference startups unless they can differentiate on latency, compliance, or model selection. Evaluate whether your inference vendor has a durable moat given this platform consolidation.",
+      "impact_level": "watch",
+      "technical_detail": "Groq 3 LPX LPU integrated into Nvidia's Vera Rubin platform; Nvidia also announced custom CPU racks, a new storage architecture, an inference operating system, and agent security software as part of the expanded platform."
+    },
+    {
+      "title": "Mistral's new Small 4 model punches above its weight with 128 expert modules",
+      "url": "https://the-decoder.com/mistrals-new-small-4-model-punches-above-its-weight-with-128-expert-modules",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Mistral released Small 4, a mixture-of-experts model with 128 expert modules combining fast text, reasoning, and vision in a single small model. MoE architecture at this scale is increasingly proving that capable multimodal models don't require massive dense parameter counts. This strengthens the case for Mistral as a cost-efficient, self-hostable alternative to OpenAI's small model tier.",
+      "builders_lens": "Mistral Small 4 is worth benchmarking immediately if you're currently paying for GPT-4o mini or Claude Haiku at scale \u2014 the MoE architecture can deliver outsized reasoning per dollar, especially for self-hosted deployments where you control infrastructure cost. For EU-based or compliance-sensitive builders, Mistral's European domicile remains a differentiator that's only getting more relevant as data residency requirements tighten. The 128-expert MoE design also suggests strong task-specific routing, which may outperform dense models on narrow vertical use cases.",
+      "impact_level": "act",
+      "technical_detail": "Mistral Small 4 uses a 128-expert mixture-of-experts (MoE) architecture supporting multimodal inputs (text + images) with fast inference characteristics; specific parameter counts and benchmark scores not disclosed in summary."
+    },
+    {
+      "title": "OpenAI expands government footprint with AWS deal, report says",
+      "url": "https://techcrunch.com/2026/03/17/openai-expands-government-footprint-with-aws-deal",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI has signed a deal with AWS to distribute its AI systems to US government customers across classified and unclassified workloads, extending beyond its existing direct Pentagon contract. Routing through AWS GovCloud gives OpenAI access to FedRAMP-compliant infrastructure without building it internally. This pairs with the Pentagon classified training story and signals that the OpenAI-AWS-DoD triangle is becoming a dominant procurement path for government AI.",
+      "builders_lens": "The OpenAI-AWS-DoD channel is consolidating fast, which means third-party government AI vendors need to either plug into this stack or differentiate on capabilities it can't offer (specialized domain models, on-prem deployment, non-US-cloud data residency). For startups targeting government, the window for selling directly to agencies before hyperscaler bundles dominate is narrowing \u2014 move now or plan to be a complementary layer. AWS GovCloud as the distribution channel also means FedRAMP High compliance is becoming table stakes for any serious gov-tech AI play.",
+      "impact_level": "watch",
+      "technical_detail": "OpenAI models deployed via AWS GovCloud infrastructure for both classified and unclassified US government workloads; distribution partnership extends OpenAI's reach beyond direct DoD contracts into broader federal procurement channels."
+    },
+    {
+      "title": "Why physical AI is becoming manufacturing's next advantage",
+      "url": "https://www.technologyreview.com/2026/03/13/1134184/why-physical-ai-is-becoming-manufacturings-next-advantage",
+      "source": "MIT Technology Review",
+      "hn_score": 4,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "MIT Technology Review profiles the emerging 'physical AI' category in manufacturing \u2014 AI systems that operate in or reason about the physical world to address labor constraints, production complexity, and innovation velocity. This is the industrial counterpart to the software-side agentic AI wave, with robotics, computer vision, and simulation as the primary technology stack. Manufacturing is a large, underpenetrated vertical for AI with long sales cycles but strong retention once embedded.",
+      "builders_lens": "Physical AI in manufacturing is a 'picks and shovels' opportunity more than an application play for most software builders \u2014 the real leverage is in simulation environments, synthetic data generation for robot training, and vision models fine-tuned on industrial imagery where labeled data is scarce and valuable. If you're considering a vertical AI play, manufacturing has structurally high switching costs and willingness to pay, but expect 12-18 month sales cycles and deep integration requirements. Watch NVIDIA Omniverse and similar simulation platforms as the enabling infrastructure layer for this category.",
+      "impact_level": "watch",
+      "technical_detail": "Physical AI systems in manufacturing leverage robotics, computer vision, and simulation-based training to address labor constraints and operational complexity; no specific model architectures or benchmarks cited in the summary."
+    }
+  ]
+}

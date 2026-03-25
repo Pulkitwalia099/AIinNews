@@ -1,0 +1,162 @@
+{
+  "date": "2026-03-25",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "With $3.5B in fresh capital, Kleiner Perkins is going all in on AI",
+      "url": "https://techcrunch.com/2026/03/24/with-3-5b-in-fresh-capital-kleiner-perkins-is-going-all-in-on-ai/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Opportunity",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Kleiner Perkins closed a $3.5B fund split $1B early-stage and $2.5B growth-stage, explicitly structured around AI bets. This signals top-tier conviction that the AI investment window is still wide open at both ends of the company lifecycle. The fund size and structure confirm late-stage AI companies will have dry powder available to avoid down-round pressure.",
+      "builders_lens": "If you're building an AI-native company, KP's early-stage $1B allocation is actively looking for deals \u2014 a warm intro is worth pursuing now. The growth tranche signals that AI companies hitting scale can still raise at favorable terms from brand-name firms, reducing the forcing function to exit early.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Anthropic hands Claude Code more control, but keeps it on a leash",
+      "url": "https://techcrunch.com/2026/03/24/anthropic-hands-claude-code-more-control-but-keeps-it-on-a-leash/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Anthropic shipped an 'auto mode' for Claude Code that reduces approval friction for multi-step coding tasks, while embedding safety guardrails to limit blast radius. This is a deliberate step toward agentic coding workflows where the model self-directs execution loops. It positions Claude Code as a direct competitor to Cursor, Devin, and GitHub Copilot Workspace in the autonomous dev tools race.",
+      "builders_lens": "If you're building developer tooling, the auto mode pattern \u2014 high autonomy with embedded kill switches \u2014 is becoming the expected UX standard; ship without it and you'll feel the gap. If you're building on top of Claude Code via API, the new control surface is worth evaluating for internal automation pipelines where human-in-the-loop is currently a bottleneck.",
+      "impact_level": "watch",
+      "technical_detail": "Auto mode uses a tiered permission model where low-risk actions (file reads, grep) execute without confirmation, while destructive operations (writes, shell execution, network calls) still gate on user approval."
+    },
+    {
+      "title": "Databricks bought two startups to underpin its new AI security product",
+      "url": "https://techcrunch.com/2026/03/24/databricks-buys-two-startups-lakewatch-antimatter-siftd-ai-security/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Databricks acquired Antimatter (data access controls) and SiftD.ai (AI-specific threat detection) to build a native AI security layer into its platform. This is a direct move to own the security narrative as enterprises push sensitive workloads into Lakehouse environments. It signals that standalone AI security startups face an accelerating acqui-hire or get-bundled dynamic from platform players.",
+      "builders_lens": "Founders building point solutions in AI data security should pressure-test whether their differentiation survives Databricks bundling \u2014 the window for independent exits in this space is narrowing fast. Conversely, the acquisition validates real enterprise willingness to pay for AI-specific security, so adjacent problems (model governance, prompt audit logging, RAG data lineage) remain open territory.",
+      "impact_level": "watch",
+      "technical_detail": "Antimatter's core tech is cryptographic data enclaving with policy-enforced decryption; SiftD.ai focused on runtime detection of adversarial inputs and data exfiltration patterns in LLM inference pipelines."
+    },
+    {
+      "title": "Arm is releasing the first in-house chip in its 35-year history",
+      "url": "https://techcrunch.com/2026/03/24/arm-is-releasing-its-first-in-house-chip-in-its-35-year-history/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Arm is breaking from its pure IP licensing model to produce its own CPU, co-developed with Meta as the launch customer. This is a structural shift that puts Arm in direct competition with its own licensees \u2014 Qualcomm, Apple, and Ampere should all be recalibrating their roadmaps. Meta's involvement suggests the chip is optimized for hyperscale AI inference workloads, not general compute.",
+      "builders_lens": "For teams running inference at scale on ARM-based cloud instances, watch whether AWS Graviton and Azure Cobalt (both ARM licensees) respond with accelerated custom silicon \u2014 this could compress inference costs further over the next 18 months. The deeper signal: vertical integration is now the default strategy for anyone serious about AI infrastructure, and pure-play fabless licensing models are under structural pressure.",
+      "impact_level": "watch",
+      "technical_detail": "Chip is a custom CPU (not GPU) built on ARM's own ISA, co-designed with Meta presumably targeting throughput-optimized transformer inference; fabrication node and core count not yet disclosed."
+    },
+    {
+      "title": "OpenAI adds open source tools to help developers build for teen safety",
+      "url": "https://techcrunch.com/2026/03/24/openai-adds-open-source-tools-to-help-developers-build-for-teen-safety/",
+      "source": "TechCrunch AI",
+      "hn_score": 2,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Enabler",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI open-sourced a set of safety policies and developer tools specifically scoped to protect minor users in AI applications. The release lowers compliance overhead for consumer app builders targeting under-18 audiences. This is partly regulatory positioning \u2014 COPPA enforcement and EU AI Act age-verification requirements are converging on this exact problem.",
+      "builders_lens": "If you're building any consumer AI product with potential minor users (tutoring, social, gaming, companion apps), adopting these tools now is both a liability hedge and a potential trust differentiator. The open-source nature means you can audit and extend the policies \u2014 don't treat them as a black box if you're operating in a regulated market.",
+      "impact_level": "act",
+      "technical_detail": "Toolset includes classifiers for age-inappropriate content categories and configurable policy templates that hook into OpenAI's moderation API layer; specific model card or benchmark data not disclosed."
+    },
+    {
+      "title": "Self-propagating malware poisons open source software and wipes Iran-based machines",
+      "url": "https://arstechnica.com/security/2026/03/self-propagating-malware-poisons-open-source-software-and-wipes-iran-based-machines/",
+      "source": "Ars Technica",
+      "hn_score": 12,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "A self-propagating worm has been found compromising open source packages and deploying a destructive wiper payload targeting machines geolocated in Iran. The self-propagation mechanism through package ecosystems makes this significantly more dangerous than a static supply chain compromise. This is part of a broader wave of supply chain attacks hitting developer infrastructure this week, including the LiteLLM and Trivy incidents.",
+      "builders_lens": "Any team with automated dependency updates or CI pipelines that pull from public package registries should audit recent package installs immediately \u2014 this is not a theoretical risk this week. Review your CI runner's network egress and secrets access scope; compromised build environments can exfiltrate credentials silently before the wiper payload activates.",
+      "impact_level": "act",
+      "technical_detail": "Malware uses self-propagation via repository poisoning (injecting malicious commits or package versions upstream), with a conditional wiper payload that activates based on system geolocation checks."
+    },
+    {
+      "title": "Widely used Trivy scanner compromised in ongoing supply-chain attack",
+      "url": "https://arstechnica.com/security/2026/03/widely-used-trivy-scanner-compromised-in-ongoing-supply-chain-attack/",
+      "source": "Ars Technica",
+      "hn_score": 5,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Trivy, one of the most widely deployed open source container vulnerability scanners, has been compromised in an active supply chain attack. The irony of a security tool becoming the attack vector makes this particularly high-impact \u2014 Trivy runs with elevated permissions in many CI/CD pipelines by design. Rotate secrets and verify your Trivy binary hash immediately if you're running it in automated workflows.",
+      "builders_lens": "If Trivy is in your pipeline, treat your CI environment as potentially compromised and rotate all secrets accessible from those runners \u2014 cloud provider tokens, registry credentials, signing keys. This is also a forcing function to pin your security tooling to verified checksums and consider SLSA provenance verification for the tools themselves, not just your dependencies.",
+      "impact_level": "act",
+      "technical_detail": "Attack vector targets the Trivy binary or its plugin ecosystem in CI environments; the scanner typically runs with read access to Docker sockets, Kubernetes configs, and cloud credential files, making it a high-value compromise target."
+    },
+    {
+      "title": "A Visual Guide to Attention Variants in Modern LLMs",
+      "url": "https://magazine.sebastianraschka.com/p/visual-attention-variants",
+      "source": "Ahead of AI",
+      "hn_score": 24,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Sebastian Raschka published a visual explainer covering the full attention variant landscape \u2014 MHA, GQA, MLA, sparse attention, and hybrid architectures \u2014 with architectural diagrams mapping the tradeoffs. This is a high-signal reference for anyone evaluating or building model architectures, as attention design is now the primary lever for inference cost and context length scaling. The timing aligns with MLA (from DeepSeek) and hybrid sparse-dense attention becoming production choices, not just research options.",
+      "builders_lens": "If you're fine-tuning or training models and still defaulting to vanilla MHA, this is a concrete reference for evaluating GQA or MLA to cut KV cache memory by 4-8x \u2014 directly translating to lower inference costs at scale. For teams evaluating which base models to build products on, understanding these architectural differences helps predict which models will age better as context windows grow.",
+      "impact_level": "watch",
+      "technical_detail": "Covers Multi-Head Attention (MHA), Grouped Query Attention (GQA), Multi-head Latent Attention (MLA from DeepSeek-V2), sparse/sliding window attention, and hybrid architectures; MLA specifically reduces KV cache via low-rank joint compression of keys and values."
+    },
+    {
+      "title": "Package Managers Need to Cool Down",
+      "url": "https://simonwillison.net/2026/Mar/24/package-managers-need-to-cool-down/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 118,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Triggered by the LiteLLM supply chain attack, Simon Willison revisits the 'dependency cooldown' concept \u2014 deliberately delaying installation of newly published package versions by 48-72 hours to allow community detection of malicious packages before they hit production. The idea is operationally simple but culturally counter to the default 'always latest' mindset baked into most CI pipelines. Given this week's cluster of supply chain incidents, the proposal has renewed urgency.",
+      "builders_lens": "Implementing dependency cooldowns is a low-engineering-effort, high-leverage security control: add a publish-date check to your dependency update bot (Dependabot, Renovate) to skip versions less than 72 hours old. For teams building internal developer platforms or AI coding agents that auto-install packages, baking cooldown logic into the install flow is a defensible differentiator right now.",
+      "impact_level": "act",
+      "technical_detail": "Proposed mechanism involves querying PyPI/npm metadata for package publish timestamps and blocking automated installs of packages published within a configurable cooldown window, implementable as a Renovate config rule or pre-install hook."
+    },
+    {
+      "title": "Malicious litellm_init.pth in litellm 1.82.8 \u2014 credential stealer",
+      "url": "https://simonwillison.net/2026/Mar/24/malicious-litellm/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 731,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "LiteLLM versions 1.82.7 and 1.82.8 on PyPI contained a hidden credential stealer in a `.pth` file, meaning the malicious code executed automatically at Python startup without any explicit `import litellm` \u2014 simply having the package installed was sufficient for compromise. LiteLLM is one of the most widely used AI infrastructure libraries, sitting in the dependency tree of thousands of production AI applications. Any environment that installed these versions should be treated as fully compromised.",
+      "builders_lens": "If litellm is anywhere in your Python environment \u2014 directly or as a transitive dependency \u2014 audit your installed version immediately (`pip show litellm`) and rotate all API keys, cloud credentials, and secrets accessible from that environment. This incident should also prompt a hard look at whether your AI infrastructure dependencies (litellm, langchain, openai SDK) are pinned to hashes and sourced from verified builds in your production deployments.",
+      "impact_level": "act",
+      "technical_detail": "The exploit used a `litellm_init.pth` file (a Python path configuration file processed by the interpreter at startup) containing base64-encoded credential-stealing code targeting API keys and environment variables; `.pth` execution bypasses import-time analysis tools and most static scanners."
+    }
+  ]
+}

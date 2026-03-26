@@ -1,0 +1,128 @@
+{
+  "date": "2026-03-26",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Self-propagating malware poisons open source software and wipes Iran-based machines",
+      "url": "https://arstechnica.com/security/2026/03/self-propagating-malware-poisons-open-source-software-and-wipes-iran-based-machines/",
+      "source": "Ars Technica",
+      "hn_score": 13,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Self-propagating malware is actively targeting open source software repositories and wiping machines geolocated in Iran. This is part of a broader wave of supply-chain attacks hitting developer tooling. Any team with CI/CD pipelines pulling from open source dependencies should treat this as an active threat.",
+      "builders_lens": "Audit your dependency graphs and CI environments immediately \u2014 self-propagating malware in OSS repos means a single transitive dependency can detonate your entire dev environment. Prioritize lockfiles, hash pinning, and automated SBOM generation. This is not theoretical: the blast radius of an infected build system includes credentials, secrets, and production configs.",
+      "impact_level": "act",
+      "technical_detail": "Malware uses self-propagation mechanisms to spread through open source package ecosystems, with a destructive payload that wipes disk contents on Iran-geolocated hosts."
+    },
+    {
+      "title": "Widely used Trivy scanner compromised in ongoing supply-chain attack",
+      "url": "https://arstechnica.com/security/2026/03/widely-used-trivy-scanner-compromised-in-ongoing-supply-chain-attack/",
+      "source": "Ars Technica",
+      "hn_score": 5,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Trivy, one of the most widely deployed open source vulnerability scanners, has been compromised as part of an ongoing supply-chain attack. The irony is sharp: the tool used to detect supply-chain risk is itself a vector. Any team using Trivy in CI/CD pipelines should assume credential exposure and rotate secrets now.",
+      "builders_lens": "If Trivy is in your pipeline, rotate all secrets accessible from that environment \u2014 this is not optional. More broadly, this incident exposes a structural weakness: security tooling runs with elevated trust and broad access, making it a high-value target. Consider air-gapping or pinning security scanner versions with verified checksums.",
+      "impact_level": "act",
+      "technical_detail": "The compromise affects Trivy's distributed package, meaning any CI pipeline pulling the scanner binary or container image may have executed malicious code with access to environment variables and secrets."
+    },
+    {
+      "title": "A Visual Guide to Attention Variants in Modern LLMs",
+      "url": "https://magazine.sebastianraschka.com/p/visual-attention-variants",
+      "source": "Ahead of AI",
+      "hn_score": 24,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Sebastian Raschka publishes a comprehensive visual breakdown of attention mechanism variants used in modern LLMs, covering MHA, GQA, MLA, sparse attention, and hybrid architectures. This is a high-signal reference for anyone making architectural decisions on model training or fine-tuning. The consolidation of these variants into one guide reflects how rapidly the attention design space has fragmented across frontier models.",
+      "builders_lens": "If you're fine-tuning, distilling, or building on top of specific base models, understanding which attention variant they use (especially GQA vs. MHA vs. MLA) directly affects memory footprint, inference speed, and KV-cache costs. MLA in particular (used in DeepSeek) is an area where implementation choices meaningfully change your per-token cost at scale.",
+      "impact_level": "watch",
+      "technical_detail": "Covers Multi-Head Attention (MHA), Grouped-Query Attention (GQA), Multi-head Latent Attention (MLA as in DeepSeek-V2), sparse attention patterns, and hybrid local-global attention schemes used in models like Gemma and Mistral."
+    },
+    {
+      "title": "Thoughts on slowing the fuck down",
+      "url": "https://simonwillison.net/2026/Mar/25/thoughts-on-slowing-the-fuck-down/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 1405,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Mario Zechner, creator of the Pi agent framework powering OpenClaw, argues that agentic engineering has devolved into addictive output maximization at the expense of discipline and correctness. With 1405 HN points, this is clearly resonating as a counter-signal to the 'ship agents fast' zeitgeist. The post reflects a growing practitioner backlash against vibe-coded agentic systems entering production.",
+      "builders_lens": "The high engagement here is itself a signal: experienced builders are hitting real walls with agentic systems that optimize for velocity over reliability. If you're building agentic products, this is a competitive wedge \u2014 teams that invest in evaluation harnesses, rollback mechanisms, and human-in-the-loop checkpoints will outperform teams that ship fast and debug in prod. The opportunity is in tooling that enforces discipline without slowing iteration.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Malicious litellm_init.pth in litellm 1.82.8 \u2014 credential stealer",
+      "url": "https://simonwillison.net/2026/Mar/24/malicious-litellm/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 738,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "LiteLLM versions 1.82.7 and 1.82.8 on PyPI contained a credential stealer hidden in a .pth file, meaning the malicious code executes at Python interpreter startup \u2014 no import required. LiteLLM is one of the most widely used LLM routing libraries in the AI builder ecosystem, making the blast radius substantial. Anyone who installed these versions should treat all API keys and environment secrets as compromised.",
+      "builders_lens": "If litellm is in any of your environments, rotate every API key and cloud credential immediately \u2014 especially OpenAI, Anthropic, and AWS keys which are common in litellm deployments. This attack vector (.pth files executing at interpreter startup) is particularly dangerous because standard import audits won't catch it. Pin litellm to a verified safe version and add PyPI hash verification to your install process.",
+      "impact_level": "act",
+      "technical_detail": "Malicious payload was base64-encoded inside a `litellm_init.pth` file; Python's `.pth` file mechanism causes arbitrary code execution at interpreter initialization, bypassing any import-time security checks \u2014 active in both 1.82.7 (proxy module) and 1.82.8."
+    },
+    {
+      "title": "Introducing the OpenAI Safety Bug Bounty program",
+      "url": "https://openai.com/index/safety-bug-bounty",
+      "source": "OpenAI Blog",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI launches a Safety Bug Bounty program targeting AI-specific vulnerabilities including prompt injection, agentic exploitation, and data exfiltration. This is distinct from traditional software bug bounties \u2014 it explicitly scopes AI abuse vectors. Zero HN engagement suggests the technical community is skeptical of its impact, but it formalizes a vulnerability category that will matter more as agents gain autonomy.",
+      "builders_lens": "For security-focused founders, this creates a template: AI-native vulnerability classes (prompt injection, agentic privilege escalation, cross-context data leakage) are now formally recognized attack surfaces with bounty structures. Building defensive tooling around these specific vectors \u2014 particularly for enterprise agentic deployments \u2014 is an underserved market that OpenAI is inadvertently validating.",
+      "impact_level": "context",
+      "technical_detail": "Program scope explicitly includes agentic vulnerabilities such as tool-call manipulation, prompt injection chains across multi-agent systems, and exfiltration via model outputs."
+    },
+    {
+      "title": "Update on the OpenAI Foundation",
+      "url": "https://openai.com/index/update-on-the-openai-foundation",
+      "source": "OpenAI Blog",
+      "hn_score": 10,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI announces its Foundation will deploy at least $1B toward disease, economic opportunity, AI resilience, and community programs. This is philanthropic capital positioning, not a product announcement, but signals OpenAI's intent to build public-sector legitimacy as regulatory scrutiny increases. Low HN engagement confirms the builder community sees this as PR rather than signal.",
+      "builders_lens": "The 'AI resilience' and 'economic opportunity' funding buckets are worth watching for grant opportunities or partnership angles if you're building in workforce transition, healthcare AI, or civic tech. Otherwise, this is primarily a narrative move ahead of anticipated regulatory pressure \u2014 not a direct builder opportunity.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Powering product discovery in ChatGPT",
+      "url": "https://openai.com/index/powering-product-discovery-in-chatgpt",
+      "source": "OpenAI Blog",
+      "hn_score": 3,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI launches AI-native shopping in ChatGPT powered by the Agentic Commerce Protocol, enabling product discovery, comparison, and merchant integration directly in chat. This is a direct threat to Google Shopping and affiliate commerce ecosystems, and the protocol layer is the key detail \u2014 it's an emerging standard for how merchants plug into AI interfaces. Low HN score likely reflects skepticism about adoption, but the infrastructure play is significant.",
+      "builders_lens": "The Agentic Commerce Protocol is the thing to watch here \u2014 if it gains adoption, it becomes the merchant API layer for AI-native shopping, similar to how Stripe became the payments layer. Opportunities exist in middleware (feed optimization, ACP integration services, AI-native product catalogs) and in any vertical commerce play that wants early presence in ChatGPT's shopping surface before it gets crowded.",
+      "impact_level": "watch",
+      "technical_detail": "ChatGPT shopping is powered by the Agentic Commerce Protocol (ACP), a structured merchant integration layer enabling product data ingestion, side-by-side comparison rendering, and transactional handoff from within the ChatGPT interface."
+    }
+  ]
+}

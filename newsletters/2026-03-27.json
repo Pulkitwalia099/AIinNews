@@ -1,0 +1,145 @@
+{
+  "date": "2026-03-27",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Google bumps up Q Day deadline to 2029, far sooner than previously thought",
+      "url": "https://arstechnica.com/security/2026/03/google-bumps-up-q-day-estimate-to-2029-far-sooner-than-previously-thought/",
+      "source": "Ars Technica",
+      "hn_score": 5,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Google has moved its estimate for cryptographically relevant quantum computers ('Q Day') to 2029, dramatically accelerating the previously assumed timeline. This means RSA and elliptic curve encryption \u2014 the backbone of most TLS, JWT, and API security today \u2014 could be broken within 3 years. The entire industry is being pushed to migrate to post-quantum cryptography (PQC) standards now.",
+      "builders_lens": "If your product handles sensitive data, authentication tokens, or long-lived secrets, PQC migration is no longer a 'future roadmap' item \u2014 it's a 2026-2027 engineering priority. NIST finalized PQC standards in 2024; start auditing your crypto dependencies and TLS configurations now. There's also a real startup opportunity in PQC migration tooling, key management, and compliance auditing for SMBs that lack in-house security teams.",
+      "impact_level": "act",
+      "technical_detail": "NIST-standardized PQC algorithms including CRYSTALS-Kyber (key encapsulation) and CRYSTALS-Dilithium (signatures) are the target migration targets; Google recommends prioritizing any RSA-2048 or ECDSA P-256 usage in long-lived certificates or stored encrypted data."
+    },
+    {
+      "title": "Self-propagating malware poisons open source software and wipes Iran-based machines",
+      "url": "https://arstechnica.com/security/2026/03/self-propagating-malware-poisons-open-source-software-and-wipes-iran-based-machines/",
+      "source": "Ars Technica",
+      "hn_score": 13,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "A self-propagating malware campaign is actively compromising open source repositories and wiping machines at Iran-based development houses \u2014 an active, in-the-wild supply chain attack with destructive payloads. The self-propagating vector means infection can spread laterally through dev environments and CI/CD pipelines before detection. Any team pulling unverified open source dependencies is a potential target regardless of geography.",
+      "builders_lens": "Audit your dependency trees and CI/CD pipeline inputs immediately \u2014 this is the same attack surface class as the XZ Utils backdoor, and self-propagating behavior makes blast radius assessment critical. Consider pinning dependency hashes, enabling artifact signing (Sigstore/cosign), and scanning build containers. If you're building developer security tooling, supply chain integrity verification is a white-hot market right now.",
+      "impact_level": "act",
+      "technical_detail": "The malware uses self-propagating mechanisms to inject into open source packages, suggesting git hook or build script infection vectors similar to prior supply chain attacks; destructive wiper payloads are confirmed on Iranian-geolocated hosts."
+    },
+    {
+      "title": "Widely used Trivy scanner compromised in ongoing supply-chain attack",
+      "url": "https://arstechnica.com/security/2026/03/widely-used-trivy-scanner-compromised-in-ongoing-supply-chain-attack/",
+      "source": "Ars Technica",
+      "hn_score": 5,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Trivy, one of the most widely deployed open source container and filesystem vulnerability scanners, has been compromised in an active supply chain attack \u2014 meaning the tool many teams use to detect malware may itself be delivering it. This is a particularly high-impact compromise because Trivy runs with elevated permissions in CI/CD pipelines and often has access to secrets. Rotate credentials and verify your Trivy installation integrity immediately.",
+      "builders_lens": "If Trivy is in your pipeline, treat it as compromised until you can verify your installed version against known-good checksums \u2014 the irony of your security scanner being the attack vector is real and dangerous. This event accelerates demand for immutable, signed, and reproducible security tooling; there's a clear opportunity for vendors offering verifiable build provenance for security-critical CLI tools. Longer term, consider defense-in-depth that doesn't rely on a single scanner binary.",
+      "impact_level": "act",
+      "technical_detail": "Trivy is a widely adopted CNCF-affiliated vulnerability scanner used for container images, filesystems, and IaC; compromise of its distribution pipeline means malicious binaries may have been pulled by automated CI/CD workflows with broad secret access."
+    },
+    {
+      "title": "A Visual Guide to Attention Variants in Modern LLMs",
+      "url": "https://magazine.sebastianraschka.com/p/visual-attention-variants",
+      "source": "Ahead of AI",
+      "hn_score": 24,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Sebastian Raschka publishes a comprehensive visual breakdown of attention mechanism variants used in modern LLMs \u2014 covering Multi-Head Attention (MHA), Grouped Query Attention (GQA), Multi-Head Latent Attention (MLA), sparse attention, and hybrid approaches. This is a high-signal reference for understanding the architectural tradeoffs driving efficiency and capability in frontier models. MLA (used in DeepSeek) and GQA (used in Llama, Mistral) are increasingly the default choices for production model training.",
+      "builders_lens": "If you're fine-tuning, training, or evaluating models, understanding GQA vs MLA tradeoffs directly affects KV cache memory costs and inference throughput \u2014 which translates to serving costs. This guide is also a practical hiring/onboarding resource for ML engineers joining teams working on custom model architectures. Teams evaluating which base model to build on should understand that GQA/MLA architectures have materially better inference economics than vanilla MHA at scale.",
+      "impact_level": "watch",
+      "technical_detail": "MLA (Multi-Head Latent Attention, as in DeepSeek-V2/V3) compresses KV cache via low-rank projection, achieving significantly lower memory footprint than GQA while maintaining model quality; sparse attention variants trade some accuracy for O(n log n) or O(n) complexity versus standard O(n\u00b2)."
+    },
+    {
+      "title": "We Rewrote JSONata with AI in a Day, Saved $500K/Year",
+      "url": "https://simonwillison.net/2026/Mar/27/vine-porting-jsonata/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 402,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Reco.ai used AI-assisted coding to rewrite the JSONata JSON expression library from JavaScript to Go in a single day, eliminating a Node.js runtime dependency and saving $500K/year in infrastructure costs. Simon Willison frames this as 'vibe porting' \u2014 using LLMs to rapidly port codebases across languages without deep expertise in the target language. The $500K saving came primarily from eliminating expensive Node.js Lambda cold starts and runtime overhead, not from the AI tooling itself.",
+      "builders_lens": "This is a concrete, reproducible playbook: identify expensive polyglot runtime dependencies, use LLM-assisted porting to collapse your stack to a single language, and capture the infra savings. If you're running Node.js microservices or Lambda functions inside a primarily Go/Rust/Python shop, audit your runtime cost profile \u2014 there may be similar wins. The deeper signal is that 'rewrite risk,' historically a company-killer, is now dramatically lower with AI-assisted porting and good test suites.",
+      "impact_level": "act",
+      "technical_detail": "The port replaced the Node.js JSONata reference implementation with a custom Go implementation, eliminating Node runtime overhead in Lambda-style serverless environments; the key enabler was having a comprehensive test suite to validate behavioral parity across the rewrite."
+    },
+    {
+      "title": "My minute-by-minute response to the LiteLLM malware attack",
+      "url": "https://simonwillison.net/2026/Mar/26/response-to-the-litellm-malware-attack/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 546,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Callum McMahon's detailed post-mortem shows how he used Claude to investigate and confirm a malicious package in LiteLLM \u2014 a widely used AI gateway/proxy library \u2014 and coordinate disclosure to PyPI, including Claude surfacing the correct security contact. LiteLLM sits in the critical path of many AI-native applications as an abstraction layer over multiple LLM APIs. This is both a supply chain security incident for AI infrastructure and a case study in AI-assisted incident response.",
+      "builders_lens": "If LiteLLM is in your stack, verify your installed version and review the malicious package details immediately \u2014 this library proxies your LLM API keys, making a compromise particularly damaging. More broadly, AI gateway/proxy libraries are now high-value attack targets because they sit between your application and your most sensitive API credentials; evaluate whether self-hosted routing or direct SDK calls reduce your attack surface. The Claude-assisted IR workflow is worth studying as a template for your own incident response runbooks.",
+      "impact_level": "act",
+      "technical_detail": "LiteLLM is a Python proxy library that provides a unified API interface across OpenAI, Anthropic, Cohere, and other LLM providers; malicious code was injected into a PyPI package version, potentially exposing API keys passed through the proxy to all configured backends."
+    },
+    {
+      "title": "Thoughts on slowing the fuck down",
+      "url": "https://simonwillison.net/2026/Mar/25/thoughts-on-slowing-the-fuck-down/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 1549,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Mario Zechner, creator of the Pi agent framework behind OpenClaw, publishes a high-credibility critique of the current agentic AI engineering trend \u2014 arguing the field has abandoned software discipline in favor of shipping volume, producing brittle, untestable systems. With 1,549 HN points, this is the most resonant piece in this batch and reflects growing senior-engineer pushback against vibe-coded agentic systems in production. The core argument: AI-assisted speed without engineering rigor creates compounding technical debt that will be catastrophic at scale.",
+      "builders_lens": "This is a direct signal about what's coming: the first wave of agentic products built without test coverage, observability, or failure mode analysis will create a market for reliability, evals, and agentic QA tooling. If you're building agents for production, invest now in deterministic test harnesses and failure taxonomies \u2014 teams that do will have a structural advantage as customers become more demanding. If you're building infrastructure, 'agent reliability' and 'agentic observability' are becoming distinct product categories worth targeting.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Update on the OpenAI Foundation",
+      "url": "https://openai.com/index/update-on-the-openai-foundation",
+      "source": "OpenAI Blog",
+      "hn_score": 10,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI announces the OpenAI Foundation will deploy at least $1 billion toward disease research, economic opportunity, AI resilience, and community programs. This is a strategic legitimacy and positioning move accompanying OpenAI's corporate restructuring toward a capped-profit model. At $1B in philanthropic commitments, it's meaningful capital but the low HN score suggests the technical community views this as PR rather than a technical or market signal.",
+      "builders_lens": "The 'AI resilience' funding bucket is worth watching \u2014 grants in this area could seed academic and nonprofit work on AI safety, robustness, and red-teaming that eventually surfaces as tooling or standards. For founders in healthtech or economic mobility, OpenAI Foundation grants may become a non-dilutive funding source worth tracking. Otherwise, limited direct builder relevance.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Gemini 3.1 Flash Live: Making audio AI more natural and reliable",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-live/",
+      "source": "Google AI Blog",
+      "hn_score": 16,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Google releases Gemini 3.1 Flash Live, an update to its real-time multimodal audio model focused on naturalness and reliability improvements for voice AI applications. Flash Live targets low-latency, streaming audio use cases \u2014 competing directly with OpenAI's Realtime API and ElevenLabs in the voice agent infrastructure space. Incremental improvements in naturalness and reliability at Flash-tier pricing could meaningfully shift cost structures for voice AI builders.",
+      "builders_lens": "If you're building voice agents, IVR replacements, or real-time audio applications, Flash Live is worth benchmarking against GPT-4o Realtime and Gemini 2.0 Flash \u2014 Google's aggressive Flash pricing has historically undercut OpenAI on comparable tasks. The 'reliability' framing suggests improved interruption handling and turn-taking, which have been the primary production pain points in deployed voice agents. This is a commoditization signal: real-time voice AI infrastructure is becoming a cost-compete market, not a differentiation layer.",
+      "impact_level": "watch",
+      "technical_detail": "Gemini Flash Live is optimized for streaming audio with low time-to-first-token latency; specific improvements in 3.1 focus on naturalness of prosody and reduced hallucination/dropout rates in live audio streams, though Google has not released specific benchmark numbers in this announcement."
+    }
+  ]
+}

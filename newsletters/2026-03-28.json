@@ -1,0 +1,164 @@
+{
+  "date": "2026-03-28",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "We Rewrote JSONata with AI in a Day, Saved $500K/Year",
+      "url": "https://simonwillison.net/2026/Mar/27/vine-porting-jsonata/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 509,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Enabler",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Reco.ai used AI-assisted 'vibe porting' to rewrite the JSONata expression language library from JavaScript into Go in roughly one day, eliminating a costly runtime dependency. The $500K/year savings came from removing Node.js infrastructure needed solely to run the JS implementation. This is a concrete, high-signal case study of AI accelerating language/runtime migrations that were previously cost-prohibitive.",
+      "builders_lens": "If your stack has a polyglot dependency \u2014 a Python service calling a JS library, or a Go service shelling out to Ruby \u2014 AI-assisted porting is now a serious option worth scoping in a sprint rather than a quarter. The pattern: feed the source library + a comprehensive test suite to a frontier model, iterate on failing tests, ship. The real unlock is that translation projects with clear correctness signals (tests) are exactly where LLMs excel.",
+      "impact_level": "act",
+      "technical_detail": "Go reimplementation of JSONata (a JSON query/transformation language used heavily in Node-RED workflows), validated against the existing JSONata test suite to ensure behavioral parity."
+    },
+    {
+      "title": "My minute-by-minute response to the LiteLLM malware attack",
+      "url": "https://simonwillison.net/2026/Mar/26/response-to-the-litellm-malware-attack/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 593,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "A malicious package was injected into the LiteLLM supply chain; Callum McMahon used Claude in real-time to confirm the vulnerability, analyze the malicious code, and coordinate a PyPI disclosure \u2014 sharing the full transcript. LiteLLM is one of the most widely used AI routing/abstraction libraries in the builder ecosystem, making this supply chain attack unusually high blast radius. The incident demonstrates both the supply chain risk of fast-moving AI infrastructure packages and a new workflow: AI-assisted incident response.",
+      "builders_lens": "If LiteLLM is in your stack, audit your pinned versions and lockfiles today \u2014 this is not theoretical. More broadly, popular AI infrastructure packages (LiteLLM, LangChain, instructor, etc.) are high-value targets precisely because they sit between your app and your LLM API keys; treat them like you would an auth library. Consider vendoring or hash-pinning critical AI middleware.",
+      "impact_level": "act",
+      "technical_detail": "Malicious code was embedded in a LiteLLM PyPI release; Claude was used interactively to decompile and analyze the payload, identify the attack vector, and surface the correct PyPI security disclosure contact."
+    },
+    {
+      "title": "Quantization from the ground up",
+      "url": "https://simonwillison.net/2026/Mar/26/quantization-from-the-ground-up/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 401,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Sam Rose published an interactive visual essay explaining LLM quantization from first principles \u2014 covering INT8, INT4, and mixed-precision approaches with live demos. Quantization is the primary lever for deploying capable models on consumer hardware, making this conceptual literacy increasingly essential. The interactive format makes it the best on-ramp resource for engineers who need to make quantization decisions without a deep ML background.",
+      "builders_lens": "If you're deploying open-weight models (Llama, Mistral, Qwen, etc.) and making decisions about GGUF quantization levels, this is the reference to share with your team to build shared intuition. Understanding quantization tradeoffs \u2014 quality degradation curves vs. VRAM savings \u2014 directly affects your inference cost and latency architecture decisions.",
+      "impact_level": "context",
+      "technical_detail": "Covers INT8 and INT4 post-training quantization, absmax and zero-point quantization schemes, and the quality-vs-compression tradeoff curves across quantization bit depths for transformer LLMs."
+    },
+    {
+      "title": "Google bumps up Q Day deadline to 2029, far sooner than previously thought",
+      "url": "https://arstechnica.com/security/2026/03/google-bumps-up-q-day-estimate-to-2029-far-sooner-than-previously-thought/",
+      "source": "Ars Technica",
+      "hn_score": 5,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Google has revised its internal estimate for cryptographically relevant quantum computing ('Q Day') to 2029 \u2014 roughly 5-10 years earlier than prior consensus \u2014 and is urging the industry to urgently migrate off RSA and elliptic curve cryptography. This compresses the timeline for post-quantum cryptography (PQC) migration from a long-range planning exercise to an active infrastructure project. NIST finalized PQC standards in 2024; the question is now execution speed.",
+      "builders_lens": "If you're building any system that stores encrypted data today that must remain confidential past 2029 \u2014 health records, financial data, long-lived credentials \u2014 'harvest now, decrypt later' attacks make this urgent, not theoretical. Audit your TLS configurations, key exchange protocols, and certificate infrastructure for RSA/EC dependencies; AWS, Cloudflare, and GCP all have PQC migration guides available now.",
+      "impact_level": "watch",
+      "technical_detail": "Migration target is NIST-standardized post-quantum algorithms including ML-KEM (CRYSTALS-Kyber) for key encapsulation and ML-DSA (CRYSTALS-Dilithium) for digital signatures, replacing RSA-2048/4096 and ECDSA/ECDH."
+    },
+    {
+      "title": "Self-propagating malware poisons open source software and wipes Iran-based machines",
+      "url": "https://arstechnica.com/security/2026/03/self-propagating-malware-poisons-open-source-software-and-wipes-iran-based-machines/",
+      "source": "Ars Technica",
+      "hn_score": 13,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "A self-propagating malware strain is actively compromising open source software repositories and has demonstrated destructive wipe capability on Iran-based machines, suggesting a geopolitically motivated threat actor. The self-propagating (worm) characteristic means passive exposure \u2014 cloning an infected repo or installing a poisoned package \u2014 is sufficient for compromise. Development environments are the target, meaning the blast radius extends to everything a developer has credentials for.",
+      "builders_lens": "Development machines are now a primary attack surface \u2014 your laptop or CI runner likely has cloud credentials, GitHub tokens, PyPI publish rights, and production SSH keys. Treat this as a prompt to audit your CI/CD pipeline's dependency ingestion, enforce reproducible builds with hash verification, and consider sandboxing dependency installation (e.g., ephemeral containers for builds). The LiteLLM attack this same week is not a coincidence \u2014 OSS supply chain is under active assault.",
+      "impact_level": "act",
+      "technical_detail": "Self-propagating malware with wiper payload; spreads by poisoning open source packages, with confirmed destructive execution on machines geolocated to Iran \u2014 indicating selective payload activation based on targeting criteria."
+    },
+    {
+      "title": "A Visual Guide to Attention Variants in Modern LLMs",
+      "url": "https://magazine.sebastianraschka.com/p/visual-attention-variants",
+      "source": "Ahead of AI",
+      "hn_score": 24,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Sebastian Raschka published a visual explainer covering the full spectrum of modern attention mechanisms: Multi-Head Attention (MHA), Grouped-Query Attention (GQA), Multi-head Latent Attention (MLA), sparse attention, and hybrid architectures. These architectural choices directly determine inference cost, memory bandwidth, and context-length scaling \u2014 which flow through to API pricing and on-device feasibility. MLA (used in DeepSeek) in particular is becoming a significant differentiator in efficient long-context inference.",
+      "builders_lens": "If you're evaluating which open-weight models to deploy or fine-tune, understanding that MLA reduces KV cache memory by up to 93% vs MHA (enabling longer contexts at lower cost) is strategically relevant \u2014 it's why DeepSeek models punch above their weight at inference time. This is also essential background for anyone evaluating whether to build on a transformer backbone vs. hybrid SSM/attention architectures like Mamba or Jamba.",
+      "impact_level": "context",
+      "technical_detail": "Covers MHA, MQA, GQA, MLA (DeepSeek's multi-head latent attention with low-rank KV compression), sliding window sparse attention, and hybrid SSM-attention architectures with visual diagrams of head/KV cache structures."
+    },
+    {
+      "title": "Gemini 3.1 Flash Live: Making audio AI more natural and reliable",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-live/",
+      "source": "Google AI Blog",
+      "hn_score": 17,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Google released Gemini 3.1 Flash Live, a model variant optimized for real-time audio interaction with improvements to naturalness, interruption handling, and reliability in voice conversations. Real-time voice is the last major UX frontier where AI assistants still feel robotic, and small improvements in latency and interruption handling have outsized effects on user retention. This positions Gemini as a direct competitor to OpenAI's Realtime API and ElevenLabs' conversational voice stack.",
+      "builders_lens": "If you're building voice-first products (customer service bots, AI companions, accessibility tools, language tutors), the competitive landscape for real-time voice APIs is now three-way between Google, OpenAI, and specialized players \u2014 which means pricing pressure and rapid capability improvement. Evaluate Gemini 3.1 Flash Live against GPT-4o Realtime on your specific latency and interruption-handling requirements; switching costs are low while the market is still moving.",
+      "impact_level": "watch",
+      "technical_detail": "Gemini 3.1 Flash Live is a streaming audio model variant of the Flash series, optimized for low-latency turn-taking and natural interruption detection in real-time bidirectional audio sessions via the Live API."
+    },
+    {
+      "title": "Anthropic wins injunction against Trump administration over Defense Department saga",
+      "url": "https://techcrunch.com/2026/03/26/anthropic-wins-injunction-against-trump-administration-over-defense-department-saga/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "A federal judge ordered the Trump administration to rescind restrictions it had placed on Anthropic related to a Defense Department contract dispute. The injunction signals that courts are willing to intervene when executive actions threaten AI company operations tied to federal contracts. This has implications for the broader AI-government contracting landscape and Anthropic's ability to pursue DoD business.",
+      "builders_lens": "For founders pursuing government contracts \u2014 particularly in defense, intelligence, or federal civilian \u2014 this case illustrates that executive branch interference is now a real and litigable risk, not just a theoretical one. The fact that Anthropic successfully obtained an injunction suggests the legal framework exists to protect vendors; build government contract strategies with legal contingency planning, not just technical compliance.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Anthropic leak reveals new model \"Claude Mythos\" with \"dramatically higher scores on tests\" than any previous model",
+      "url": "https://the-decoder.com/anthropic-leak-reveals-new-model-claude-mythos-with-dramatically-higher-scores-on-tests-than-any-previous-model/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Leaked Anthropic internal documents reveal a new model class called 'Claude Mythos' positioned above Opus, with dramatically higher benchmark scores and a deliberately slow, safety-focused rollout strategy with an emphasis on cybersecurity capabilities. Two name candidates and a cautious release philosophy suggest Anthropic is treating this as a significant capability jump requiring careful staged deployment. The cybersecurity focus is notable \u2014 it signals Anthropic is targeting the security research and red-teaming market directly.",
+      "builders_lens": "If Claude Mythos delivers on 'dramatically higher' benchmark claims, it will reset expectations for what's achievable with Claude's API and likely compress the capability gap with GPT-5/o3. The deliberate slow release means enterprise customers and API builders should expect a waitlist/tier-gated rollout \u2014 start building relationships with Anthropic's enterprise team now if you want early access. The cybersecurity emphasis also suggests a specialized API tier or system prompt capabilities optimized for offensive/defensive security workflows.",
+      "impact_level": "watch",
+      "technical_detail": "Leaked documents indicate Claude Mythos is a new model tier above Opus with substantially higher scores across evaluations; specific architecture details not disclosed, but documents reference a focus on cybersecurity capability benchmarks and a staged/deliberate release strategy."
+    },
+    {
+      "title": "Cohere launches an open source voice model specifically for transcription",
+      "url": "https://techcrunch.com/2026/03/26/cohere-launches-an-open-source-voice-model-specifically-for-transcription/",
+      "source": "TechCrunch AI",
+      "hn_score": 3,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Cost Driver",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Cohere released an open-source transcription model at 2B parameters supporting 14 languages, designed to run on consumer-grade GPUs for self-hosted deployments. This directly competes with Whisper (OpenAI) and Deepgram in the self-hosted transcription space, with Cohere's enterprise relationships as a distribution advantage. At 2B parameters, it fits comfortably on an RTX 3090/4090 or a single A10G, making it viable for cost-sensitive or data-sovereignty-constrained applications.",
+      "builders_lens": "For any product handling audio \u2014 meeting transcription, call centers, voice memos, accessibility tooling \u2014 a 2B open-source model that runs on a consumer GPU changes the build-vs-buy calculus significantly. If you're currently paying Deepgram or AssemblyAI per-minute rates and processing high volumes, benchmark this model against your accuracy requirements; the self-hosting cost crossover point is likely lower than you expect at scale.",
+      "impact_level": "act",
+      "technical_detail": "2B parameter open-source ASR model supporting 14 languages, optimized for consumer GPU inference (confirmed compatible with RTX-class hardware); released under an open license enabling self-hosting without per-request API costs."
+    }
+  ]
+}

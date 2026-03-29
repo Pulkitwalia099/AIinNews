@@ -1,0 +1,136 @@
+{
+  "date": "2026-03-29",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Self-propagating malware poisons open source software and wipes Iran-based machines",
+      "url": "https://arstechnica.com/security/2026/03/self-propagating-malware-poisons-open-source-software-and-wipes-iran-based-machines/",
+      "source": "Ars Technica",
+      "hn_score": 13,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Self-propagating malware is actively targeting open source software packages and wiping machines geolocated in Iran. This is a supply chain attack vector that can silently compromise developer environments and production pipelines. Any team pulling open source dependencies without rigorous verification is potentially exposed.",
+      "builders_lens": "Audit your dependency trees and CI/CD pipelines immediately \u2014 supply chain attacks are increasingly sophisticated and can sit dormant before triggering. Consider investing in tools like Socket.dev or Sigstore for dependency provenance verification. This is also a product opportunity: automated supply chain security for AI/ML toolchains remains underserved.",
+      "impact_level": "act",
+      "technical_detail": "Malware is self-propagating across open source packages, suggesting either compromised maintainer accounts or automated injection into package registries, with a destructive payload triggered by geolocation."
+    },
+    {
+      "title": "We Rewrote JSONata with AI in a Day, Saved $500K/Year",
+      "url": "https://simonwillison.net/2026/Mar/27/vine-porting-jsonata/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 519,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Enabler",
+        "Cost Driver",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Reco.ai used AI-assisted 'vibe porting' to rewrite the JSONata JSON expression language from JavaScript into Go in roughly one day, eliminating a costly runtime dependency and saving an estimated $500K/year. Simon Willison frames this as a repeatable pattern \u2014 using LLMs to port libraries between languages rather than wrapping or paying licensing fees. The case study is concrete: working production code, real cost savings, documented process.",
+      "builders_lens": "If your stack has expensive or mismatched language dependencies (e.g., a Python service shelling out to a Node runtime), AI-assisted porting is now a legitimate one-sprint engineering task rather than a quarter-long project. The $500K saving came from eliminating Node.js infrastructure overhead \u2014 map your own stack for similar 'language impedance' costs. This pattern also suggests a micro-consultancy opportunity: AI-accelerated library porting as a service for enterprises stuck on legacy runtime dependencies.",
+      "impact_level": "act",
+      "technical_detail": "The team ported the full JSONata specification (a JSON query/transform language comparable to jq) from its canonical JavaScript implementation to Go using LLM-assisted code generation, validating correctness against the existing test suite."
+    },
+    {
+      "title": "My minute-by-minute response to the LiteLLM malware attack",
+      "url": "https://simonwillison.net/2026/Mar/26/response-to-the-litellm-malware-attack/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 594,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "A malicious package was injected into LiteLLM \u2014 one of the most widely used open source LLM routing libraries \u2014 and a researcher used Claude transcripts in real time to confirm the vulnerability, scope the blast radius, and identify the correct PyPI security contact to report it. This is the highest-profile supply chain attack yet targeting AI infrastructure specifically. LiteLLM sits in the critical path of thousands of AI applications.",
+      "builders_lens": "If LiteLLM is in your stack, verify your installed version against known-good hashes immediately and check your PyPI lockfiles. More broadly, this attack confirms that AI infrastructure packages are now high-value targets \u2014 pin your dependencies and monitor for unexpected updates. The incident also demonstrates a new use case: LLMs as real-time incident response partners for security triage, which is a product category worth building.",
+      "impact_level": "act",
+      "technical_detail": "Malicious code was embedded in a LiteLLM PyPI release; the researcher used Claude to perform static analysis of the suspicious package diff and confirm exfiltration or backdoor behavior before escalating to PyPI security."
+    },
+    {
+      "title": "Quantization from the ground up",
+      "url": "https://simonwillison.net/2026/Mar/26/quantization-from-the-ground-up/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 403,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Sam Rose published an interactive essay that is being called one of the best visual explanations of LLM quantization ever written, covering how models are compressed from float32 down to int4 and below with minimal quality loss. This is educational infrastructure \u2014 the kind of resource that accelerates the next wave of engineers deploying local and edge models. Understanding quantization is now a prerequisite for anyone making cost/quality tradeoffs in inference.",
+      "builders_lens": "If your team is making decisions about model deployment (cloud vs. local, llama.cpp vs. vLLM, which GGUF quantization level to use), this essay is required reading before you spec infrastructure. Teams deploying on-device or at the edge should use this to justify specific quantization choices to non-technical stakeholders. Bookmark it \u2014 it's the kind of reference that gets shared in engineering onboarding.",
+      "impact_level": "watch",
+      "technical_detail": "The essay covers quantization schemes from FP32 through INT8, INT4, and sub-4-bit formats, explaining calibration datasets, weight vs. activation quantization, and quality-degradation tradeoffs with interactive visualizations."
+    },
+    {
+      "title": "Gemini 3.1 Flash Live: Making audio AI more natural and reliable",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-live/",
+      "source": "Google AI Blog",
+      "hn_score": 17,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Google released Gemini 3.1 Flash Live, an iteration of its real-time audio model focused on naturalness and reliability improvements for voice AI applications. The low HN score suggests limited technical disclosure so far, but audio/voice is Google's clearest path to consumer AI differentiation against OpenAI's Realtime API. This signals continued investment in streaming, low-latency multimodal inference as a product-grade capability.",
+      "builders_lens": "If you're building voice agents, call center AI, or real-time audio applications, Google's Flash Live is now a serious alternative to OpenAI's Realtime API \u2014 benchmark latency, interruption handling, and per-minute pricing against your current stack. The 'reliability' framing suggests Google is targeting production deployments where dropped audio or hallucinated responses have real costs. Watch for API pricing changes as Google competes aggressively on this vector.",
+      "impact_level": "watch",
+      "technical_detail": "Gemini 3.1 Flash Live is a streaming multimodal model optimized for real-time audio I/O; specific latency figures, context window size for audio, and architecture details were not disclosed in the summary."
+    },
+    {
+      "title": "Anthropic wins injunction against Trump administration over Defense Department saga",
+      "url": "https://techcrunch.com/2026/03/26/anthropic-wins-injunction-against-trump-administration-over-defense-department-saga/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Opportunity",
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "A federal judge ordered the Trump administration to rescind restrictions placed on Anthropic's relationship with the Defense Department. This is a significant legal win that clears Anthropic's path to federal and defense contracts, a multi-billion dollar market. It also signals that courts are willing to push back on executive branch interference in AI procurement.",
+      "builders_lens": "For startups building on Anthropic's API, this reduces regulatory risk around using Claude in government or defense-adjacent applications \u2014 the legal precedent matters. If you're pursuing FedRAMP or DoD contracts, Anthropic is now a more viable foundation model vendor. Watch whether this opens GovCloud API access or new enterprise tiers from Anthropic targeting public sector.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Anthropic's Claude popularity with paying consumers is skyrocketing",
+      "url": "https://techcrunch.com/2026/03/28/anthropics-claude-popularity-with-paying-consumers-is-skyrocketing/",
+      "source": "TechCrunch AI",
+      "hn_score": 8,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Anthropic's paid Claude subscriptions have more than doubled in 2026, with total user estimates ranging from 18M to 30M \u2014 the wide range reflects Anthropic's deliberate opacity on metrics. Rapid paid subscription growth signals that Claude is converting free users at a rate that challenges the assumption that ChatGPT has an unassailable consumer lead. This is relevant for anyone building on or competing with frontier model APIs.",
+      "builders_lens": "Rapid Claude adoption means your users are increasingly Claude-native \u2014 their prompting habits, expectations for reasoning quality, and willingness to pay for AI are shaped by Claude's UX. If you're building a product that wraps or competes with Claude, this growth trajectory means Anthropic is investing heavily in consumer retention features that will raise the bar. It's also a signal to revisit Claude's API pricing tiers \u2014 volume discounts may be negotiable as they scale.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Google bumps up Q Day deadline to 2029, far sooner than previously thought",
+      "url": "https://arstechnica.com/security/2026/03/google-bumps-up-q-day-estimate-to-2029-far-sooner-than-previously-thought/",
+      "source": "Ars Technica",
+      "hn_score": 5,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption",
+        "Cost Driver",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Google has revised its estimate for 'Q Day' \u2014 the point at which quantum computers can break RSA and elliptic curve cryptography \u2014 from the mid-2030s to 2029, a dramatic acceleration. The company is urging the entire industry to migrate off RSA and EC encryption immediately. This compresses the migration window for any system handling sensitive long-lived data, including AI model weights, training data, and API credentials.",
+      "builders_lens": "If you're building infrastructure that needs to protect data with a 5+ year sensitivity horizon (medical, financial, defense, model IP), post-quantum cryptography migration is no longer a future roadmap item \u2014 it needs to be in your 2026 planning. NIST finalized PQC standards in 2024; start by inventorying where RSA/EC is used in your TLS, JWT signing, and key exchange. This is also a clear market signal: PQC-as-a-service and crypto-agility tooling for AI infrastructure is an underserved opportunity with a hard deadline.",
+      "impact_level": "act",
+      "technical_detail": "Google's revised timeline targets cryptographically relevant quantum computers capable of running Shor's algorithm against 2048-bit RSA and 256-bit elliptic curve keys by approximately 2029; NIST-standardized PQC algorithms (ML-KEM, ML-DSA, SLH-DSA) are the recommended migration targets."
+    }
+  ]
+}

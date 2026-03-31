@@ -1,0 +1,165 @@
+{
+  "date": "2026-03-31",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Starcloud raises $170 million Series A to build data centers in space",
+      "url": "https://techcrunch.com/2026/03/30/starcloud-raises-170-million-series-ato-build-data-centers-in-space/",
+      "source": "TechCrunch AI",
+      "hn_score": 8,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "New Market",
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Starcloud raised a $170M Series A to build orbital data centers, becoming YC's fastest unicorn at 17 months post-demo day. Space-based compute offers potential advantages in cooling, solar power, and latency for certain global workloads. The speed of this raise signals serious institutional conviction in off-Earth infrastructure as a viable compute tier.",
+      "builders_lens": "This is a long-horizon bet, not a near-term stack decision \u2014 but watch for early API access or ground-station partnerships that could offer novel latency profiles for globally distributed inference. If you're building in edge compute or satellite-adjacent infrastructure, Starcloud is worth a direct conversation now before access becomes competitive.",
+      "impact_level": "watch",
+      "technical_detail": "No disclosed specs on compute density, orbital altitude, or interconnect architecture in available summary \u2014 thermal management and laser inter-satellite links are the known hard problems in this space."
+    },
+    {
+      "title": "Bluesky leans into AI with Attie, an app for building custom feeds",
+      "url": "https://techcrunch.com/2026/03/28/bluesky-leans-into-ai-with-attie-an-app-for-building-custom-feeds/",
+      "source": "TechCrunch AI",
+      "hn_score": 12,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Bluesky launched Attie, an AI-powered app that lets users create custom algorithmic feeds on the atproto open social protocol without writing code. This is Bluesky's first major AI-native product move and signals they're building tooling to differentiate atproto as a programmable social substrate. The open protocol angle means third-party builders can extend and compete on feed intelligence.",
+      "builders_lens": "atproto's open firehose plus AI feed generation is an underexplored surface for distribution-layer startups \u2014 think personalized news, niche community aggregators, or B2B signal monitoring built on public social data. Attie validates the market but leaves room for verticalized feed products that Bluesky won't prioritize. Build on the protocol, not against the platform.",
+      "impact_level": "watch",
+      "technical_detail": "Attie operates on atproto's lexicon-based feed generator architecture; no model size or inference provider disclosed in summary."
+    },
+    {
+      "title": "The Pentagon's culture war tactic against Anthropic has backfired",
+      "url": "https://www.technologyreview.com/2026/03/30/1134881/the-pentagons-culture-war-tactic-against-anthropic-has-backfired/",
+      "source": "MIT Technology Review",
+      "hn_score": 8,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "A California federal judge temporarily blocked the Pentagon from labeling Anthropic a supply chain risk and ordering agencies to stop using its AI, ruling against the month-long DOD campaign. The case exposes the growing political risk frontier for AI vendors selling into government and the judiciary's willingness to push back on executive-branch AI procurement interference. Anthropic's win here has implications for every frontier AI company pursuing federal contracts.",
+      "builders_lens": "If you're building on Anthropic's API for government or regulated-sector customers, this ruling provides short-term stability but underscores the need to architect for model portability \u2014 vendor lock-in risk in federal AI is now explicitly political, not just technical. For GovTech AI founders, this case is a template for how procurement battles will be fought; legal strategy is now part of your GTM.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Google bumps up Q Day deadline to 2029, far sooner than previously thought",
+      "url": "https://arstechnica.com/security/2026/03/google-bumps-up-q-day-estimate-to-2029-far-sooner-than-previously-thought/",
+      "source": "Ars Technica",
+      "hn_score": 5,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Google has revised its estimate for cryptographically relevant quantum computing ('Q Day') to 2029, years earlier than prior consensus, and is urging the entire industry to migrate off RSA and elliptic curve cryptography immediately. This compresses the migration runway for any system handling sensitive data \u2014 including AI model weights, API keys, and training pipelines. NIST's post-quantum standards are now effectively urgent, not aspirational.",
+      "builders_lens": "If your AI product handles sensitive user data, model IP, or sits in a regulated industry, you need to start a post-quantum cryptography audit now \u2014 2029 is three product cycles away. Prioritize libraries that already support NIST PQC standards (CRYSTALS-Kyber, CRYSTALS-Dilithium) and flag this to your security lead this week. Startups that build PQC migration tooling or offer crypto-agile infrastructure are entering a suddenly hot market.",
+      "impact_level": "act",
+      "technical_detail": "Google's revised estimate implies cryptographically relevant quantum computers capable of breaking 2048-bit RSA and standard elliptic curve schemes (e.g., ECDSA P-256) by 2029; migration target is NIST FIPS 203/204/205 post-quantum standards."
+    },
+    {
+      "title": "Mr. Chatterbox is a (weak) Victorian-era ethically trained model you can run on your own computer",
+      "url": "https://simonwillison.net/2026/Mar/30/mr-chatterbox/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 12,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Opportunity",
+        "Enabler"
+      ],
+      "maturity_tag": "Early Research",
+      "summary": "Trip Venturella trained Mr. Chatterbox entirely from scratch on 28,000+ out-of-copyright Victorian-era British Library texts, producing a locally runnable model with a distinctive corpus-constrained 'ethical' profile. The project demonstrates that domain-specific, legally clean training sets can produce deployable models with predictable stylistic and content behavior. While weak by modern benchmarks, it's a proof-of-concept for copyright-safe, auditable model lineage.",
+      "builders_lens": "This points at a real opportunity: enterprises and regulated industries increasingly want models with fully auditable training provenance \u2014 no scraped web data, no copyright ambiguity, no GDPR exposure. Building fine-tuning pipelines or base models on legally clean domain corpora (public domain, licensed, synthetic) is a moat that big labs can't easily replicate for vertical use cases. Worth watching as a template for compliance-first model development.",
+      "impact_level": "context",
+      "technical_detail": "Model trained from scratch on 28,000+ Victorian texts (1837\u20131899) from the British Library; architecture and parameter count not disclosed; runs locally on consumer hardware."
+    },
+    {
+      "title": "Pretext",
+      "url": "https://simonwillison.net/2026/Mar/29/pretext/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 442,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Cheng Lou (React core contributor, creator of react-motion) released Pretext, a browser library that calculates wrapped-text height without touching the DOM \u2014 solving a longstanding performance bottleneck in UI rendering. The HN score of 442 signals strong developer resonance; this is the kind of primitive that quietly becomes a dependency in AI chat UIs, streaming text renderers, and canvas-based interfaces. It matters because accurate, fast text measurement is a prerequisite for polished AI-generated content presentation.",
+      "builders_lens": "If you're building AI chat interfaces, document editors, or any UI with streaming or dynamic text, Pretext could eliminate a class of layout jank and reflow bugs that currently require expensive DOM measurement hacks. Given the author's pedigree, expect this to be adopted quickly \u2014 evaluate it now before your competitors' UX gets noticeably smoother. It's also a signal that the browser rendering layer for AI interfaces is still primitive and ripe for tooling.",
+      "impact_level": "act",
+      "technical_detail": "Pretext computes paragraph line-wrap height via a pure computational approach (likely canvas-based font metrics or a custom text layout engine) that bypasses DOM reflow entirely \u2014 no DOM access means it can run off-thread or in non-browser environments."
+    },
+    {
+      "title": "Gemini 3.1 Flash Live: Making audio AI more natural and reliable",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-live/",
+      "source": "Google AI Blog",
+      "hn_score": 17,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Google released Gemini 3.1 Flash Live, an update to its real-time audio model focused on improving naturalness and reliability for voice interactions. Flash Live sits at the low-latency, cost-efficient end of Google's model lineup, making it the practical choice for voice agents, phone bots, and real-time assistants. Incremental audio quality improvements at the Flash tier directly lower the bar for shipping production voice AI products.",
+      "builders_lens": "If you're building voice agents or real-time audio applications, Gemini Flash Live is now a serious evaluation candidate against OpenAI's Realtime API and ElevenLabs \u2014 benchmark it on your specific latency and naturalness requirements. The 'Flash' tier pricing means audio AI is moving toward commodity; differentiation will shift to application logic, persona, and reliability engineering rather than model selection. Consider building model-agnostic audio abstraction layers now.",
+      "impact_level": "act",
+      "technical_detail": "Gemini 3.1 Flash Live is a real-time, low-latency multimodal audio model; specific TTFT (time-to-first-token), WER benchmarks, and context window for audio not disclosed in summary \u2014 check Google AI Studio for current specs."
+    },
+    {
+      "title": "ScaleOps raises $130M to improve computing efficiency amid AI demand",
+      "url": "https://techcrunch.com/2026/03/30/scaleops-130m-series-c-kubernetes-efficiency-ai-demand-funding/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "ScaleOps raised $130M Series C to automate Kubernetes resource optimization in real time, targeting GPU waste and runaway cloud costs driven by AI workloads. The raise validates that infrastructure efficiency tooling is a high-margin, high-demand category as AI inference bills become a board-level concern. Automated resource management at the orchestration layer is now a standard requirement for any AI platform running at scale.",
+      "builders_lens": "If your AI infrastructure runs on Kubernetes and you're not actively optimizing GPU utilization, you're likely leaving 20-40% of compute spend on the table \u2014 evaluate ScaleOps or competitors (Kubecost, Cast.ai) before your next cloud bill review. For founders building MLOps or AI platform tooling, ScaleOps' Series C at this stage signals strong revenue, making this a validated market segment worth either competing in or integrating against. Cost efficiency is becoming a product feature, not just an ops concern.",
+      "impact_level": "act",
+      "technical_detail": "ScaleOps uses real-time Kubernetes resource recommendation and automated rightsizing across CPU, memory, and GPU allocations; operates as a controller within existing K8s clusters without requiring workload migration."
+    },
+    {
+      "title": "AI chip startup Rebellions raises $400 million at $2.3B valuation in pre-IPO round",
+      "url": "https://techcrunch.com/2026/03/30/ai-chip-startup-rebellions-raises-400-million-at-2-3b-valuation-in-pre-ipo-round/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Rebellions, a South Korean AI chip startup focused on inference-optimized silicon, raised $400M at a $2.3B valuation in a pre-IPO round ahead of a planned public offering later in 2026. The raise continues the pattern of inference-specific chip challengers attracting large capital as NVIDIA's margin profile and supply constraints make alternatives strategically attractive. An IPO would be a significant liquidity and validation event for the non-NVIDIA AI chip ecosystem.",
+      "builders_lens": "For infrastructure-heavy AI companies, Rebellions' pre-IPO momentum is a signal to evaluate inference alternatives to NVIDIA H100/H200 in your 2027 procurement planning \u2014 inference-optimized chips can offer better performance-per-dollar on fixed-shape workloads. If you're a cloud or data center buyer, engaging Rebellions pre-IPO may yield favorable early-customer terms. Watch their IPO filing for disclosed performance benchmarks and customer names as due diligence signals.",
+      "impact_level": "watch",
+      "technical_detail": "Rebellions designs inference-specific AI accelerators; their ATOM chip was previously benchmarked against NVIDIA A100 on transformer inference workloads \u2014 IPO filing should disclose updated specs for their next-generation silicon."
+    },
+    {
+      "title": "Mistral AI raises $830M in debt to set up a data center near Paris",
+      "url": "https://techcrunch.com/2026/03/30/mistral-ai-raises-830m-in-debt-to-set-up-a-data-center-near-paris/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Mistral AI raised $830M in debt financing to build a proprietary data center near Paris, targeting Q2 2026 operations. The debt structure (vs. equity) is notable \u2014 it preserves cap table while signaling that Mistral's revenue base is strong enough to service significant leverage. This move positions Mistral as sovereign AI infrastructure for Europe, reducing dependence on US hyperscalers and strengthening its regulatory positioning under the EU AI Act.",
+      "builders_lens": "For European AI startups or any company with EU data residency requirements, Mistral's owned compute capacity means more competitive and compliance-friendly API pricing is likely coming \u2014 worth revisiting Mistral's API as a primary or fallback provider in H2 2026. The sovereign infrastructure play also signals Mistral is building for longevity as an independent European frontier lab, not positioning for acquisition \u2014 factor that into your vendor risk assessment.",
+      "impact_level": "watch",
+      "technical_detail": "No disclosed GPU configuration or rack count for the Paris facility; Q2 2026 target suggests procurement is already complete \u2014 likely NVIDIA H100/H200 clusters given current market availability and Mistral's existing infrastructure partnerships."
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "date": "2026-04-10",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "ChatGPT finally offers $100/month Pro plan",
+      "url": "https://techcrunch.com/2026/04/09/chatgpt-pro-plan-100-month-codex/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI launched a $100/month tier, bridging the gap between its $20 Plus and $200 Pro plans. This unlocks a previously underserved segment of power users unwilling to pay 10x for Pro. Competitive pressure from Claude and Gemini likely accelerated this pricing move.",
+      "builders_lens": "If you're building B2B SaaS that resells or wraps OpenAI capacity, this new tier gives you a cleaner cost anchor for mid-market pricing. For consumer AI tools, watch whether this pulls users away from third-party wrappers \u2014 OpenAI is moving down-market to capture more of the direct relationship.",
+      "impact_level": "watch",
+      "technical_detail": "Pricing tier likely includes Codex access based on URL slug; exact rate limits and model access per tier not specified in summary."
+    },
+    {
+      "title": "Meta AI app climbs to No. 5 on the App Store after Muse Spark launch",
+      "url": "https://techcrunch.com/2026/04/09/meta-ai-app-climbs-to-no-5-on-the-app-store-after-muse-spark-launch/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Meta AI's standalone app jumped from No. 57 to No. 5 on the App Store following the launch of Muse Spark, a significant distribution milestone for a free, ads-subsidized AI assistant. Meta's ability to leverage its social graph and free pricing poses a real competitive threat to paid AI assistant products. This is the clearest sign yet that Meta is competing seriously at the consumer AI layer, not just the model layer.",
+      "builders_lens": "If you're building consumer-facing AI apps that compete on general-purpose assistance, Meta's free, well-distributed product is a direct ceiling on what you can charge and retain. Narrow down on defensible verticals or workflows where Meta won't go \u2014 niche productivity, professional domains, or enterprise contexts are safer bets than general Q&A or chat.",
+      "impact_level": "watch",
+      "technical_detail": "Muse Spark appears to be a new model or feature release powering the Meta AI app; no architecture or benchmark details available in the summary."
+    },
+    {
+      "title": "Google and Intel deepen AI infrastructure partnership",
+      "url": "https://techcrunch.com/2026/04/09/google-and-intel-deepen-ai-infrastructure-partnership/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Google and Intel are co-developing custom chips amid a global CPU shortage, signaling that the compute constraint is moving beyond GPUs into general processing. This partnership could give Google a supply-chain advantage and reduce dependency on standard x86 procurement. For the broader market, it's another indicator that chip scarcity is shaping strategic partnerships at the hyperscaler level.",
+      "builders_lens": "The CPU shortage is a quiet bottleneck that affects inference costs and availability \u2014 if you're planning infrastructure builds or negotiating cloud contracts in the next 12 months, factor in that CPU-bound workloads (data preprocessing, orchestration, non-GPU inference) may get more expensive or constrained. Watch Intel's Gaudi line for potential cost-competitive GPU alternatives if this partnership accelerates.",
+      "impact_level": "watch",
+      "technical_detail": "Partnership involves co-development of custom silicon; no specific chip architecture, process node, or timeline details provided."
+    },
+    {
+      "title": "AWS boss explains why investing billions in both Anthropic and OpenAI is an OK conflict",
+      "url": "https://techcrunch.com/2026/04/08/aws-boss-explains-why-investing-billions-in-both-anthropic-and-openai-is-an-ok-conflict/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "AWS is doubling down on a multi-model strategy, backing both Anthropic and OpenAI while framing it as consistent with its culture of coopetition. This confirms AWS is positioning Bedrock as the neutral distribution layer above foundation model competition \u2014 the platform wins regardless of which model wins. Builders should internalize that AWS has no incentive to pick a model winner; they're selling compute and APIs.",
+      "builders_lens": "If you're building on Bedrock or evaluating it, this is a green light \u2014 AWS will keep investing in model diversity on the platform, which gives you negotiating leverage and optionality. The real opportunity is building model-agnostic tooling (evals, routing, observability) that sits above this layer, since AWS itself won't build deep here.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Constellations",
+      "url": "https://www.technologyreview.com/2026/04/10/1135106/jeff-vandermeer-constellations-science-fiction/",
+      "source": "MIT Technology Review",
+      "hn_score": 540,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Opportunity"
+      ],
+      "maturity_tag": "Early Research",
+      "summary": "MIT Technology Review published a science fiction short story by Jeff VanderMeer featuring an AI mind as a core character \u2014 part of a broader editorial trend of using fiction to explore AI futures. The high HN score (540) suggests the technical community is hungry for thoughtful narrative framings of AI, not just technical coverage. This is context, not a product signal, but reflects the cultural moment builders are operating in.",
+      "builders_lens": "High engagement on AI fiction from a technical audience signals appetite for humanistic AI storytelling \u2014 relevant if you're thinking about brand voice, content strategy, or AI ethics framing for your product. Not a direct build opportunity, but understanding how your users emotionally relate to AI is increasingly a product design input.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Thousands of consumer routers hacked by Russia's military",
+      "url": "https://arstechnica.com/security/2026/04/russias-military-hacks-thousands-of-consumer-routers-to-steal-credentials/",
+      "source": "Ars Technica",
+      "hn_score": 9,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Russia's military compromised end-of-life consumer and SOHO routers across 120 countries to steal credentials, confirming that legacy network hardware is a live attack surface for state actors. This is relevant to AI builders who deploy edge inference or remote developer environments on home/office networks. The breadth of the campaign (120 countries) suggests systematic, not targeted, exploitation.",
+      "builders_lens": "If your team works remotely or you have any edge inference nodes on SOHO networks, audit your router inventory now \u2014 EOL hardware with no patch path is an active liability. For founders building AI products with any credential or model weight security requirements, this is a reminder that network-layer security assumptions in home/office settings are broken.",
+      "impact_level": "act",
+      "technical_detail": "Attack vector targets end-of-life routers with no available firmware patches; credential theft mechanism not detailed but likely involves traffic interception or stored credential extraction."
+    },
+    {
+      "title": "Coreweave signs multi-year cloud deal with Anthropic to power Claude",
+      "url": "https://the-decoder.com/coreweave-signs-multi-year-cloud-deal-with-anthropic-to-power-claude/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Coreweave has locked in a multi-year compute contract with Anthropic to serve Claude inference workloads, diversifying Anthropic's infrastructure away from pure AWS dependency. This validates Coreweave as a credible hyperscaler alternative for frontier AI workloads and signals that GPU cloud competition is intensifying. For AWS, losing some Anthropic compute to Coreweave is a small but meaningful signal about its grip on AI-native customers.",
+      "builders_lens": "Coreweave's ability to win a deal with a top-3 AI lab strengthens the case for evaluating them for high-throughput GPU workloads \u2014 pricing and availability may be more favorable than AWS for pure inference use cases. If you're currently locked into AWS for AI compute, this deal is a signal that the alternatives are maturing fast enough to handle mission-critical loads.",
+      "impact_level": "watch",
+      "technical_detail": "Deal covers cloud GPU compute for Claude inference; no specifics on GPU types (likely H100/H200 clusters), contract value, or capacity commitments disclosed."
+    },
+    {
+      "title": "Google Gemini now generates interactive visualizations you can tweak and explore right in the chat",
+      "url": "https://the-decoder.com/google-gemini-now-generates-interactive-visualizations-you-can-tweak-and-explore-right-in-the-chat/",
+      "source": "The Decoder",
+      "hn_score": 2,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Google Gemini now renders interactive, tweakable data visualizations inline in chat, following Claude's earlier release of a similar capability. This collapses a key workflow \u2014 data query \u2192 visualization \u2192 iteration \u2014 into a single chat interface, threatening standalone BI and data exploration tools. The feature parity with Claude signals that interactive artifacts in chat are becoming table stakes for frontier assistants.",
+      "builders_lens": "If you're building lightweight BI, data storytelling, or analytics tooling that competes on 'quick visualizations,' your moat is narrowing fast \u2014 both Gemini and Claude now do this natively. Shift focus to enterprise data connectivity, governance, or domain-specific analysis where raw chat interfaces won't suffice. Alternatively, this creates an opportunity to build on top of the artifact/visualization APIs if Google exposes them.",
+      "impact_level": "watch",
+      "technical_detail": "Gemini generates interactive chart artifacts rendered directly in the chat UI; likely implemented via code execution sandbox outputting HTML/JS or a proprietary visualization runtime, similar to Claude's artifact system."
+    },
+    {
+      "title": "Components of A Coding Agent",
+      "url": "https://magazine.sebastianraschka.com/p/components-of-a-coding-agent",
+      "source": "Ahead of AI",
+      "hn_score": 389,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Sebastian Raschka breaks down the architecture of coding agents \u2014 tool use, memory systems, and repository context retrieval \u2014 into a practical engineering reference. High HN engagement (389) confirms this is filling a real knowledge gap as teams move from LLM prototypes to production agentic systems. This is the kind of piece that shapes how the next generation of coding infrastructure gets built.",
+      "builders_lens": "If you're building a coding agent or integrating one into a developer product, this is required reading \u2014 the framework for thinking about tool selection, context window management, and memory tiers will directly inform your architecture decisions. The components described (repo context, memory, tool calling) are also a map of where third-party tooling opportunities exist: better code retrieval, smarter context compression, and eval frameworks for agent correctness.",
+      "impact_level": "act",
+      "technical_detail": "Article covers tool-use patterns, short/long-term memory architectures, and retrieval-augmented repo context strategies for LLM-based coding agents; no specific model benchmarks cited."
+    },
+    {
+      "title": "GLM-5.1: Towards Long-Horizon Tasks",
+      "url": "https://simonwillison.net/2026/Apr/7/glm-51/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 878,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Disruption",
+        "New Market",
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Z.ai released GLM-5.1, a 754B parameter MIT-licensed model available on HuggingFace and OpenRouter, specifically optimized for long-horizon tasks \u2014 complex, multi-step reasoning over extended contexts. The MIT license on a frontier-scale model is a significant event: it enables commercial deployment, fine-tuning, and derivative works without restriction. The 878 HN score reflects genuine excitement from builders who see this as a free, capable alternative to proprietary frontier models.",
+      "builders_lens": "A 754B MIT-licensed model capable of long-horizon tasks is a genuine build opportunity \u2014 this is the first time a model at this capability tier has been commercially free to use and modify. Evaluate it immediately for complex agentic workflows, long-context document processing, and any use case where you'd otherwise be paying Anthropic or OpenAI per-token at scale. The catch: 1.51TB model size means self-hosting requires serious multi-node GPU infrastructure, so OpenRouter access is the practical on-ramp for most teams.",
+      "impact_level": "act",
+      "technical_detail": "GLM-5.1 is a 754B parameter model weighing 1.51TB, MIT-licensed, available on HuggingFace (zai-org/GLM-5.1) and OpenRouter; shares architecture and paper with GLM-5, targeted at long-horizon multi-step task completion."
+    }
+  ]
+}

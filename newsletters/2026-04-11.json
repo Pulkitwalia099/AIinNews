@@ -1,0 +1,166 @@
+{
+  "date": "2026-04-11",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Constellations",
+      "url": "https://www.technologyreview.com/2026/04/10/1135106/jeff-vandermeer-constellations-science-fiction/",
+      "source": "MIT Technology Review",
+      "hn_score": 540,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "New Market"
+      ],
+      "maturity_tag": "Early Research",
+      "summary": "MIT Technology Review published a science fiction short story by Jeff VanderMeer featuring an AI mind as a character in a post-crash survival scenario. The high HN score (540) signals strong reader appetite for literary AI narratives at a moment when the industry is grappling with AI identity and consciousness. This is culture signal, not product signal.",
+      "builders_lens": "The engagement here reflects a broader hunger for thoughtful AI fiction that doesn't default to dystopia or utopia \u2014 there may be a market for curated AI-themed literary content or editorial products targeting technically literate audiences. Not an immediate build opportunity, but a useful temperature check on how your users emotionally frame AI.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Thousands of consumer routers hacked by Russia's military",
+      "url": "https://arstechnica.com/security/2026/04/russias-military-hacks-thousands-of-consumer-routers-to-steal-credentials/",
+      "source": "Ars Technica",
+      "hn_score": 9,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Opportunity",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Russia's military intelligence compromised thousands of end-of-life consumer and SOHO routers across 120 countries to harvest credentials. The attack surface is unmanaged edge hardware \u2014 a persistent, structural vulnerability that neither vendors nor users are incentivized to fix. This is an ongoing operational security threat, not a one-time incident.",
+      "builders_lens": "This is a clear signal for AI-assisted network security products targeting the SOHO and prosumer segment \u2014 automated firmware auditing, anomaly detection on edge devices, or managed router replacement services. If you're building anything that handles auth flows or sits behind residential infrastructure (remote work tooling, IoT, VPNs), audit your threat model for compromised last-mile hardware.",
+      "impact_level": "watch",
+      "technical_detail": "Attack vector targets end-of-life routers with no patch pipeline, enabling credential harvesting at scale across 120 countries via likely botnet-style C2 infrastructure."
+    },
+    {
+      "title": "GLM-5.1: Towards Long-Horizon Tasks",
+      "url": "https://simonwillison.net/2026/Apr/7/glm-51/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 879,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Z.ai released GLM-5.1, a 754B parameter model under MIT license \u2014 one of the largest openly licensed models available, now accessible via OpenRouter. The MIT license on a frontier-scale model is a significant inflection: it removes legal friction for commercial fine-tuning and deployment at scale. This is the open-weight frontier closing the gap with proprietary labs.",
+      "builders_lens": "A 754B MIT-licensed model changes the calculus for any builder who previously ruled out open weights due to licensing risk or capability gaps \u2014 this is now a viable base for building proprietary vertical agents, fine-tuned systems, or commercial products without rev-share encumbrances. The immediate action: benchmark it on your specific task domain via OpenRouter before committing to a proprietary API dependency. Infrastructure cost at 1.51TB is still a moat, but inference APIs make it accessible.",
+      "impact_level": "act",
+      "technical_detail": "754B parameter MoE-architecture model, 1.51TB weight file on HuggingFace under MIT license, available for inference via OpenRouter; shares architecture paper (arXiv 2602.15763) with GLM-5."
+    },
+    {
+      "title": "ChatGPT finally offers $100/month Pro plan",
+      "url": "https://techcrunch.com/2026/04/09/chatgpt-pro-plan-100-month-codex/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI launched a $100/month tier between their $20 Plus and $200 Pro plans, likely bundling Codex access for power users. This fills a gap that was forcing users to either under-pay or dramatically overpay, and signals OpenAI is optimizing ARPU across a wider segment of the developer-adjacent market. The pricing ladder is now more competitive with Anthropic and Google.",
+      "builders_lens": "If you're building productivity tools or coding assistants that compete with or complement ChatGPT, this pricing move expands the pool of users willing to pay meaningfully for AI \u2014 it validates the $50-$150/month prosumer price point. For infrastructure builders, watch whether this tier unlocks higher API rate limits or Codex-specific endpoints that could be wrapped into vertical products.",
+      "impact_level": "watch",
+      "technical_detail": "Plan reportedly includes Codex access; sits between existing $20/month Plus and $200/month Pro tiers, suggesting differentiated compute allocation or feature gating at each tier."
+    },
+    {
+      "title": "Google and Intel deepen AI infrastructure partnership",
+      "url": "https://techcrunch.com/2026/04/09/google-and-intel-deepen-ai-infrastructure-partnership/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Cost Driver",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Google and Intel are co-developing custom chips amid a global CPU shortage driven by AI workload demand. This partnership is a defensive move by Intel to stay relevant in the AI silicon race while giving Google supply chain diversification beyond its own TPUs and NVIDIA dependency. The CPU shortage signal is critical \u2014 it suggests AI inference and orchestration workloads are consuming general compute at a pace that's straining supply.",
+      "builders_lens": "The CPU shortage is a real near-term cost driver for anyone running inference pipelines or large-scale data processing \u2014 expect price increases or allocation constraints on standard cloud compute in the next 6-12 months. If you're designing infrastructure now, architect for flexibility across accelerator types (TPU, GPU, CPU) rather than assuming NVIDIA availability. The Google-Intel partnership may surface new price-competitive inference options in 12-18 months.",
+      "impact_level": "watch",
+      "technical_detail": "Partnership targets co-development of custom silicon; specific chip architectures and process nodes not disclosed, but context suggests focus on AI inference workloads given stated CPU shortage pressure."
+    },
+    {
+      "title": "Meta AI app climbs to No. 5 on the App Store after Muse Spark launch",
+      "url": "https://techcrunch.com/2026/04/09/meta-ai-app-climbs-to-no-5-on-the-app-store-after-muse-spark-launch/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Meta AI's standalone app jumped from #57 to #5 on the US App Store following the launch of its Muse Spark model, a 52-position surge that indicates meaningful consumer pull. This is the clearest signal yet that Meta is building a direct-to-consumer AI product that can compete on distribution with ChatGPT \u2014 not just an embedded feature. Meta's social graph and ad infrastructure give it a fundamentally different monetization path than OpenAI.",
+      "builders_lens": "Meta AI at #5 in the App Store means a third major consumer AI surface (alongside ChatGPT and Gemini) is now capturing mainstream attention \u2014 the window for undifferentiated AI assistant apps is effectively closed. Builders should focus on either deep vertical specificity or integrations that work across these platforms rather than competing head-on. Watch whether Meta opens Muse Spark capabilities via API, which would be an immediate distribution opportunity.",
+      "impact_level": "watch",
+      "technical_detail": "Muse Spark is the model powering the ranking surge; no public parameter counts or architecture details disclosed at time of reporting."
+    },
+    {
+      "title": "Deepmind CEO Hassabis says AGI will hit like ten industrial revolutions compressed into a single decade",
+      "url": "https://the-decoder.com/deepmind-ceo-hassabis-says-agi-will-hit-like-ten-industrial-revolutions-compressed-into-a-single-decade/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Platform Shift"
+      ],
+      "maturity_tag": "Early Research",
+      "summary": "Demis Hassabis publicly forecasts AGI within five years with civilizational-scale impact, while simultaneously cautioning that AI is overhyped in the short term and underestimated long-term. The dual message \u2014 near-term caution, long-term maximalism \u2014 is a strategic framing that manages both investor expectations and regulatory optics. This is notable primarily as a signal of where DeepMind's internal conviction sits.",
+      "builders_lens": "Hassabis's five-year AGI window, coming from the CEO of the lab closest to that frontier, is relevant context for long-horizon product bets \u2014 if you're building for a world where AI capabilities compound rapidly, the planning horizon for your company's defensibility compresses significantly. The more actionable read: DeepMind's public posture suggests they are shipping capability-forward products soon; monitor Gemini Ultra and AlphaCode successor releases as proxies.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Mustafa Suleyman: AI development won't hit a wall anytime soon\u2014here's why",
+      "url": "https://www.technologyreview.com/2026/04/08/1135398/mustafa-suleyman-ai-future/",
+      "source": "MIT Technology Review",
+      "hn_score": 3,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Platform Shift"
+      ],
+      "maturity_tag": "Early Research",
+      "summary": "Microsoft AI CEO Mustafa Suleyman argues that exponential AI progress will continue and that human intuition systematically underestimates non-linear compounding. The piece reads as a counter-narrative to scaling skeptics and a signal that Microsoft's AI leadership remains committed to continued large-scale investment. In context with Hassabis's comments, there is clear exec-level consensus forming around a continued capability ramp.",
+      "builders_lens": "Two of the most senior AI executives in the world published bullish long-term takes in the same week \u2014 this is relevant context for fundraising narratives and for founders deciding whether to build on today's frontier or wait. The more useful signal for builders: Suleyman's framing around exponential progress suggests Microsoft will continue aggressive Copilot and Azure OpenAI investments, making the Microsoft ecosystem an increasingly powerful (and competitively risky) distribution channel.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Google's Gemma 4 puts free agentic AI on your phone and no data ever leaves the device",
+      "url": "https://the-decoder.com/googles-gemma-4-puts-free-agentic-ai-on-your-phone-and-no-data-ever-leaves-the-device/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Google released Gemma 4 with on-device agentic capabilities in E2B and E4B variants, deployable via the AI Edge Gallery app with full local inference and zero data egress. On-device agentic AI at this capability level is a qualitative shift \u2014 it enables privacy-preserving AI features that were previously impossible without cloud dependency. This directly unlocks enterprise, healthcare, and regulated-industry use cases that have been blocked by data residency requirements.",
+      "builders_lens": "This is an 'act now' signal for any builder targeting regulated industries (healthcare, legal, finance, government) where cloud data processing is a hard blocker \u2014 Gemma 4 on-device removes the compliance moat that was preventing AI feature adoption in these verticals. Concretely: prototype your most data-sensitive feature against the E4B model via AI Edge Gallery this week and benchmark whether local inference quality meets your product bar. On-device agentic AI also changes the economics for consumer apps by eliminating per-query API costs.",
+      "impact_level": "act",
+      "technical_detail": "Gemma 4 ships in E2B (2B parameter) and E4B (4B parameter) edge-optimized variants; runs fully on-device via Google AI Edge Gallery with local agentic task execution and no network data transmission required."
+    },
+    {
+      "title": "ALTK\u2011Evolve: On\u2011the\u2011Job Learning for AI Agents",
+      "url": "https://huggingface.co/blog/ibm-research/altk-evolve",
+      "source": "HuggingFace Blog",
+      "hn_score": 3,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Opportunity"
+      ],
+      "maturity_tag": "Early Research",
+      "summary": "IBM Research published ALTK-Evolve, a framework enabling AI agents to learn and improve from task experience during deployment rather than requiring offline retraining. This addresses one of the core brittleness problems in production agents \u2014 the inability to adapt to environment drift or novel edge cases without expensive fine-tuning cycles. If it generalizes, this is a meaningful step toward agents that get better the longer they run.",
+      "builders_lens": "For teams building long-running agentic systems (workflow automation, customer support bots, coding agents), on-the-job learning directly reduces the maintenance burden of keeping agents performant as their operating environment changes \u2014 this is worth prototyping against your highest-churn agent failure modes. The research is early-stage, but the pattern (continual learning without retraining) will become a production requirement in 12-18 months; tracking IBM's open-source releases here gives you a head start.",
+      "impact_level": "watch",
+      "technical_detail": "ALTK-Evolve uses an evolutionary algorithm-based approach to update agent tool-use policies from deployment experience; framework targets agentic task adaptation without full model fine-tuning cycles."
+    }
+  ]
+}

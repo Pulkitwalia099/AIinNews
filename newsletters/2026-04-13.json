@@ -1,0 +1,165 @@
+{
+  "date": "2026-04-13",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "The largest orbital compute cluster is open for business",
+      "url": "https://techcrunch.com/2026/04/13/the-largest-orbital-compute-cluster-is-open-for-business/",
+      "source": "TechCrunch AI",
+      "hn_score": 1,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "New Market",
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Kepler Communications has deployed 40 GPUs in Earth orbit, now open for commercial workloads with Sophia Space as its first customer. This is the first serious orbital compute offering, targeting use cases where processing data in space avoids costly downlink bandwidth. Latency, reliability, and radiation hardening remain open engineering questions.",
+      "builders_lens": "Watch for niche applications in satellite imagery processing, Earth observation analytics, and defense where downlink bandwidth is the bottleneck \u2014 not general AI inference. Too early and too exotic for most builders, but if you're building in the geospatial or defense-adjacent stack, this is a differentiated infrastructure bet worth tracking.",
+      "impact_level": "watch",
+      "technical_detail": "40 GPUs operating in low Earth orbit, architecture and interconnect specs not disclosed; customer Sophia Space suggests space-edge inference rather than training workloads."
+    },
+    {
+      "title": "Sam Altman responds to 'incendiary' New Yorker article after attack on his home",
+      "url": "https://techcrunch.com/2026/04/11/sam-altman-responds-to-incendiary-new-yorker-article-after-attack-on-his-home/",
+      "source": "TechCrunch AI",
+      "hn_score": 8,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Sam Altman published a public rebuttal to a New Yorker investigative piece questioning his trustworthiness, amid a reported physical attack on his home. This is primarily a media and governance story, not a technical one, but executive credibility crises at AI labs have historically triggered talent departures and enterprise hesitation. Worth monitoring for second-order effects on OpenAI's partnerships and regulatory posture.",
+      "builders_lens": "If you're building on OpenAI's API, executive instability is a platform risk signal \u2014 not immediate action, but a reason to ensure your architecture isn't single-vendor dependent. Enterprise buyers also read these stories; expect some procurement teams to ask harder questions about OpenAI's governance.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "ChatGPT finally offers $100/month Pro plan",
+      "url": "https://techcrunch.com/2026/04/09/chatgpt-pro-plan-100-month-codex/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI filled the gap between its $20 and $200/month tiers with a new $100/month plan, likely bundling Codex and advanced features targeting power users and prosumers. This pricing move signals OpenAI is optimizing for developer and professional capture before enterprise contracts close. The $100 price point is a direct shot at Anthropic's comparable tier.",
+      "builders_lens": "For B2B SaaS builders, this accelerates the 'why build this when ChatGPT does it for $100/month?' objection from investors and customers \u2014 you need a sharper answer. Conversely, if you're building productivity tooling for the $20-$100 user segment, OpenAI just validated that market and may drive users toward premium AI workflows you can layer on top of.",
+      "impact_level": "watch",
+      "technical_detail": "Plan reportedly includes Codex access; exact model access, rate limits, and context window allocations per tier not specified in summary."
+    },
+    {
+      "title": "Constellations",
+      "url": "https://www.technologyreview.com/2026/04/10/1135106/jeff-vandermeer-constellations-science-fiction/",
+      "source": "MIT Technology Review",
+      "hn_score": 540,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler"
+      ],
+      "maturity_tag": "Early Research",
+      "summary": "MIT Technology Review published a science fiction short story by Jeff VanderMeer featuring a ship's AI as a central character \u2014 unusually high HN score of 540 suggests it resonated deeply with the technical community. The editorial choice to run literary fiction in a technical publication reflects the field's growing preoccupation with AI consciousness, alignment, and what 'mind' means. High engagement signals the AI builder community is hungry for narrative frameworks around these questions.",
+      "builders_lens": "The 540 HN score on a fiction piece is itself a data point: the technical community is processing existential questions about AI through story. If you're building AI products with agentic or embodied characteristics, how you frame the 'mind' of your system to users matters more than you might think \u2014 this is a UX and ethics signal, not just a cultural one.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Iran-linked hackers disrupt operations at US critical infrastructure sites",
+      "url": "https://arstechnica.com/security/2026/04/iran-linked-hackers-disrupt-operations-at-us-critical-infrastructure-sites/",
+      "source": "Ars Technica",
+      "hn_score": 4,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Iran-linked threat actors have disrupted US critical infrastructure operations, escalating alongside the US-Israel conflict. Industrial control systems (ICS) and OT environments are the attack surface, not AI systems directly \u2014 but AI-managed industrial infrastructure is now explicitly in the threat model. This is the type of event that accelerates compliance requirements and security spend for any AI system touching physical infrastructure.",
+      "builders_lens": "If you're building AI for industrial automation, energy, water, or manufacturing, this is your reminder that OT security and air-gap architecture need to be features, not afterthoughts. Expect CISA guidance and procurement requirements to tighten \u2014 early compliance investment becomes a competitive moat in enterprise sales to critical infrastructure operators.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Thousands of consumer routers hacked by Russia's military",
+      "url": "https://arstechnica.com/security/2026/04/russias-military-hacks-thousands-of-consumer-routers-to-steal-credentials/",
+      "source": "Ars Technica",
+      "hn_score": 9,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Russian military intelligence compromised thousands of end-of-life consumer and SOHO routers across 120 countries to build a credential-harvesting network. The attack targets the physical network layer beneath cloud and AI infrastructure, not AI systems directly. For distributed AI workloads and remote developer environments, compromised edge routers are a real credential exfiltration vector.",
+      "builders_lens": "Remote-first AI teams and distributed inference deployments need to treat endpoint network security as part of their threat model \u2014 particularly if engineers are accessing cloud GPU clusters or model APIs from home networks. Push your team toward hardware keys (YubiKey), zero-trust network access, and regular audits of who has API credentials stored locally.",
+      "impact_level": "watch",
+      "technical_detail": "Attack targets end-of-life SOHO routers with no available firmware patches; vector involves credential interception at the network layer, affecting 120 countries per reporting."
+    },
+    {
+      "title": "The AI industry is running out of compute, with outages, rationing, and rising GPU prices",
+      "url": "https://the-decoder.com/the-ai-industry-is-running-out-of-compute-with-outages-rationing-and-rising-gpu-prices/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Disruption",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "GPU spot prices have jumped ~50% as AI agent demand surges beyond available capacity; Anthropic is experiencing outages and OpenAI has ended Sora. This is a structural supply crunch, not a temporary blip \u2014 agentic workloads are dramatically more compute-intensive than single-turn inference. The crunch creates both cost pressure for builders and a clear investment signal toward compute efficiency and alternative infrastructure.",
+      "builders_lens": "Act now on three things: lock in reserved GPU capacity before prices rise further, audit your agent architectures for compute efficiency (batching, caching, model routing to smaller models where possible), and evaluate whether inference providers with their own hardware (Groq, Cerebras, Together AI) offer better price-performance than hyperscaler GPU rentals. This crunch will also accelerate demand for products that reduce compute requirements \u2014 quantization tools, distillation pipelines, and prompt compression startups have a real tailwind.",
+      "impact_level": "act",
+      "technical_detail": "GPU spot market prices up ~50% per market data; Anthropic outages attributed to agent workload surge; OpenAI discontinuing Sora suggests compute reallocation prioritization decisions are being made at the model portfolio level."
+    },
+    {
+      "title": "Claude now works across all three major Office apps",
+      "url": "https://the-decoder.com/claude-now-works-across-all-three-major-office-apps/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Anthropic has completed its Microsoft Office integration suite by adding a Word add-in, joining existing Excel and PowerPoint plugins. This makes Claude a full-stack enterprise productivity assistant within the dominant office suite, competing directly with Microsoft's own Copilot inside Microsoft's platform. The strategic tension \u2014 Microsoft distributing a competitor's AI inside its own product \u2014 is notable and unlikely to last indefinitely.",
+      "builders_lens": "For builders targeting enterprise knowledge workers, this narrows the greenfield \u2014 the baseline expectation is now 'Claude or Copilot in every Office app.' The opportunity shifts to vertical-specific workflows (legal document review in Word, financial modeling in Excel) where generic AI needs domain context you can provide. Also watch for Microsoft tightening add-in policies as Copilot monetization pressure grows.",
+      "impact_level": "watch",
+      "technical_detail": "Claude Word add-in joins existing Excel and PowerPoint integrations; likely uses Claude's API with Office Add-in JS SDK; specific model version (Sonnet/Opus) and context window handling for long documents not specified."
+    },
+    {
+      "title": "Researchers define what counts as a world model and text-to-video generators do not",
+      "url": "https://the-decoder.com/researchers-define-what-counts-as-a-world-model-and-text-to-video-generators-do-not/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Opportunity"
+      ],
+      "maturity_tag": "Early Research",
+      "summary": "An international research team released OpenWorldLib, a framework formally defining what constitutes a 'world model,' explicitly excluding text-to-video generators like Sora. The definition likely requires causal reasoning, physical simulation capacity, or explicit state representation \u2014 capabilities current video diffusion models lack. This taxonomic work matters because it clarifies what's actually needed for robust agentic AI, robotics, and sim-to-real transfer.",
+      "builders_lens": "If you're building agents that need to reason about physical environments \u2014 robotics, autonomous systems, game AI, or industrial simulation \u2014 this research defines the capability gap your architecture needs to close. The 6-18 month product opportunity is in building evaluation frameworks and benchmarks around this definition, since enterprises deploying physical AI agents will need to certify world-model quality before deployment.",
+      "impact_level": "watch",
+      "technical_detail": "OpenWorldLib proposes a formal taxonomy distinguishing world models from generative video models; criteria likely include causal state representation and counterfactual reasoning capacity; paper from an international multi-institution collaboration."
+    },
+    {
+      "title": "ALTK\u2011Evolve: On\u2011the\u2011Job Learning for AI Agents",
+      "url": "https://huggingface.co/blog/ibm-research/altk-evolve",
+      "source": "HuggingFace Blog",
+      "hn_score": 3,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Opportunity"
+      ],
+      "maturity_tag": "Early Research",
+      "summary": "IBM Research published ALTK-Evolve, a framework enabling AI agents to learn and improve from task execution in real-time deployment \u2014 'on-the-job learning' rather than static fine-tuning cycles. This addresses one of the core limitations of deployed agents: they don't get better from operational experience without expensive retraining pipelines. If the approach generalizes, it compresses the feedback loop from months to continuous improvement.",
+      "builders_lens": "This is a 6-18 month research-to-product signal: if on-the-job learning proves robust, the architectural assumption that you need to retrain or fine-tune on a schedule gets replaced by continuous adaptation. Start tracking this now if you're building long-running agent systems \u2014 the first production implementations will likely appear in enterprise workflow automation and coding assistants. Watch for IBM to productize this inside WatsonX as a differentiator against static model providers.",
+      "impact_level": "watch",
+      "technical_detail": "ALTK-Evolve appears to combine agent task execution traces with online learning updates; likely built on IBM's ALTK (Agent Learning Toolkit) framework; specific benchmark results, model sizes, and update frequency not available from summary."
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "date": "2026-04-14",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Stanford report highlights growing disconnect between AI insiders and everyone else",
+      "url": "https://techcrunch.com/2026/04/13/stanford-report-highlights-growing-disconnect-between-ai-insiders-and-everyone-else/",
+      "source": "TechCrunch AI",
+      "hn_score": 609,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Stanford's 2026 AI Index documents a widening perception gap: AI insiders are bullish while general public anxiety around jobs, healthcare, and economic impact is rising sharply. This trust deficit is now a measurable, documented trend \u2014 not anecdote. For builders, this gap is both a product risk and a market opportunity in AI explainability, transparency tooling, and public-facing UX.",
+      "builders_lens": "The trust gap is a wedge for startups building human-readable AI outputs, audit trails, or 'AI literacy' products targeting enterprises that need to deploy AI to skeptical workforces. If your product touches non-technical end users, designing for anxiety \u2014 not just capability \u2014 is now a competitive differentiator. Ignoring this gap risks regulatory backlash and adoption friction.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Sam Altman responds to 'incendiary' New Yorker article after attack on his home",
+      "url": "https://techcrunch.com/2026/04/11/sam-altman-responds-to-incendiary-new-yorker-article-after-attack-on-his-home/",
+      "source": "TechCrunch AI",
+      "hn_score": 8,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Sam Altman published a blog post responding to a New Yorker profile questioning his trustworthiness, alongside a reported physical attack on his home. The low HN score reflects that the builder community largely treats this as noise. Relevant only insofar as OpenAI leadership instability historically correlates with API reliability and roadmap disruptions.",
+      "builders_lens": "If you're deeply integrated with OpenAI APIs, leadership perception risk at the top is worth monitoring as a secondary signal for platform stability \u2014 but no action warranted now. Diversifying model providers remains the standard hedge regardless of personnel drama.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Want to understand the current state of AI? Check out these charts.",
+      "url": "https://www.technologyreview.com/2026/04/13/1135675/want-to-understand-the-current-state-of-ai-check-out-these-charts/",
+      "source": "MIT Technology Review",
+      "hn_score": 3,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "MIT Tech Review distills Stanford's 2026 AI Index into key charts covering capability progress, safety gaps, and public sentiment. Serves as a high-signal reference document for calibrating where the field actually stands versus media narrative. Best used as a benchmarking artifact for internal strategy decks or investor conversations.",
+      "builders_lens": "Use these charts to ground board presentations, fundraising narratives, or hiring pitches in credible third-party data rather than hype cycles. The Stanford Index is the most cited annual reference in enterprise AI procurement conversations \u2014 knowing the key stats is table stakes for technical executives.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Thousands of consumer routers hacked by Russia's military",
+      "url": "https://arstechnica.com/security/2026/04/russias-military-hacks-thousands-of-consumer-routers-to-steal-credentials/",
+      "source": "Ars Technica",
+      "hn_score": 9,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Russia's military compromised thousands of end-of-life consumer and SOHO routers across 120 countries to steal credentials, likely for downstream network access. This is a direct infrastructure risk for distributed AI workloads, remote engineering teams, and any company relying on employees working from home networks. The attack surface is end-of-life hardware with no patch path.",
+      "builders_lens": "If your team is remote or your AI inference pipeline involves edge nodes or distributed compute, audit your network assumptions now \u2014 credential theft at the router level can compromise cloud access tokens and API keys. This also signals a market gap for zero-trust network tooling specifically designed for AI workload environments and distributed teams. Startups building security layers for agentic systems should note that credential theft is the primary attack vector against autonomous agents.",
+      "impact_level": "act",
+      "technical_detail": "Attack vector targets end-of-life SOHO routers with no firmware update path; credential harvesting likely enables lateral movement into corporate VPNs and cloud management consoles."
+    },
+    {
+      "title": "Stanford's AI Index 2026 shows rapid progress, growing safety concerns, and declining public trust",
+      "url": "https://the-decoder.com/stanfords-ai-index-2026-shows-rapid-progress-growing-safety-concerns-and-declining-public-trust/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Disruption",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Stanford HAI's 2026 AI Index documents major model performance leaps, a narrowing US-China capability gap, mounting safety incidents, and eroding public trust as the four defining trends of the current moment. The US-China convergence is the most strategically significant datapoint for anyone thinking about geopolitical risk in AI supply chains or model access. Safety concerns are transitioning from academic to regulatory \u2014 expect policy pressure to accelerate.",
+      "builders_lens": "The narrowing US-China gap means export controls and model access restrictions are likely to tighten \u2014 if your product depends on frontier model API access, build abstraction layers now. The safety concern escalation is a direct opportunity for startups in red-teaming, model evaluation, and compliance tooling, all of which are underfunded relative to the risk being documented. Companies building in regulated industries (healthcare, finance, legal) should treat this report as a preview of incoming compliance requirements.",
+      "impact_level": "watch",
+      "technical_detail": "Report documents benchmark performance convergence between leading US and Chinese models across coding, reasoning, and multimodal tasks, with Chinese models now competitive on several MMLU-class evaluations."
+    },
+    {
+      "title": "The AI industry is running out of compute, with outages, rationing, and rising GPU prices",
+      "url": "https://the-decoder.com/the-ai-industry-is-running-out-of-compute-with-outages-rationing-and-rising-gpu-prices/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Opportunity",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Surging agentic AI demand is creating a structural compute shortage: Anthropic is experiencing service outages, OpenAI shut down Sora, and GPU spot prices have jumped nearly 50% according to market data. This is not a temporary bottleneck \u2014 agentic workloads are fundamentally more compute-intensive than single-turn inference, and capacity is not keeping pace. Builders relying on third-party API access should expect SLA degradation and cost spikes to continue.",
+      "builders_lens": "Lock in reserved compute capacity now if you're building latency-sensitive agentic products \u2014 spot market GPU prices up 50% means your unit economics built on spot pricing are broken. This is a direct opportunity for startups building inference optimization layers, model distillation tools, or cost routing systems that dynamically select cheaper models for subtasks. Consider architecting agentic workflows to gracefully degrade when primary model providers are unavailable, as outage frequency is increasing.",
+      "impact_level": "act",
+      "technical_detail": "GPU spot instance prices up ~50% quarter-over-quarter per market data; Anthropic Claude API experiencing availability degradation under agentic multi-step workload demand spikes."
+    },
+    {
+      "title": "Steve Yegge",
+      "url": "https://simonwillison.net/2026/Apr/13/steve-yegge/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 729,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Steve Yegge's viral observation: even Google engineering has the same AI adoption curve as a tractor company \u2014 20% agentic power users, 20% refusers, 60% passive or minimal users. This distribution appears consistent across the industry and suggests that AI productivity gains are extremely concentrated, not broadly distributed. The 729 HN score indicates this resonated hard with the builder community as a credible insider signal.",
+      "builders_lens": "The 20/60/20 adoption split means the real productivity unlock isn't better models \u2014 it's workflow design and change management that converts the 60% middle into active users. This is a wide-open opportunity for tooling that lowers the activation energy for agentic adoption: better onboarding flows, team-level workflow templates, and AI usage analytics for engineering managers. If you're building internal developer tooling or productivity products, targeting the 60% passive majority is a larger and less competitive market than building for the 20% power users who are already served.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "Enterprises power agentic workflows in Cloudflare Agent Cloud with OpenAI",
+      "url": "https://openai.com/index/cloudflare-openai-agent-cloud",
+      "source": "OpenAI Blog",
+      "hn_score": 1,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Cloudflare's Agent Cloud now integrates GPT-5.4 and OpenAI Codex, positioning Cloudflare as an enterprise-grade deployment layer for AI agents with built-in edge distribution and security. This is a meaningful platform move: Cloudflare's network infrastructure plus OpenAI's models creates a managed agentic runtime that bypasses the need to stitch together separate compute, CDN, and model API layers. The near-zero HN score suggests builders see this as a press release, but the infrastructure implications are real.",
+      "builders_lens": "If you're building agentic products for enterprise customers, Cloudflare Agent Cloud reduces time-to-production and satisfies enterprise security requirements that DIY stacks struggle to meet \u2014 evaluate it as a deployment target before building custom orchestration. Conversely, this partnership signals that Cloudflare is becoming a serious AI infrastructure competitor to AWS/GCP managed AI services, which matters for platform dependency decisions. Watch whether Cloudflare adds model-agnostic routing \u2014 that would make it a neutral layer worth building on.",
+      "impact_level": "watch",
+      "technical_detail": "Integration exposes GPT-5.4 and OpenAI Codex via Cloudflare's Workers AI runtime, enabling sub-50ms edge inference routing with Cloudflare's global anycast network for latency-sensitive agentic tasks."
+    }
+  ]
+}

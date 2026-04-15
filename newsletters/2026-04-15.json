@@ -1,0 +1,135 @@
+{
+  "date": "2026-04-15",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Stanford report highlights growing disconnect between AI insiders and everyone else",
+      "url": "https://techcrunch.com/2026/04/13/stanford-report-highlights-growing-disconnect-between-ai-insiders-and-everyone-else/",
+      "source": "TechCrunch AI",
+      "hn_score": 656,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Opportunity",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Stanford's AI Index documents a widening perception gap between AI practitioners and the general public, with non-experts expressing rising anxiety around job displacement, healthcare, and economic stability. This isn't just a communication problem \u2014 it's a trust deficit that shapes regulation, enterprise adoption, and consumer product design. The gap creates both a market for explainability/trust tooling and a political risk for companies deploying AI in sensitive domains.",
+      "builders_lens": "The trust gap is a product opportunity: tools that make AI decisions legible to non-technical stakeholders (HR, patients, consumers) are undersupplied. If you're building in healthcare, finance, or HR automation, 'explainability' is no longer a nice-to-have \u2014 regulators and end-users are demanding it. Consider whether your GTM strategy accounts for the 80% of the market that isn't an AI enthusiast.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Turn your best AI prompts into one-click tools in Chrome",
+      "url": "https://blog.google/products-and-platforms/products/chrome/skills-in-chrome/",
+      "source": "Google AI Blog",
+      "hn_score": 282,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Google is shipping 'Skills' in Chrome, allowing users to save and reuse AI prompts as one-click browser-native tools. This embeds personalized AI workflows directly into the browser layer, bypassing third-party prompt management tools. It signals Google's intent to make Chrome itself an AI productivity surface, not just a gateway to AI apps.",
+      "builders_lens": "If you're building a Chrome extension or browser-based AI productivity tool, Google just colonized your core use case. The strategic question is whether to build on top of Skills (if an API surfaces) or differentiate into territory Chrome won't touch \u2014 team collaboration, domain-specific workflows, or enterprise policy controls. Watch whether Skills gets an extension API; if it does, it becomes a distribution channel.",
+      "impact_level": "act",
+      "technical_detail": "Skills in Chrome appear to use on-device or Gemini Nano-backed prompt execution within the browser context; no public API or model card details released at this stage."
+    },
+    {
+      "title": "OpenAI has bought AI personal finance startup Hiro",
+      "url": "https://techcrunch.com/2026/04/13/openai-has-bought-ai-personal-finance-startup-hiro/",
+      "source": "TechCrunch AI",
+      "hn_score": 8,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI acquired Hiro, an AI-native personal finance startup, signaling a direct push into financial planning within ChatGPT. This is OpenAI's clearest move yet into vertical consumer applications beyond general-purpose chat. For fintech builders, this is a category-level threat \u2014 OpenAI now has the distribution and the capability to own the top of the financial advice funnel.",
+      "builders_lens": "If you're building AI-powered personal finance, budgeting, or financial planning tools, OpenAI just entered your market with 500M+ users as a distribution moat. The defensible plays are now: deep integrations with financial institutions (account aggregation, transaction data), licensed advice (RIA, broker-dealer), or B2B tooling for advisors \u2014 none of which OpenAI will move fast on. Don't compete on the generic 'help me with my finances' use case.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "Trusted access for the next era of cyber defense",
+      "url": "https://simonwillison.net/2026/Apr/14/trusted-access-openai/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 152,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI is fine-tuning a new model variant, GPT-5.4-Cyber, specifically for defensive cybersecurity use cases, framed as a direct response to Anthropic's Claude Mythos. This represents a race between frontier labs to capture the government and enterprise security market with capability-unlocked, domain-restricted models. The 'trusted access' framing suggests a tiered model access program for vetted security organizations.",
+      "builders_lens": "A cybersecurity-specialized GPT-5.4 variant with trusted access creates a supply-side unlock for defensive security tooling that previously required jailbreaks or workarounds. Builders in threat intelligence, red team automation, SOC co-pilots, or vulnerability research should be positioning now to get into OpenAI's trusted partner program before access becomes competitive or gated. The moat here is being in the first wave of certified integrators.",
+      "impact_level": "act",
+      "technical_detail": "GPT-5.4-Cyber is a fine-tuned variant of GPT-5.4 with defensive cybersecurity capability unlocks; positioned as OpenAI's counter to Anthropic's Claude Mythos Preview, which was evaluated by the UK AI Safety Institute for offensive cyber benchmarks."
+    },
+    {
+      "title": "Steve Yegge",
+      "url": "https://simonwillison.net/2026/Apr/13/steve-yegge/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 729,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Steve Yegge reports that Google's internal AI adoption mirrors that of a legacy industrial company \u2014 roughly 20% power users, 20% refusers, and 60% passive or non-users \u2014 suggesting that even the company building frontier AI hasn't cracked internal change management. This pattern appears consistent across most of the industry and implies the productivity gains from AI coding tools are being captured by a small minority. The unlock isn't model capability \u2014 it's organizational adoption.",
+      "builders_lens": "The 20/60/20 adoption split is your B2B AI go-to-market problem and your opportunity simultaneously. If you can build tooling or change management workflows that move the 60% from passive to active users, the ROI math for enterprise deals becomes overwhelming. Conversely, if your product assumes power-user behavior, you're addressing 20% of seats \u2014 reprice and reposition accordingly, or build onboarding flows that convert the middle 60%.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "OpenAI's GPT-5.4 Pro reportedly solves a longstanding open Erd\u0151s math problem in under two hours",
+      "url": "https://the-decoder.com/openais-gpt-5-4-pro-reportedly-solves-a-longstanding-open-erdos-math-problem-in-under-two-hours/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Disruption",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "GPT-5.4 Pro reportedly solved an open Erd\u0151s combinatorics problem in approximately 80 minutes, with Fields Medalist Terence Tao describing it as a 'meaningful contribution to mathematics.' This is a qualitative threshold crossing \u2014 not a benchmark, but an externally validated novel result in pure mathematics. It suggests frontier models are entering the territory of genuine scientific discovery, not just pattern-matched recall.",
+      "builders_lens": "This is the clearest signal yet that AI is transitioning from 'tool that assists researchers' to 'agent that does research.' The 6-18 month product opportunity is in research automation infrastructure: formal verification pipelines, automated literature synthesis, hypothesis generation loops, and AI-assisted peer review. Scientific publishing, pharma R&D, and materials science are the first verticals where this compounds into defensible IP.",
+      "impact_level": "watch",
+      "technical_detail": "GPT-5.4 Pro solved an open Erd\u0151s combinatorics problem in ~80 minutes; no architecture or parameter details disclosed, but the result was independently validated by Terence Tao as a novel mathematical contribution rather than retrieval of known results."
+    },
+    {
+      "title": "Claude Mythos can autonomously compromise weakly defended enterprise networks end-to-end",
+      "url": "https://the-decoder.com/claude-mythos-can-autonomously-compromise-weakly-defended-enterprise-networks-end-to-end/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Disruption",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "The UK AI Safety Institute evaluated Claude Mythos Preview and found it can autonomously execute end-to-end attack simulations against weakly defended corporate networks \u2014 the first time an AI model has cleared this bar in formal testing. Significant caveats apply around network configuration and defender posture, but the threshold has been crossed. This is the dual-use problem made concrete: the same capability that enables offensive simulation enables defensive automation.",
+      "builders_lens": "This evaluation creates immediate urgency and opportunity in two directions: (1) automated red teaming and penetration testing services built on top of sanctioned model access are now a viable product category, and (2) the defensive side \u2014 AI-powered network hardening, misconfiguration detection, and attack path simulation \u2014 just got a credible threat model to sell against. Enterprise security buyers now have a concrete reason to accelerate AI-native defense tooling purchases.",
+      "impact_level": "act",
+      "technical_detail": "Claude Mythos Preview achieved autonomous end-to-end compromise of a simulated corporate network in UK AISI evaluation; specific attack chain, dwell time, and detection evasion metrics not yet publicly disclosed, but the result marks a first-of-kind milestone in formal AI capability assessment for offensive cyber."
+    },
+    {
+      "title": "Enterprises power agentic workflows in Cloudflare Agent Cloud with OpenAI",
+      "url": "https://openai.com/index/cloudflare-openai-agent-cloud",
+      "source": "OpenAI Blog",
+      "hn_score": 1,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Cloudflare has integrated GPT-5.4 and Codex into its Agent Cloud product, giving enterprises a managed platform for building, deploying, and scaling AI agents with Cloudflare's security and edge network as the runtime. This formalizes the pattern of AI models running as persistent agents on edge infrastructure rather than as stateless API calls. For builders, Cloudflare's network becomes an opinionated orchestration layer for agentic workloads.",
+      "builders_lens": "If you're building enterprise agentic workflows, this partnership means you can deploy agents with Cloudflare's zero-trust security, DDoS protection, and global edge network without building that infrastructure yourself \u2014 which is a significant compliance and procurement accelerant for regulated industries. The risk: deeper lock-in to the OpenAI/Cloudflare stack. Evaluate whether the deployment simplicity is worth the reduced portability before committing agent architecture to this platform.",
+      "impact_level": "watch",
+      "technical_detail": "Cloudflare Agent Cloud now supports GPT-5.4 and Codex via OpenAI APIs within Cloudflare Workers runtime, enabling persistent agentic execution at edge with Cloudflare's security primitives (Zero Trust, WAF) applied to agent traffic and tool calls."
+    }
+  ]
+}

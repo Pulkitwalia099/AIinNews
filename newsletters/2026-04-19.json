@@ -1,0 +1,165 @@
+{
+  "date": "2026-04-19",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "AI chip startup Cerebras files for IPO",
+      "url": "https://techcrunch.com/2026/04/18/ai-chip-startup-cerebras-files-for-ipo/",
+      "source": "TechCrunch AI",
+      "hn_score": 3,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Cerebras is filing for IPO backed by a $10B+ OpenAI deal and an AWS deployment agreement, marking a major credibility milestone for non-Nvidia AI silicon. This signals the compute stack is genuinely diversifying at the enterprise and hyperscaler level. For builders, it validates that Cerebras inference is a real alternative worth evaluating, not a research curiosity.",
+      "builders_lens": "If your inference costs are dominated by Nvidia-priced GPU hours, Cerebras's AWS integration means you may soon be able to benchmark wafer-scale inference inside your existing cloud workflows. Watch for pricing arbitrage opportunities as Cerebras competes for AWS workloads \u2014 especially for latency-sensitive, large-batch inference jobs.",
+      "impact_level": "watch",
+      "technical_detail": "Cerebras uses wafer-scale engine (WSE) architecture \u2014 a single die the size of a full wafer \u2014 enabling extremely high memory bandwidth and low-latency token generation compared to GPU clusters."
+    },
+    {
+      "title": "Kevin Weil and Bill Peebles exit OpenAI as company continues to shed 'side quests'",
+      "url": "https://techcrunch.com/2026/04/17/kevin-weil-and-bill-peebles-exit-openai-as-company-continues-to-shed-side-quests/",
+      "source": "TechCrunch AI",
+      "hn_score": 8,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI is shutting down Sora and dissolving its science team, with CPO Kevin Weil and Sora lead Bill Peebles both departing \u2014 a clear signal the company is cutting consumer moonshots to concentrate on enterprise revenue. This is a strategic retreat from the frontier-of-everything posture OpenAI held two years ago. The talent exodus also opens windows for competitors and startups in video generation and AI-for-science.",
+      "builders_lens": "Sora's shutdown leaves a real gap in enterprise video generation \u2014 if you're building in that space (synthetic media, video search, training data generation), OpenAI just exited your market. On the science side, the disbanding of the science team is an opportunity to recruit world-class AI researchers who built cutting-edge biology and chemistry models.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Sources: Cursor in talks to raise $2B+ at $50B valuation as enterprise growth surges",
+      "url": "https://techcrunch.com/2026/04/17/sources-cursor-in-talks-to-raise-2b-at-50b-valuation-as-enterprise-growth-surges/",
+      "source": "TechCrunch AI",
+      "hn_score": 3,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Cursor is reportedly raising at a $50B valuation \u2014 an extraordinary number for a coding assistant that didn't exist three years ago \u2014 with a16z and Thrive returning as lead investors. Enterprise adoption is the cited growth driver, confirming that AI-native developer tooling has crossed the chasm from prosumer to institutional buyer. This is one of the fastest value accumulations in software history.",
+      "builders_lens": "At $50B, Cursor is priced like infrastructure, not an app \u2014 which means the market believes AI coding tools will capture a durable, high-margin share of the software development budget. If you're building adjacent tooling (code review, testing, deployment, security), Cursor's enterprise traction is the rising tide; integrate or position against it deliberately. Competing head-on is increasingly capital-intensive.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Factory hits $1.5B valuation to build AI coding for enterprises",
+      "url": "https://techcrunch.com/2026/04/16/factory-hits-1-5b-valuation-to-build-ai-coding-for-enterprises/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Factory raised $150M led by Khosla at a $1.5B valuation, targeting enterprise-grade AI coding workflows \u2014 a direct play on the same category as Cursor but with a more autonomous, agent-first positioning. The round validates that investors see room for multiple large winners in AI-assisted software development. Factory's differentiation appears to be deeper workflow automation rather than IDE-level assistance.",
+      "builders_lens": "The fact that both Cursor ($50B) and Factory ($1.5B) are raising simultaneously at large valuations tells you the enterprise buyer is actively allocating budget to AI coding \u2014 but the two products are solving different parts of the problem (IDE assistance vs. autonomous task execution). If you're building B2B dev tooling, the market is segmenting fast; pick a layer and go deep rather than competing on breadth.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Salesforce CEO Marc Benioff says APIs are the new UI for AI agents",
+      "url": "https://the-decoder.com/salesforce-ceo-marc-benioff-says-apis-are-the-new-ui-for-ai-agents/",
+      "source": "The Decoder",
+      "hn_score": 11,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Salesforce is launching 'Headless 360,' opening its entire CRM platform to AI agents via API \u2014 effectively replacing the browser UI as the primary interface for enterprise software interactions. Benioff is operationalizing a thesis Sam Altman has also articulated: agents will consume software through APIs, not GUIs. This is one of the largest enterprise software companies betting its platform strategy on the agentic paradigm.",
+      "builders_lens": "If you're building agents that interact with enterprise workflows, Salesforce just became a more programmatically accessible target \u2014 watch for new Headless 360 API docs and rate limit structures. More importantly, this is the template: every major SaaS platform will follow. Builders who create agent orchestration layers or 'API translation' middleware between legacy SaaS and modern agent frameworks are in an excellent position right now.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "Changes in the system prompt between Claude Opus 4.6 and 4.7",
+      "url": "https://simonwillison.net/2026/Apr/18/opus-system-prompt/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 95,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Simon Willison diffs the system prompts between Claude Opus 4.6 and 4.7 \u2014 Anthropic being the only major lab to publicly archive these. System prompt changes are a high-signal but underread indicator of how a lab's safety philosophy, behavioral guardrails, and capability priorities are evolving in production. Small prompt deltas often foreshadow large behavioral shifts in real deployments.",
+      "builders_lens": "If Claude is in your stack, reading these diffs is essential maintenance \u2014 system prompt changes at the model level can silently alter your product's behavior without any code changes on your end. Anthropic's transparency here is a genuine competitive advantage for builders who want predictable, auditable AI behavior; factor this into your model selection criteria.",
+      "impact_level": "act",
+      "technical_detail": "Claude Opus 4.7 shipped April 16, 2026; Anthropic publishes full system prompt changelogs at platform.claude.com/docs/en/release-notes/system-prompts, covering all versions back to Claude 3 in July 2024."
+    },
+    {
+      "title": "Qwen3.6-35B-A3B on my laptop drew me a better pelican than Claude Opus 4.7",
+      "url": "https://simonwillison.net/2026/Apr/16/qwen-beats-opus/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 556,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Disruption",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Alibaba's Qwen3.6-35B-A3B \u2014 a mixture-of-experts model running locally on a laptop \u2014 outperformed Claude Opus 4.7 on at least one creative generation task, drawing significant HN attention. This is directionally important: capable open-weight MoE models are reaching the performance envelope of frontier closed models on specific tasks, and they run on consumer hardware. The cost and sovereignty implications are substantial.",
+      "builders_lens": "A 35B MoE model with a 3B active parameter footprint running on a laptop at near-Opus quality is a direct threat to any product built on closed-model API dependency \u2014 and an opportunity for anyone building local-first or edge AI. If your use case doesn't require the absolute frontier and involves sensitive data or latency constraints, this is the moment to seriously benchmark open-weight alternatives against your current API spend.",
+      "impact_level": "act",
+      "technical_detail": "Qwen3.6-35B-A3B is a mixture-of-experts architecture with 35B total parameters but only ~3B active per forward pass, enabling laptop-class inference; tested via llm CLI tooling by Willison."
+    },
+    {
+      "title": "Codex for (almost) everything",
+      "url": "https://openai.com/index/codex-for-almost-everything",
+      "source": "OpenAI Blog",
+      "hn_score": 1543,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI has significantly expanded its Codex app for macOS and Windows, adding computer use, in-app browsing, image generation, memory, and plugin support \u2014 transforming it from a coding assistant into a general-purpose AI agent for developer workflows. The 1543 HN score makes this the highest-signal story of the batch; the builder community is paying close attention. Codex is becoming the agentic IDE layer that sits above the OS.",
+      "builders_lens": "Computer use plus in-app browsing plus memory in a single coding-focused agent is a qualitative leap \u2014 this can now autonomously navigate documentation, run tests, generate assets, and remember project context across sessions. If you're building developer tooling, this is your new competitive benchmark. If you're building plugins or integrations, the Codex plugin ecosystem is an immediate distribution channel worth targeting.",
+      "impact_level": "act",
+      "technical_detail": "Codex now integrates computer use (GUI automation), in-app browser control, persistent memory across sessions, image generation, and a plugin API \u2014 all within the macOS and Windows desktop client."
+    },
+    {
+      "title": "Introducing GPT-Rosalind for life sciences research",
+      "url": "https://openai.com/index/introducing-gpt-rosalind",
+      "source": "OpenAI Blog",
+      "hn_score": 132,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "New Market",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI has launched GPT-Rosalind, a frontier reasoning model purpose-built for drug discovery, genomics, protein reasoning, and scientific workflows \u2014 a direct move into vertical AI for life sciences. Named after Rosalind Franklin, this signals OpenAI is building domain-specific model variants rather than relying solely on general-purpose models to serve high-value verticals. It arrives alongside the shutdown of OpenAI's internal science team, suggesting this is the commercial replacement.",
+      "builders_lens": "GPT-Rosalind creates an API-accessible reasoning layer for biotech and pharma workflows that previously required custom fine-tuning or domain-specific model stacks. If you're building in computational biology, drug discovery tooling, or clinical data analysis, evaluate this immediately \u2014 it may collapse your model infrastructure cost and complexity. Equally, if you're building life sciences software, your buyers will be asking about GPT-Rosalind integration within months.",
+      "impact_level": "watch",
+      "technical_detail": "GPT-Rosalind is described as a frontier reasoning model with specialized capabilities in protein structure reasoning, genomics analysis, and drug-target interaction prediction \u2014 architecture details not yet disclosed."
+    },
+    {
+      "title": "Trusted access for the next era of cyber defense",
+      "url": "https://openai.com/index/scaling-trusted-access-for-cyber-defense",
+      "source": "OpenAI Blog",
+      "hn_score": 161,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI is expanding its Trusted Access for Cyber program, releasing GPT-5.4-Cyber exclusively to vetted security defenders while adding enhanced safeguards against offensive misuse. This is a controlled, credentialed rollout \u2014 not a public API \u2014 signaling OpenAI is treating cybersecurity capability as a regulated resource, similar to how export controls work for dual-use tech. It validates that AI-powered cyber offense/defense is now a serious capability frontier.",
+      "builders_lens": "If you're building in enterprise security, threat detection, or incident response, getting into the Trusted Access program is a meaningful competitive moat \u2014 early access to GPT-5.4-Cyber's capabilities before general availability. The credential-gating also suggests OpenAI is building a defensible channel for government and regulated-industry security buyers; positioning your product alongside this program could accelerate enterprise sales cycles.",
+      "impact_level": "watch",
+      "technical_detail": "GPT-5.4-Cyber is a specialized variant of GPT-5.4 with enhanced cybersecurity reasoning capabilities, distributed exclusively through OpenAI's vetted Trusted Access for Cyber program with additional use-policy safeguards."
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "date": "2026-04-20",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "AI chip startup Cerebras files for IPO",
+      "url": "https://techcrunch.com/2026/04/18/ai-chip-startup-cerebras-files-for-ipo/",
+      "source": "TechCrunch AI",
+      "hn_score": 4,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Cerebras is moving toward a public offering after securing an AWS integration deal and a reported $10B+ agreement with OpenAI. This signals that non-NVIDIA compute infrastructure is graduating from niche to institutional-grade. A Cerebras IPO would give the market a liquid benchmark for alternative AI chip valuations.",
+      "builders_lens": "If you're building inference-heavy workloads, Cerebras's AWS availability means you can now benchmark wafer-scale compute against NVIDIA without a direct enterprise contract. Watch pricing post-IPO \u2014 if Cerebras commoditizes high-throughput inference, latency-sensitive applications (real-time agents, coding assistants) could see cost structures improve dramatically.",
+      "impact_level": "watch",
+      "technical_detail": "Cerebras uses wafer-scale engine (WSE) architecture delivering up to 4 petaflops on-chip with 900,000 AI cores, purpose-built to eliminate the memory bandwidth bottleneck that limits GPU clusters on large models."
+    },
+    {
+      "title": "Kevin Weil and Bill Peebles exit OpenAI as company continues to shed 'side quests'",
+      "url": "https://techcrunch.com/2026/04/17/kevin-weil-and-bill-peebles-exit-openai-as-company-continues-to-shed-side-quests/",
+      "source": "TechCrunch AI",
+      "hn_score": 8,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI is shutting down Sora and folding its science team, with CPO Kevin Weil and Sora lead Bill Peebles departing as the company doubles down on enterprise AI. This is a deliberate strategic contraction \u2014 OpenAI is trading moonshot optionality for revenue-focused execution. The talent and IP exiting opens immediate opportunities in video generation and AI-for-science.",
+      "builders_lens": "Sora's shutdown is a direct greenfield signal: enterprise video generation and AI-for-science are now explicitly de-prioritized by OpenAI, meaning startups in those verticals won't face an OpenAI first-party product competing with them in the near term. Weil and Peebles are both high-conviction operators \u2014 watch where they land, as it will likely define the next breakout company in their respective domains.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "Sources: Cursor in talks to raise $2B+ at $50B valuation as enterprise growth surges",
+      "url": "https://techcrunch.com/2026/04/17/sources-cursor-in-talks-to-raise-2b-at-50b-valuation-as-enterprise-growth-surges/",
+      "source": "TechCrunch AI",
+      "hn_score": 3,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Cursor is reportedly raising $2B+ at a $50B valuation led by a16z and Thrive, driven by surging enterprise adoption of AI coding tools. At $50B, Cursor is pricing in category dominance of developer tooling \u2014 a bet that AI-native IDEs replace traditional editors across engineering orgs. This is one of the fastest valuation ascents in enterprise software history.",
+      "builders_lens": "A $50B Cursor valuation sets the ceiling and the expectation: enterprise AI dev tools are a massive, winner-take-most market. If you're building adjacent to the coding workflow \u2014 code review, security scanning, test generation, documentation \u2014 this round validates the TAM but also signals you need differentiation beyond 'AI + IDE'. The opportunity is in the vertical-specific or post-IDE layer (deployment, observability, compliance) that Cursor won't own.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Claude Token Counter, now with model comparisons",
+      "url": "https://simonwillison.net/2026/Apr/20/claude-token-counts/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 233,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Simon Willison upgraded his Claude Token Counter tool to support cross-model tokenizer comparisons, revealing that Claude Opus 4.7 is the first Claude model to ship a new tokenizer. Tokenizer changes have direct cost and compatibility implications for anyone running Claude in production \u2014 different token counts mean different pricing and context window behavior. This is a low-visibility but high-impact infrastructure change that most teams will discover only when billing surprises them.",
+      "builders_lens": "If you have prompts optimized for Claude 4.6 in production, run them through this tool against 4.7 before upgrading \u2014 tokenizer drift can silently inflate costs or truncate context. More broadly, the open-source token counter is a useful addition to any eval or cost-monitoring pipeline; fork it and integrate it into your CI to catch tokenization regressions on model upgrades.",
+      "impact_level": "act",
+      "technical_detail": "Claude Opus 4.7 introduces a new tokenizer that differs from all previous Claude models (3.x through 4.6), meaning identical prompts will produce different token counts and thus different API costs and context window consumption."
+    },
+    {
+      "title": "Changes in the system prompt between Claude Opus 4.6 and 4.7",
+      "url": "https://simonwillison.net/2026/Apr/18/opus-system-prompt/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 544,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Anthropic published updated system prompts for Claude Opus 4.7, and Willison's diff analysis surfaces meaningful behavioral shifts in how the model is instructed to operate. Anthropic remains the only major lab to publicly document its user-facing system prompts, making this a rare window into how frontier labs are shaping model behavior at the instruction level. Shifts here often predict capability and policy changes that surface in the API weeks later.",
+      "builders_lens": "Reading Anthropic's system prompt diffs is one of the highest-signal activities for anyone building on Claude \u2014 it tells you what the model is being nudged toward and away from before you discover it in production. If you're using Claude in agentic pipelines or with custom personas, cross-reference your system prompt against Anthropic's to identify potential behavioral conflicts introduced by 4.7's changes.",
+      "impact_level": "act",
+      "technical_detail": "Anthropic's published system prompt archive now spans from Claude 3 (July 2024) through Opus 4.7 (April 16, 2026), enabling systematic behavioral diffing across model generations via the platform.claude.com release notes."
+    },
+    {
+      "title": "Codex for (almost) everything",
+      "url": "https://openai.com/index/codex-for-almost-everything",
+      "source": "OpenAI Blog",
+      "hn_score": 1552,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Disruption",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI's updated Codex app for macOS and Windows now includes computer use, in-app browsing, image generation, memory, and plugins \u2014 effectively transforming it from a code completion tool into a general-purpose autonomous developer agent. This is OpenAI's most direct competitive move against Cursor, Devin, and the broader agentic coding market. The 1552 HN score reflects that the developer community sees this as a genuine step-change, not an incremental update.",
+      "builders_lens": "Codex now competes directly with Devin, Cursor, and any coding agent you're building \u2014 if your product is 'AI that codes', you need to reassess your differentiation within the next 30 days. The plugin architecture is the most important detail: building a Codex plugin could be a faster GTM than a standalone tool for reaching OpenAI's existing developer base. Conversely, the browser and computer-use capabilities signal that OpenAI is moving up the stack toward full task automation, which compresses the runway for pure coding agents.",
+      "impact_level": "act",
+      "technical_detail": "Codex's updated architecture includes a native computer-use module with in-app browser integration, persistent memory across sessions, and a plugin API \u2014 suggesting it runs on a multimodal action model similar to the Operator stack, not just a code-completion fine-tune."
+    },
+    {
+      "title": "Introducing GPT-Rosalind for life sciences research",
+      "url": "https://openai.com/index/introducing-gpt-rosalind",
+      "source": "OpenAI Blog",
+      "hn_score": 132,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "New Market",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI launched GPT-Rosalind, a frontier reasoning model purpose-built for drug discovery, genomics analysis, protein reasoning, and scientific workflows. This is OpenAI's first publicly named vertical-specific model, signaling a deliberate move to own AI-for-science as a category distinct from general-purpose assistants. Named after Rosalind Franklin, the model represents OpenAI's answer to DeepMind's AlphaFold lineage and a direct bid for pharma/biotech enterprise contracts.",
+      "builders_lens": "GPT-Rosalind creates an immediate two-sided opportunity: biotech and pharma teams should evaluate it against existing workflows (literature synthesis, hypothesis generation, molecular property prediction) where it may outperform general models; and AI-for-science startups should expect OpenAI to move into their workflow layer within 12-18 months, making differentiation through proprietary data and lab integrations urgent. The gap OpenAI won't fill quickly is wet-lab integration and regulatory-compliant data pipelines \u2014 those are buildable moats.",
+      "impact_level": "watch",
+      "technical_detail": "GPT-Rosalind is described as a frontier reasoning model with specific capability tuning for genomics analysis, protein structure reasoning, and drug discovery workflows \u2014 likely built on the o-series reasoning architecture with domain-specific RLHF and scientific corpus fine-tuning."
+    },
+    {
+      "title": "The next evolution of the Agents SDK",
+      "url": "https://openai.com/index/the-next-evolution-of-the-agents-sdk",
+      "source": "OpenAI Blog",
+      "hn_score": 23,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI updated its Agents SDK with native sandbox execution and a model-native harness for building secure, long-running agents that operate across files and tools. The low HN score (23) suggests this is more incremental plumbing than breakthrough \u2014 but native sandboxing is a meaningful security primitive that removes a major blocker for enterprise agent deployment. This is infrastructure work that makes the Codex and broader OpenAI agent ecosystem safer to run in production.",
+      "builders_lens": "If you're building multi-step agents on OpenAI's stack, the native sandbox execution means you can run code-executing agents in production without building your own isolation layer \u2014 materially reducing your security engineering burden. The model-native harness is worth watching: it suggests OpenAI is converging toward a standard agent runtime that could become the default substrate for the ecosystem, similar to how the OpenAI API became the default LLM interface.",
+      "impact_level": "watch",
+      "technical_detail": "The updated Agents SDK introduces a model-native harness with native sandbox execution (isolated execution environments for code and tool calls), enabling stateful, long-running agent sessions with file system access without requiring third-party sandboxing solutions like E2B or Modal."
+    },
+    {
+      "title": "Turn your best AI prompts into one-click tools in Chrome",
+      "url": "https://blog.google/products-and-platforms/products/chrome/skills-in-chrome/",
+      "source": "Google AI Blog",
+      "hn_score": 307,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Disruption",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Google is shipping 'Skills' in Chrome \u2014 a feature that lets users save AI prompts as reusable one-click tools directly in the browser. This embeds AI utility at the browser level, potentially displacing the dozens of prompt-management and AI-overlay extensions that currently monetize this workflow. With Chrome's ~3B user install base, even modest adoption makes this a category-defining distribution move.",
+      "builders_lens": "Skills in Chrome is a direct threat to any product whose core value prop is 'save and reuse your best AI prompts' \u2014 if that's your product, you have 6-12 months to move up the value stack before Google's distribution makes your current wedge irrelevant. The opportunity is in what Skills won't do: complex multi-step automations, cross-app workflows, and enterprise prompt governance \u2014 those layers remain buildable. For anyone building Chrome extensions with AI capabilities, this is also a signal to evaluate whether your feature will be natively absorbed.",
+      "impact_level": "act",
+      "technical_detail": "Chrome Skills appear to be implemented as browser-native prompt templates with one-click invocation, likely leveraging Chrome's built-in Gemini integration rather than requiring external API calls, which would give them a latency and privacy advantage over extension-based alternatives."
+    }
+  ]
+}

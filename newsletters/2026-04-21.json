@@ -1,0 +1,136 @@
+{
+  "date": "2026-04-21",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Anthropic takes $5B from Amazon and pledges $100B in cloud spending in return",
+      "url": "https://techcrunch.com/2026/04/20/anthropic-takes-5b-from-amazon-and-pledges-100b-in-cloud-spending-in-return/",
+      "source": "TechCrunch AI",
+      "hn_score": 134,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Amazon invested another $5B into Anthropic as part of a total $33B commitment, with Anthropic contractually pledging $100B in AWS cloud spend in return. This circular capital structure effectively locks Anthropic's compute future to AWS infrastructure. For builders, this signals AWS as the dominant inference and training substrate for Claude-based applications for the foreseeable future.",
+      "builders_lens": "If you're building on Claude APIs, your upstream provider is now deeply AWS-dependent \u2014 latency, pricing, and availability will track AWS infrastructure decisions. Consider this a strong signal to consolidate your own stack on AWS if you're a Claude-first shop. The risk: AWS-Anthropic co-dependency could create a single-vendor fragility that multi-cloud or Bedrock-native strategies should hedge against.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "AI chip startup Cerebras files for IPO",
+      "url": "https://techcrunch.com/2026/04/18/ai-chip-startup-cerebras-files-for-ipo/",
+      "source": "TechCrunch AI",
+      "hn_score": 4,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Cerebras is filing for IPO after securing an AWS chip deployment deal and a reported $10B+ contract with OpenAI. The IPO signals that wafer-scale, non-GPU compute is maturing into a viable commercial infrastructure tier. Cerebras chips offer dramatically higher inference throughput for specific workloads, particularly long-context and real-time generation.",
+      "builders_lens": "Cerebras chips are now accessible via AWS and OpenAI's infrastructure, meaning high-throughput inference use cases \u2014 real-time voice, low-latency agents, high-volume generation pipelines \u2014 may have a new cost-performance tier to evaluate. Watch post-IPO pricing and API availability; if Cerebras becomes a first-class inference option on AWS Bedrock or OpenAI's API, latency-sensitive builders should benchmark it immediately.",
+      "impact_level": "watch",
+      "technical_detail": "Cerebras' Wafer Scale Engine 3 (WSE-3) integrates 900,000 AI cores and 44GB on-chip SRAM on a single wafer, enabling memory-bandwidth-bound inference throughput that outpaces GPU clusters for certain model architectures."
+    },
+    {
+      "title": "Amazon pours $33B into Anthropic, which promises to spend $100B right back on AWS",
+      "url": "https://the-decoder.com/amazon-pours-33b-into-anthropic-which-promises-to-spend-100b-right-back-on-aws/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "This article covers the same Amazon-Anthropic capital commitment story as Article 1, with the total investment framed at $33B across multiple tranches. The $100B AWS spend pledge is the structural anchor of the deal. No new technical or strategic information beyond the TechCrunch coverage.",
+      "builders_lens": "Duplicate coverage of the Amazon-Anthropic deal \u2014 see the TechCrunch article for the actionable framing. The consistent signal across sources: Anthropic's infrastructure future is AWS, and builders on Claude should plan accordingly.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Claude Token Counter, now with model comparisons",
+      "url": "https://simonwillison.net/2026/Apr/20/claude-token-counts/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 304,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Simon Willison updated his Claude Token Counter tool to support side-by-side tokenizer comparisons across Claude model versions. The key finding: Claude Opus 4.7 is the first Claude model to ship with a changed tokenizer, making it meaningfully different from 4.6 for cost and context estimation. Builders with existing prompts tuned to 4.6 token budgets should revalidate against 4.7.",
+      "builders_lens": "If you're running cost-optimized prompts or context-window-constrained workflows on Claude, a tokenizer change in Opus 4.7 means your token count estimates from 4.6 are now stale. Run your production prompts through the updated tool before migrating to 4.7 \u2014 mismatches can cause context overflow or unexpected cost spikes at scale. This is an immediate pre-migration checklist item.",
+      "impact_level": "act",
+      "technical_detail": "Claude Opus 4.7 introduces a new tokenizer that produces different token counts than the 4.6 tokenizer for identical input strings; the tool exposes this delta via the Anthropic token counting API endpoint across both model versions."
+    },
+    {
+      "title": "Changes in the system prompt between Claude Opus 4.6 and 4.7",
+      "url": "https://simonwillison.net/2026/Apr/18/opus-system-prompt/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 576,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Anthropic updated Claude Opus 4.7's system prompt, and Simon Willison did a diff against 4.6's published prompt \u2014 enabled by Anthropic's unique practice of publishing system prompts publicly. The changes reveal deliberate shifts in Claude's default behaviors, persona framing, and constraint language that will affect how API users need to write or override system prompts. This is rare signal on how frontier labs are evolving model defaults.",
+      "builders_lens": "If you're building on Claude and relying on default system prompt behaviors \u2014 especially for safety guardrails, persona consistency, or instruction-following heuristics \u2014 the 4.6-to-4.7 diff is required reading before upgrading. Changes in default system prompts can silently break evals and production workflows. Anthropic's prompt transparency is a competitive moat for builders: use it to understand what you're overriding and why.",
+      "impact_level": "act",
+      "technical_detail": "Anthropic publishes versioned system prompts at platform.claude.ai/docs/release-notes/system-prompts; the 4.7 prompt diverges from 4.6 in constraint framing and identity language, with the archive extending back to Claude 3 in July 2024."
+    },
+    {
+      "title": "Scaling Codex to enterprises worldwide",
+      "url": "https://openai.com/index/scaling-codex-to-enterprises-worldwide",
+      "source": "OpenAI Blog",
+      "hn_score": 3,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI launched Codex Labs and announced partnerships with Accenture, PwC, and Infosys to deploy Codex across enterprise software development lifecycles, reporting 4M weekly active users. This is a direct play to institutionalize AI-assisted development through the large systems integrator channel. The SI partnerships signal that Codex is being positioned as enterprise workflow infrastructure, not just a developer tool.",
+      "builders_lens": "The SI channel play (Accenture, PwC, Infosys) means Codex is now competing for enterprise dev tool budgets through procurement relationships, not bottom-up developer adoption. If you're building developer tooling, this is the moment to define what you do better than Codex for specific verticals or workflows \u2014 broad horizontal coding assistance is increasingly a commodity. The 4M WAU number is the floor, not the ceiling; enterprise lock-in via SIs will compound fast.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Codex for (almost) everything",
+      "url": "https://openai.com/index/codex-for-almost-everything",
+      "source": "OpenAI Blog",
+      "hn_score": 1553,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Disruption",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI's Codex app for macOS and Windows now includes computer use, in-app browsing, image generation, memory, and plugins \u2014 evolving from a coding assistant into a general-purpose agentic developer environment. The 1553 HN score is the highest in this batch, indicating strong practitioner signal. This is a significant surface area expansion that repositions Codex as a full-stack developer agent, not just a code completion tool.",
+      "builders_lens": "Codex with computer use and in-app browsing is now capable of end-to-end software tasks \u2014 write code, browse docs, run tests, generate assets, remember context across sessions. For builders, this either competes directly with what you're building (any dev-workflow automation layer) or dramatically expands what you can prototype solo. The plugin architecture is the key leverage point: identify workflow gaps Codex's plugins don't cover and build there first before OpenAI closes them.",
+      "impact_level": "act",
+      "technical_detail": "The updated Codex app integrates computer use APIs enabling GUI interaction, a persistent memory system for cross-session context, native in-app browser for real-time web retrieval, and a plugin interface \u2014 all running on top of OpenAI's o-series reasoning models."
+    },
+    {
+      "title": "Introducing GPT-Rosalind for life sciences research",
+      "url": "https://openai.com/index/introducing-gpt-rosalind",
+      "source": "OpenAI Blog",
+      "hn_score": 132,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "New Market",
+        "Opportunity",
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI launched GPT-Rosalind, a domain-specialized frontier reasoning model targeting drug discovery, genomics analysis, protein reasoning, and scientific research workflows. This is OpenAI's first publicly named vertical-specific model, signaling a strategic shift toward domain-tuned reasoning models alongside their horizontal GPT/o-series lineup. The life sciences vertical is a high-value beachhead \u2014 regulatory complexity, long R&D cycles, and large institutional budgets make it ideal for premium model pricing.",
+      "builders_lens": "GPT-Rosalind opens two immediate opportunities: (1) application-layer companies building on top of a domain-specialized API for biotech, pharma, and genomics workflows \u2014 the model likely handles domain reasoning that previously required heavy prompt engineering or fine-tuning; (2) a template signal that OpenAI will release more vertical models (legal, finance, materials science are obvious next targets). If you're in life sciences AI, evaluate GPT-Rosalind's benchmarks against your current stack immediately; if you're in adjacent verticals, the vertical-model playbook is now validated and your window before OpenAI arrives is shrinking.",
+      "impact_level": "act",
+      "technical_detail": "GPT-Rosalind is described as a frontier reasoning model specialized for life sciences, implying o-series-class chain-of-thought reasoning fine-tuned on biological and chemical datasets spanning drug discovery, genomics, and protein structure reasoning \u2014 specific benchmark numbers and parameter counts have not been publicly disclosed."
+    }
+  ]
+}

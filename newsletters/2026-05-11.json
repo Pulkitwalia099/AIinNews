@@ -1,0 +1,136 @@
+{
+  "date": "2026-05-11",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Intel's comeback story is even wilder than it seems",
+      "url": "https://techcrunch.com/2026/05/08/intels-comeback-story-is-even-wilder-than-it-seems/",
+      "source": "TechCrunch AI",
+      "hn_score": 11,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Cost Driver"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Intel's stock has surged 490% over the past year, driven by Wall Street's bet on a full turnaround \u2014 but the article argues the market is pricing in execution that hasn't materialized yet. For the AI infrastructure stack, Intel's relevance hinges on whether its foundry ambitions and GPU/accelerator roadmap can actually challenge NVIDIA and AMD. Right now, that's speculative.",
+      "builders_lens": "Don't make infrastructure bets on Intel silicon yet \u2014 the stock move reflects hope, not shipped product. Watch the 18-24 month horizon for Intel's Gaudi successor; if yields improve and developer tooling catches up, Intel could offer meaningful cost arbitrage on training and inference workloads. For now, NVIDIA and AMD remain the safe stack.",
+      "impact_level": "watch",
+      "technical_detail": "Intel's Gaudi 3 accelerator targets 1,835 TFLOPS of BF16 compute, but developer adoption and MLOps tooling remain significantly behind CUDA's ecosystem maturity."
+    },
+    {
+      "title": "Mozilla says 271 vulnerabilities found by Mythos have \"almost no false positives\"",
+      "url": "https://arstechnica.com/information-technology/2026/05/mozilla-says-271-vulnerabilities-found-by-mythos-have-almost-no-false-positives/",
+      "source": "Ars Technica",
+      "hn_score": 129,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Opportunity",
+        "Enabler",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Mozilla has fully adopted Mythos, an AI-assisted vulnerability discovery tool, after it surfaced 271 real bugs in Firefox with near-zero false positives \u2014 a threshold that historically has blocked security teams from trusting automated tools. This is a significant production validation of AI in high-stakes code auditing, a domain where precision matters more than recall. Mozilla's public endorsement signals the category is crossing from experiment to standard practice.",
+      "builders_lens": "The near-zero false positive rate is the key unlock \u2014 prior AI security tools drowned teams in noise and got abandoned. If you're building in AppSec, the wedge is now precision-first tooling for specific codebases or languages, not broad scanners. Enterprise security budgets are large and the incumbent SAST/DAST tools are widely hated \u2014 this is a strong wedge for a focused AI security startup.",
+      "impact_level": "act",
+      "technical_detail": "Mythos uses AI-guided program analysis (likely combining LLM reasoning with static analysis) to achieve near-zero false positives across 271 confirmed vulnerabilities in the Firefox codebase; specific model architecture not disclosed."
+    },
+    {
+      "title": "Using Claude Code: The Unreasonable Effectiveness of HTML",
+      "url": "https://simonwillison.net/2026/May/8/unreasonable-effectiveness-of-html/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 790,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Thariq Shihipar from Anthropic's Claude Code team argues that requesting HTML output instead of Markdown from Claude produces dramatically richer, more useful artifacts \u2014 structured data, interactive elements, embedded visualizations \u2014 that Markdown simply can't express. The post is packed with working examples showing Claude generating self-contained HTML apps, dashboards, and reports from single prompts. This reframes LLM output format as a first-class product decision, not an afterthought.",
+      "builders_lens": "This is immediately actionable: swap your Markdown output prompts for HTML in any user-facing LLM feature and you get interactivity, styling, and structure for free. For product builders, this expands the viable surface area of 'single-prompt apps' \u2014 think generated reports, dashboards, and tools that live in an iframe. Anthropic shipping this thinking publicly suggests Claude Code is being optimized around HTML-native workflows.",
+      "impact_level": "act",
+      "technical_detail": "Claude Code generates self-contained HTML/CSS/JS artifacts in a single inference pass; the approach leverages the model's training on web content to produce interactive components without requiring a separate rendering pipeline or framework scaffold."
+    },
+    {
+      "title": "OpenAI launches DeployCo to help businesses build around intelligence",
+      "url": "https://openai.com/index/openai-launches-the-deployment-company",
+      "source": "OpenAI Blog",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI has launched DeployCo, a majority-controlled subsidiary that functions as an enterprise deployment and integration business, helping organizations move from API access to full operational AI integration. This is OpenAI moving down the value chain \u2014 from model provider to implementation partner \u2014 directly competing with SIs, boutique AI consultancies, and enterprise software vendors. The Palantir playbook comparison is apt: deep workflow embedding creates data moats and lock-in that pure API relationships don't.",
+      "builders_lens": "This is a direct threat to AI consulting shops and vertical SaaS companies that built their moat on 'we know how to deploy GPT-4 for your industry.' OpenAI now wants that margin and that customer relationship. The strategic response: go deeper into domain-specific data, compliance requirements, or workflows that OpenAI's generalist team won't prioritize \u2014 regulated industries, niche verticals, and legacy system integration are your defensible ground.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "Scaling Trusted Access for Cyber with GPT-5.5 and GPT-5.5-Cyber",
+      "url": "https://openai.com/index/gpt-5-5-with-trusted-access-for-cyber",
+      "source": "OpenAI Blog",
+      "hn_score": 4,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "OpenAI has released GPT-5.5 and a specialized GPT-5.5-Cyber variant under its Trusted Access for Cyber program, giving verified security researchers and defenders access to more capable models for vulnerability research and critical infrastructure protection. The cyber-specialized variant signals OpenAI is willing to build domain-fine-tuned frontier models, not just gate access to general ones. This opens a new tier of AI-assisted offense/defense tooling that wasn't viable with prior models.",
+      "builders_lens": "If you're building security tooling, get on the Trusted Access waitlist now \u2014 GPT-5.5-Cyber access is a meaningful capability moat while it remains restricted. More broadly, this validates the market for domain-specialized frontier model variants; expect OpenAI to extend this pattern to legal, medical, and financial verticals. If you're in one of those sectors, the window to build with general models before specialized ones arrive is narrowing.",
+      "impact_level": "watch",
+      "technical_detail": "GPT-5.5-Cyber is a domain-specialized variant of GPT-5.5, presumably fine-tuned or RLHF-steered on cybersecurity corpora; accessible only to verified defenders through OpenAI's Trusted Access program, with specific benchmark performance against CTF and vulnerability research tasks not yet publicly disclosed."
+    },
+    {
+      "title": "OpenAI's DeployCo subsidiary adopts Palantir's playbook, building a moat from workflows no lab can simulate",
+      "url": "https://the-decoder.com/openais-deployco-subsidiary-adopts-palantirs-playbook-building-a-moat-from-workflows-no-lab-can-simulate/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "Platform Shift",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "The Decoder provides deeper analysis of DeployCo's strategic logic: by embedding AI into core enterprise workflows \u2014 not just selling API access \u2014 OpenAI builds proprietary workflow data and switching costs that no competing lab can replicate without the same customer relationships. The Palantir analogy holds because Palantir's moat isn't its software, it's the institutional knowledge encoded in how it's deployed. OpenAI is building the same thing, faster, at frontier model quality.",
+      "builders_lens": "The analysis clarifies the competitive threat more precisely than OpenAI's own announcement: DeployCo isn't just a services business, it's a data flywheel. Every enterprise workflow they touch teaches them what production AI deployment actually looks like at scale \u2014 insight that gets baked back into model training and product. Startups competing here need proprietary workflow data of their own; pure resellers and prompt engineers are being squeezed from both ends.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "Musk v. Altman week 2: OpenAI fires back, and Shivon Zilis reveals that Musk tried to poach Sam Altman",
+      "url": "https://www.technologyreview.com/2026/05/08/1137008/musk-v-altman-week-2-openai-fires-back-and-shivon-zilis-reveals-that-musk-tried-to-poach-sam-altman/",
+      "source": "MIT Technology Review",
+      "hn_score": 2,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Week two of the Musk v. OpenAI trial surfaced testimony from Shivon Zilis that Musk attempted to recruit Sam Altman away from OpenAI, undercutting Musk's narrative that he was deceived by Altman. OpenAI's legal counter-offensive is reframing the suit as a competitive move by xAI rather than a principled dispute about nonprofit mission. The trial's outcome could affect OpenAI's for-profit conversion timeline and governance structure.",
+      "builders_lens": "Watch the governance outcome closely \u2014 if the trial delays or complicates OpenAI's for-profit conversion, it affects the company's ability to raise capital and execute on DeployCo and other expansion moves. For founders in the OpenAI ecosystem, governance instability at the top creates short windows where enterprise customers get nervous and look for alternatives. That's a real sales opportunity for Anthropic, Mistral, and vertically-focused players.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Cloudflare says AI made 1,100 jobs obsolete, even as revenue hit a record high",
+      "url": "https://techcrunch.com/2026/05/08/cloudflare-says-ai-made-1100-jobs-obsolete-even-as-revenue-hit-a-record-high/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Cloudflare eliminated 1,100 support roles \u2014 its first large-scale layoff \u2014 attributing the reduction directly to AI efficiency gains, even as revenue reached record highs. This is a clean, public data point that AI-driven headcount reduction in support functions is happening at scale at a major infrastructure company, not just being discussed. The revenue-up, headcount-down pattern will pressure other infrastructure and SaaS companies to follow.",
+      "builders_legend": "For builders, this is a strong signal that AI-native customer support tooling has crossed the threshold from 'pilot project' to 'board-level cost lever.' If you're building in support automation, the sales conversation has changed \u2014 you're no longer selling efficiency, you're selling the ability to avoid a painful layoff cycle. The counter-opportunity: displaced support workers with deep product knowledge are a talent pool for QA, RLHF labeling, and customer success roles at AI-native companies.",
+      "builders_lens": "For builders, this is a strong signal that AI-native customer support tooling has crossed the threshold from 'pilot project' to 'board-level cost lever.' If you're building in support automation, the sales conversation has shifted \u2014 CFOs are now asking what headcount reduction is possible, not just what ticket deflection looks like. The adjacent opportunity: displaced support workers with deep product knowledge are an underpriced talent pool for QA, RLHF, and customer success at AI-native startups.",
+      "impact_level": "watch",
+      "technical_detail": null
+    }
+  ]
+}

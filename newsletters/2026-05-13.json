@@ -1,0 +1,133 @@
+{
+  "date": "2026-05-13",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Anthropic now has more business customers than OpenAI, according to Ramp data",
+      "url": "https://techcrunch.com/2026/05/13/anthropic-now-has-more-business-customers-than-openai-according-to-ramp-data/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Ramp's spend data shows Anthropic has overtaken OpenAI in verified business customer count for the first time. This is a revealed-preference signal \u2014 companies are voting with procurement budgets, not benchmarks. The shift suggests Claude's enterprise positioning (longer context, stricter safety SLAs, API reliability) is converting at the company level.",
+      "builders_lens": "If you're building B2B AI tooling or middleware, Anthropic's API ecosystem is now the second major platform to design around with near-parity urgency to OpenAI. Consider dual-provider architecture now \u2014 enterprise buyers will ask about it. Also watch for Anthropic to launch a partner/ISV program as they scale GTM.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "Anthropic warns investors against secondary platforms offering access to its shares",
+      "url": "https://techcrunch.com/2026/05/12/anthropic-warns-investors-against-secondary-platforms-offering-access-to-its-shares/",
+      "source": "TechCrunch AI",
+      "hn_score": 8,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Anthropic is actively voiding unauthorized secondary-market transfers of its equity, signaling tight cap table control ahead of what is likely a closely managed liquidity event. The aggressive stance suggests an IPO or structured primary raise is being prepared where cap table cleanliness matters. This is unusual public communication \u2014 likely a legal prophylactic against disputes at a future valuation mark.",
+      "builders_lens": "If you're an operator or angel considering secondary exposure to Anthropic via SPVs or platforms like Forge/Hiive, this is a hard stop \u2014 the company will not recognize those transfers. For founders watching the AI IPO pipeline: Anthropic's cap table hygiene push is a leading indicator of a public offering within 12-18 months, which will benchmark valuations across the sector.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Three things in AI to watch, according to a Nobel-winning economist",
+      "url": "https://www.technologyreview.com/2026/05/11/1137090/three-things-in-ai-to-watch-according-to-a-nobel-winning-economist/",
+      "source": "MIT Technology Review",
+      "hn_score": 3,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Daron Acemoglu, whose prior AI skepticism was controversial in Silicon Valley, outlines three macro AI dynamics worth monitoring \u2014 likely labor displacement, productivity measurement gaps, and concentration of gains. His framework matters because it shapes regulatory and policy responses that will eventually constrain or redirect AI deployment. This is the academic framing that feeds congressional testimony and EU policy.",
+      "builders_lens": "If you're building workforce automation or AI-for-enterprise productivity tools, Acemoglu's critique is the intellectual foundation regulators will cite. Anticipate disclosure requirements around labor impact and build your narrative now. Founders in jurisdictions with active AI regulation (EU, UK) should track his specific policy recommendations as early-warning signals.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Musk v. Altman week 2: OpenAI fires back, and Shivon Zilis reveals that Musk tried to poach Sam Altman",
+      "url": "https://www.technologyreview.com/2026/05/08/1137008/musk-v-altman-week-2-openai-fires-back-and-shivon-zilis-reveals-that-musk-tried-to-poach-sam-altman/",
+      "source": "MIT Technology Review",
+      "hn_score": 2,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Week 2 of the Musk v. OpenAI trial reveals Musk attempted to recruit Sam Altman to xAI, undermining his narrative that OpenAI's commercial turn was the grievance. OpenAI's legal counteroffensive is sharpening the argument that Musk's suit is competitive interference, not principled nonprofit enforcement. The trial's outcome will set precedent on founder obligation and mission drift for AI nonprofits.",
+      "builders_lens": "The legal framing around nonprofit-to-capped-profit conversion is directly relevant to any founder structuring an AI company with a public benefit or safety mission. Watch for rulings on what governance controls are enforceable at founding \u2014 this will reshape how AI safety orgs and mission-driven AI companies draft their charters going forward.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "Mozilla says 271 vulnerabilities found by Mythos have \"almost no false positives\"",
+      "url": "https://arstechnica.com/information-technology/2026/05/mozilla-says-271-vulnerabilities-found-by-mythos-have-almost-no-false-positives/",
+      "source": "Ars Technica",
+      "hn_score": 129,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Opportunity",
+        "Enabler",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Mozilla has fully adopted Mythos, an AI-assisted vulnerability discovery tool, after it surfaced 271 real bugs in Firefox with near-zero false positive rate. This is a landmark production validation of AI security tooling by a major open-source maintainer \u2014 not a pilot, a full commitment. The false-positive metric is the unlock: previous AI security tools failed on precision, not recall.",
+      "builders_lens": "This is the clearest enterprise proof point yet for AI-native application security \u2014 build or integrate now. The opportunity is in precision-first vuln discovery for codebases that can't tolerate alert fatigue (embedded systems, browsers, infra). If you're building security tooling, Mythos's approach (likely combining static analysis with LLM-guided triage) is the architecture to study and the benchmark to beat.",
+      "impact_level": "act",
+      "technical_detail": "Mythos identified 271 vulnerabilities in Firefox with near-zero false positive rate; the underlying approach likely combines traditional static/symbolic analysis with LLM-assisted triage to achieve high precision \u2014 specifics on model architecture or context window usage were not disclosed."
+    },
+    {
+      "title": "AI startup Recursive emerges from stealth with $650 million to build self-improving AI",
+      "url": "https://the-decoder.com/ai-startup-recursive-emerges-from-stealth-with-650-million-to-build-self-improving-ai/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Opportunity",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Early Research",
+      "summary": "Recursive has launched with $650M to pursue recursive self-improvement as a path to superintelligence \u2014 one of the highest-risk, highest-ceiling bets in AI. The framing of RSI as the 'fastest path to superintelligence' puts them in direct ideological competition with Anthropic's Constitutional AI and OpenAI's alignment-first approach. At $650M pre-product, this is a capital-as-moat play betting that RSI requires scale before safety constraints are optimized.",
+      "builders_lens": "Watch Recursive's technical hires and first published research closely \u2014 if they demonstrate even incremental RSI progress, it will compress timelines that other labs are planning around. For founders building on top of frontier models, a credible RSI player entering the market means capability jumps could become less predictable, making abstraction layers and model-agnostic architectures a more urgent design choice.",
+      "impact_level": "watch",
+      "technical_detail": "No architecture or benchmark details disclosed at launch; the RSI approach presumably involves models iteratively modifying their own training objectives or architectures, a paradigm with no current production-validated implementations at scale."
+    },
+    {
+      "title": "Alphabet's Isomorphic Labs raises $2.1 billion to scale AI drug discovery toward clinical trials",
+      "url": "https://the-decoder.com/alphabets-isomorphic-labs-raises-2-1-billion-to-scale-ai-drug-discovery-toward-clinical-trials/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Enabler",
+        "Opportunity"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Isomorphic Labs has closed a $2.1B Series B led by Thrive Capital to push AI-designed drug candidates into clinical trials \u2014 the first true validation gate for AI drug discovery. The round signals investor conviction that the AlphaFold-era structural biology breakthroughs are now translating into the clinical pipeline, not just research publications. Clinical trial entry moves AI pharma from 'interesting science' to 'revenue-eventable asset.'",
+      "builders_lens": "The $2.1B bet on Isomorphic's IsoDDE platform is a signal to build the surrounding infrastructure stack: clinical data management for AI-discovered compounds, regulatory submission tooling that accounts for AI-generated molecular rationale, and CRO integrations optimized for novel target classes. If you're in biotech SaaS or clinical ops, AI-native drug candidates have different data schemas and audit requirements than traditional candidates \u2014 that gap is a product opportunity.",
+      "impact_level": "watch",
+      "technical_detail": "Isomorphic's IsoDDE platform builds on AlphaFold's protein structure prediction capabilities, extending into drug-target interaction modeling and molecular optimization; the $2.1B will fund wet-lab validation and IND-enabling studies for lead candidates."
+    },
+    {
+      "title": "How ChatGPT adoption broadened in early 2026",
+      "url": "https://openai.com/signals/research/2026q1-update",
+      "source": "OpenAI Blog",
+      "hn_score": 3,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI's Q1 2026 data shows ChatGPT's fastest growth segment is users over 35, with gender usage balance improving \u2014 both classic indicators of mainstream technology adoption crossing the chasm. This is no longer a developer and early-adopter product; it is a mass-market consumer platform. The demographic shift has direct implications for interface expectations, use-case mix, and competitive surface area.",
+      "builders_lens": "Consumer AI products now need to be designed for users with low tolerance for hallucinations, complex prompting, or ambiguous outputs \u2014 the 35+ cohort expects reliability over capability breadth. This creates a wedge opportunity for vertically focused, high-trust AI apps (health, finance, legal) that prioritize explainability and guardrails over raw model power. It also means SEO and content distribution strategies now matter as much as model quality for consumer-facing AI products.",
+      "impact_level": "watch",
+      "technical_detail": null
+    }
+  ]
+}

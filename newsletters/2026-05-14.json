@@ -1,0 +1,135 @@
+{
+  "date": "2026-05-14",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Who trusts Sam Altman?",
+      "url": "https://techcrunch.com/2026/05/13/who-trusts-sam-altman/",
+      "source": "TechCrunch AI",
+      "hn_score": 75,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Sam Altman testified in federal court, asserting his trustworthiness as a businessperson. The litigation signals escalating legal and governance scrutiny of OpenAI's leadership and corporate structure. For builders dependent on OpenAI's platform, this represents a non-trivial counterparty risk to monitor.",
+      "builders_lens": "If your product is deeply coupled to OpenAI APIs, ongoing litigation and governance instability at the top is a reason to accelerate multi-model architecture now. Anthropic's B2B surge (see Article 7) suggests the market is already hedging. Build provider-agnostic abstraction layers.",
+      "impact_level": "watch",
+      "technical_detail": null
+    },
+    {
+      "title": "AI chatbots are giving out people's real phone numbers",
+      "url": "https://www.technologyreview.com/2026/05/13/1137203/ai-chatbots-are-giving-out-peoples-real-phone-numbers/",
+      "source": "MIT Technology Review",
+      "hn_score": 7,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Opportunity",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Google's generative AI is hallucinating real phone numbers and attributing them to wrong businesses, causing strangers to flood innocent people with calls for months. This is a concrete, recurring harm from RAG and knowledge-base failures in production AI products. Regulatory and legal exposure for AI-generated contact information is now a live product liability issue.",
+      "builders_lens": "There is a clear wedge here for identity verification and AI output grounding services \u2014 specifically real-time fact-checking layers for contact data, business listings, and PII in LLM outputs. If you're building any local/business search or directory product with AI, you need a PII scrubbing and ground-truth verification step before serving results or face serious liability.",
+      "impact_level": "act",
+      "technical_detail": "Failure mode appears rooted in retrieval-augmented generation conflating entity embeddings across similar business categories, surfacing real PII from training or index data without adequate grounding checks."
+    },
+    {
+      "title": "Linux bitten by second severe vulnerability in as many weeks",
+      "url": "https://arstechnica.com/security/2026/05/linux-bitten-by-second-severe-vulnerability-in-as-many-weeks/",
+      "source": "Ars Technica",
+      "hn_score": 13,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Linux has suffered two severe vulnerabilities in consecutive weeks, with production patches now available. For AI infrastructure teams running GPU clusters or inference servers on Linux, unpatched systems represent an elevated attack surface. Patch immediately \u2014 this is operational hygiene, not a trend story.",
+      "builders_lens": "If you're running self-hosted inference or training infrastructure on Linux, prioritize patching this week. Cloud providers will likely auto-patch managed services, but bare-metal or co-lo GPU setups are your responsibility. Use this as a forcing function to audit your kernel update cadence.",
+      "impact_level": "act",
+      "technical_detail": "Two distinct severe CVEs in the production Linux kernel within two weeks; patches are available for production-version kernels and should be applied immediately across all Linux-based compute nodes."
+    },
+    {
+      "title": "Mozilla says 271 vulnerabilities found by Mythos have \"almost no false positives\"",
+      "url": "https://arstechnica.com/information-technology/2026/05/mozilla-says-271-vulnerabilities-found-by-mythos-have-almost-no-false-positives/",
+      "source": "Ars Technica",
+      "hn_score": 129,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Opportunity",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Mozilla has fully adopted Anthropic's Claude Mythos for AI-assisted bug discovery in Firefox, with the model surfacing 271 vulnerabilities at near-zero false positive rates. This is a landmark production validation of AI-powered static analysis and vulnerability research at scale. The 'almost no false positives' claim is the key signal \u2014 it means engineering teams can act on findings without manual triage overhead.",
+      "builders_lens": "AI-assisted security tooling is crossing the production threshold. If you're building security products, the window to differentiate on false-positive reduction is narrowing as foundation models absorb this capability. The immediate opportunity is in vertical-specific vulnerability pipelines \u2014 firmware, smart contracts, embedded systems \u2014 where general models haven't yet been validated. For founders: Mozilla's public endorsement is the case study your enterprise sales team needs.",
+      "impact_level": "act",
+      "technical_detail": "Claude Mythos Preview identified 271 vulnerabilities in the Firefox codebase with near-zero false positives, suggesting strong code-level reasoning and static analysis capabilities likely enabled by extended context and tool-use features in the Mythos architecture."
+    },
+    {
+      "title": "ChatGPT's web traffic share dropped from 78% to 54% in one year as Gemini quietly tripled its reach",
+      "url": "https://the-decoder.com/chatgpts-web-traffic-share-dropped-from-78-to-54-in-one-year-as-gemini-quietly-tripled-its-reach/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "ChatGPT's web traffic share fell from 77.6% to 53.7% in twelve months while Google Gemini surged from 7.3% to 26.7%, per Similarweb data. This is web traffic only \u2014 API and mobile usage likely show different distributions \u2014 but the consumer mindshare shift is real and accelerating. Google's distribution moat (Search, Android, Chrome) is clearly converting into AI product adoption.",
+      "builders_lens": "If your product embeds a single AI provider's consumer brand or relies on ChatGPT's mindshare for user acquisition, the funnel math is changing. More importantly, Google's distribution advantage suggests Gemini will continue to gain on web \u2014 build integrations for both or risk being caught on the wrong side of a platform shift. API-layer builders should watch whether this consumer shift translates to enterprise procurement changes.",
+      "impact_level": "watch",
+      "technical_detail": "Similarweb web traffic data shows ChatGPT at 53.7% share vs. Gemini at 26.7% as of early 2026; figures exclude API, mobile app, and embedded product usage, which may skew the competitive picture significantly."
+    },
+    {
+      "title": "New Claude Mythos becomes the first AI model to clear all cyberattack simulations from Britain's AI safety agency",
+      "url": "https://the-decoder.com/new-claude-mythos-becomes-the-first-ai-model-to-clear-all-cyberattack-simulations-from-britains-ai-safety-agency/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Disruption",
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Claude Mythos Preview became the first AI model to pass all cyberattack simulations from the UK AI Security Institute, with the institute also revising its estimate of AI cyber capability doubling time downward twice \u2014 now faster than 4.7 months. GPT-5.5 also exceeded prior benchmarks. This is a capability inflection point with direct national security and enterprise security implications.",
+      "builders_lens": "The doubling-time compression on AI cyber capabilities is the number that matters here \u2014 it means the threat model for AI-assisted attacks is evolving faster than most security teams' planning cycles. For founders in defensive security, this is both a tailwind (customer urgency is real) and a product challenge (your threat model needs quarterly updates). For enterprises: your red team benchmarks from 12 months ago are already obsolete.",
+      "impact_level": "act",
+      "technical_detail": "Claude Mythos Preview cleared 100% of UK AISI cyberattack simulation tasks; the institute has revised AI cyber capability doubling time to under 4.7 months, down from an already-revised 8-month estimate, suggesting rapid capability scaling in offensive security task performance."
+    },
+    {
+      "title": "Anthropic overtakes OpenAI in B2B adoption for the first time according to Ramp spending data",
+      "url": "https://the-decoder.com/anthropic-overtakes-openai-in-b2b-adoption-for-the-first-time-according-to-ramp-spending-data/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Anthropic now leads OpenAI in B2B adoption at 34.4% vs. 32.3% of US companies tracked by Ramp's AI spending index, with Anthropic quadrupling its reach in one year. This is the first time OpenAI has lost the B2B lead and it coincides with Claude Mythos shipping strong enterprise security and coding benchmarks. Three unnamed factors could erode the lead quickly.",
+      "builders_lens": "The B2B inversion is a procurement signal, not just a benchmark story \u2014 enterprise buyers are writing bigger checks to Anthropic. If you're building on Claude and haven't renewed or expanded your API agreement recently, pricing and tier structures may shift as Anthropic gains leverage. For those building OpenAI-native enterprise tools, now is the time to audit whether your product story still holds if Claude becomes the default enterprise model.",
+      "impact_level": "act",
+      "technical_detail": "Ramp AI Index (US company spending data) shows Anthropic at 34.4% B2B adoption vs. OpenAI at 32.3% as of May 2026, representing a 4x year-over-year growth for Anthropic in enterprise customer count."
+    },
+    {
+      "title": "Claude for Small Business ships 15 agent workflows that handle payroll, invoices, and tax prep",
+      "url": "https://the-decoder.com/anthropic-launches-claude-for-small-business-to-embed-ai-into-the-tools-you-forgot-you-pay-for/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Platform Shift",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Anthropic launched 'Claude for Small Business,' bundling 15 pre-built agent workflows integrated with QuickBooks, PayPal, and HubSpot, plus free training and a 10-city US workshop tour. This is Anthropic's direct move into the SMB vertical \u2014 a market historically owned by vertical SaaS and accounting software. Packaging AI as embedded workflows rather than a chat interface is the key product bet here.",
+      "builders_lens": "Anthropic is now competing in the application layer, not just the model layer \u2014 this compresses margins for startups building thin AI wrappers on top of Claude for SMB use cases like bookkeeping, invoicing, or CRM automation. The opportunity that remains is in niches Anthropic won't prioritize: industry-specific workflows (construction, restaurants, healthcare SMBs) and international markets outside the US. The workshop tour is also a distribution playbook worth studying if you're going after the same buyer.",
+      "impact_level": "watch",
+      "technical_detail": "Claude for Small Business ships 15 agentic workflow integrations with QuickBooks, PayPal, and HubSpot, suggesting multi-step tool-calling and structured output capabilities are being productized as no-code agent templates for non-technical SMB users."
+    }
+  ]
+}

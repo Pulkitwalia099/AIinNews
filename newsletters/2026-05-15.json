@@ -1,0 +1,136 @@
+{
+  "date": "2026-05-15",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "What happens when AI starts building itself?",
+      "url": "https://techcrunch.com/2026/05/14/what-happens-when-ai-starts-building-itself/",
+      "source": "TechCrunch AI",
+      "hn_score": 6,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "New Market",
+        "Opportunity",
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Richard Socher's new startup has raised $650M to build a self-improving AI system capable of autonomous research and iteration. The bet is that recursive self-improvement is no longer a thought experiment but an engineering problem with a capital solution. If it ships, this becomes a foundational capability that compresses the R&D cycle for every downstream AI company.",
+      "builders_lens": "Watch this closely but don't build on it yet \u2014 $650M buys a lot of compute and talent, but self-improving systems have a long history of overpromising. The real opportunity is in tooling for AI-generated code auditing, safety guardrails, and evaluation frameworks that a project like this will eventually need to buy or partner with.",
+      "impact_level": "watch",
+      "technical_detail": "No specific architecture disclosed; the system is described as targeting indefinite self-directed research and improvement, implying recursive fine-tuning or RL loops on model-generated outputs."
+    },
+    {
+      "title": "Cerebras raises $5.5B, then stock pops $108%, in the first huge tech IPO of 2026",
+      "url": "https://techcrunch.com/2026/05/14/cerebras-raises-5-5b-kicking-off-2026s-ipo-season-with-a-bang/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler",
+        "New Market"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Cerebras completed a $5.5B IPO with shares doubling on day one, marking the first major tech listing of 2026 and validating the alternative AI chip market. This signals that public markets are ready to price specialized AI compute infrastructure at scale. A 108% pop suggests significant demand overhang \u2014 expect competing wafer-scale or custom silicon plays to accelerate their own exit timelines.",
+      "builders_lens": "Cerebras' inference speed advantage (sub-100ms for large models) is now a public benchmark competitors must beat. If you're building latency-sensitive applications \u2014 real-time voice, agentic loops, live coding assistants \u2014 revisit Cerebras API pricing now that they have capital to expand capacity and cut rates aggressively to gain enterprise share.",
+      "impact_level": "watch",
+      "technical_detail": "Cerebras' CS-3 wafer-scale engine contains 900,000 AI cores on a single die, enabling inference throughput that outperforms GPU clusters for sequential token generation workloads."
+    },
+    {
+      "title": "AI chatbots are giving out people's real phone numbers",
+      "url": "https://www.technologyreview.com/2026/05/13/1137203/ai-chatbots-are-giving-out-peoples-real-phone-numbers/",
+      "source": "MIT Technology Review",
+      "hn_score": 7,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Google's generative AI is hallucinating real phone numbers belonging to private individuals, causing misdirected calls and harassment at scale. This is a production harm problem, not a theoretical one \u2014 it's already affecting real users and creating legal exposure for platform operators. The gap between AI's confidence and its accuracy in retrieving PII is becoming a liability category.",
+      "builders_lens": "If your product surfaces AI-generated contact information or local business data, you now have a clear legal and reputational risk vector. The opportunity is in PII-detection middleware and grounding layers that validate structured outputs (phone numbers, emails, addresses) against authoritative sources before serving them \u2014 this is a wedge for a compliance-focused AI infrastructure product.",
+      "impact_level": "act",
+      "technical_detail": "The failures appear to stem from retrieval-augmented or fine-tuned models conflating training data with real-time lookup, without grounding verification against a canonical directory source."
+    },
+    {
+      "title": "Linux bitten by second severe vulnerability in as many weeks",
+      "url": "https://arstechnica.com/security/2026/05/linux-bitten-by-second-severe-vulnerability-in-as-many-weeks/",
+      "source": "Ars Technica",
+      "hn_score": 13,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Cost Driver"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "A second severe Linux kernel vulnerability has been disclosed within two weeks, with patches now available for production systems. For AI infrastructure operators running GPU clusters on Linux, unpatched kernel vulnerabilities represent both a security and uptime risk. Patch now \u2014 the cadence of critical Linux CVEs is accelerating, suggesting either increased attacker focus or upstream code quality issues.",
+      "builders_lens": "If you're running self-managed GPU infrastructure for training or inference, establish an automated kernel patching pipeline if you haven't already \u2014 manual patch cycles at this CVE frequency will create gaps. Cloud-managed compute (GKE, EKS, Lambda Labs managed) shifts this burden to the vendor and is increasingly worth the premium for smaller teams.",
+      "impact_level": "act",
+      "technical_detail": "Specific CVE details not disclosed in the summary; described as 'severe,' implying CVSS 7.0+ with potential for privilege escalation or remote code execution in kernel-space components."
+    },
+    {
+      "title": "ChatGPT's web traffic share dropped from 78% to 54% in one year as Gemini quietly tripled its reach",
+      "url": "https://the-decoder.com/chatgpts-web-traffic-share-dropped-from-78-to-54-in-one-year-as-gemini-quietly-tripled-its-reach/",
+      "source": "The Decoder",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "ChatGPT's web traffic share fell 24 percentage points in 12 months while Gemini nearly quadrupled its share from 7% to 27%, per Similarweb data. This is a distribution story, not a capability story \u2014 Google's search integration is driving Gemini adoption through existing surface area, not product superiority. The consumer AI layer is fragmenting faster than most builders anticipated.",
+      "builders_lens": "Don't build your GTM around ChatGPT's user base as a monolithic proxy for 'AI users' \u2014 the audience is now split across Gemini (Google-native users), ChatGPT (power users and API builders), and emerging entrants. If you're building integrations or plugins, prioritize multi-platform support; single-platform bets on consumer AI surfaces are increasingly risky. API usage data (not covered here) likely tells a different story favoring OpenAI \u2014 know which market you're actually in.",
+      "impact_level": "watch",
+      "technical_detail": "Data source is Similarweb web traffic only; excludes mobile app usage, API calls, and enterprise deployments \u2014 materially undercounts OpenAI's actual consumption footprint."
+    },
+    {
+      "title": "EMO: Pretraining mixture of experts for emergent modularity",
+      "url": "https://huggingface.co/blog/allenai/emo",
+      "source": "HuggingFace Blog",
+      "hn_score": 4,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Opportunity"
+      ],
+      "maturity_tag": "Early Research",
+      "summary": "Allen AI has published research on EMO, a pretraining approach for Mixture of Experts models that encourages emergent modular specialization without explicit routing supervision. The technique aims to make MoE architectures more efficient and interpretable by allowing specialization to arise naturally during pretraining. This is foundational work with implications for cheaper, more interpretable large models in 12-24 months.",
+      "builders_lens": "This is one to bookmark for the 12-18 month horizon \u2014 emergent modularity in MoE could enable cheaper fine-tuning by activating only relevant expert subsets, which directly reduces inference cost for specialized enterprise deployments. Teams building fine-tuned vertical models should track whether this approach produces better expert specialization than standard MoE, which would make domain-specific models cheaper to serve.",
+      "impact_level": "watch",
+      "technical_detail": "EMO pretrains MoE models without supervised routing labels, allowing expert specialization to emerge from the data distribution; evaluated on standard language modeling benchmarks with reported improvements in expert utilization and load balancing over baseline MoE."
+    },
+    {
+      "title": "Work with Codex from anywhere",
+      "url": "https://openai.com/index/work-with-codex-from-anywhere",
+      "source": "OpenAI Blog",
+      "hn_score": 308,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "OpenAI has shipped Codex on the ChatGPT mobile app, enabling developers to monitor, steer, and approve long-running coding tasks from any device including remote environments. This turns Codex into an async, ambient coding agent rather than a synchronous IDE tool \u2014 a meaningful UX shift. The 308 HN score signals strong developer validation; this is the highest-signal article in today's set.",
+      "builders_lens": "This is the clearest 'act now' signal in today's briefing. Async coding agents with mobile approval flows unlock a new workflow pattern: kick off a complex task from your laptop, review and steer it from your phone, merge on the next machine. If you're building dev tools, CI/CD integrations, or code review products, Codex's async task model is the new interface paradigm to design around \u2014 or compete against. Start testing task delegation limits immediately to understand where human-in-the-loop checkpoints are required.",
+      "impact_level": "act",
+      "technical_detail": "Codex runs as an autonomous agent in sandboxed remote environments, with the mobile interface providing real-time task state visibility and the ability to inject steering prompts mid-execution without interrupting the underlying compute session."
+    },
+    {
+      "title": "AI Ascent 2026",
+      "url": "https://sequoiacap.com/article/ai-ascent-2026/",
+      "source": "Sequoia Capital",
+      "hn_score": 6,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Opportunity",
+        "New Market"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Sequoia has published its annual AI Ascent report for 2026, representing the firm's current theses on where AI value is compounding. As a top-tier signals document from the firm that backed OpenAI, Stripe, and Airbnb, the framing here influences where hundreds of millions in seed and growth capital will flow over the next 12 months. Worth reading in full to understand what pitches are getting funded.",
+      "builders_lens": "Treat this as a map of where Sequoia will write checks \u2014 if your company fits their framing, sharpen your narrative to match their vocabulary before pitching. More importantly, identify the gaps they're not covering: categories Sequoia overlooks often have less competition and more room for contrarian bets. Full article content not available in this summary, so read the source directly.",
+      "impact_level": "watch",
+      "technical_detail": null
+    }
+  ]
+}

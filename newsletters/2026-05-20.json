@@ -1,0 +1,132 @@
+{
+  "date": "2026-05-20",
+  "title": "AI in News",
+  "articles": [
+    {
+      "title": "Google Search as you know it is over",
+      "url": "https://techcrunch.com/2026/05/19/google-search-as-you-know-it-is-over/",
+      "source": "TechCrunch AI",
+      "hn_score": 122,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Google is replacing the blue-link paradigm with AI-generated conversational answers, agentic interfaces, and interactive experiences directly in Search. This accelerates the zero-click trend, systematically reducing referral traffic to publishers and content-dependent businesses. The shift redefines what it means to 'rank' \u2014 SEO as historically practiced is effectively obsolete.",
+      "builders_lens": "If your product relies on organic search traffic, you need an alternative distribution strategy now \u2014 not in 12 months. The opportunity flip side: products that become the answer inside AI search (structured data, API integrations with Google's agent layer, or direct partnerships) will capture disproportionate surface area. Build for citation, not for click.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "Inside Anduril and Meta's quest to make smart glasses for warfare",
+      "url": "https://www.technologyreview.com/2026/05/18/1137412/inside-anduril-and-metas-quest-to-make-smart-glasses-for-warfare/",
+      "source": "MIT Technology Review",
+      "hn_score": 41,
+      "section": "Application Layer",
+      "signal_tags": [
+        "New Market",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Anduril and Meta are co-developing an AR headset for military use that enables drone strike authorization via eye-tracking and voice commands, leveraging Meta's consumer AR hardware expertise for defense applications. This is a significant signal that consumer-grade AI hardware is maturing into mission-critical edge deployments. The collaboration validates that defense tech is now a serious customer for frontier consumer hardware platforms.",
+      "builders_lens": "The defense-to-consumer hardware pipeline is reversing \u2014 consumer platforms (Meta Ray-Bans architecture) are becoming the base layer for military edge AI. For founders, this signals that multimodal edge inference, low-latency voice command systems, and AR-native agent UX are now dual-use markets with serious procurement budgets. If you're building vision-language models for edge devices, defense is a near-term revenue path.",
+      "impact_level": "watch",
+      "technical_detail": "The headset prototype integrates eye-tracking for intent detection with voice command interfaces to authorize autonomous drone operations, built on Meta's Ray-Ban smart glasses hardware lineage."
+    },
+    {
+      "title": "Recent Developments in LLM Architectures: KV Sharing, mHC, and Compressed Attention",
+      "url": "https://magazine.sebastianraschka.com/p/recent-developments-in-llm-architectures",
+      "source": "Ahead of AI",
+      "hn_score": 36,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Cost Driver",
+        "Enabler"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "Sebastian Raschka surveys the latest architectural innovations in open-weight LLMs \u2014 KV cache sharing, multi-head compression (mHC), and compressed attention \u2014 as deployed in models like Gemma 4 and DeepSeek V4. These techniques directly attack the memory and compute bottleneck of long-context inference, which has been the primary cost driver for production LLM deployments. This research is already shipping in production-grade open models, meaning cost curves for long-context workloads are bending now.",
+      "builders_lens": "If you're building on long-context models (RAG, document analysis, coding agents), these architectural improvements mean your inference costs will drop materially as you migrate to newer open-weight models. Teams running self-hosted inference should benchmark Gemma 4 and DeepSeek V4 against their current stack \u2014 the KV compression gains at 128k+ context windows are likely to change your build-vs-buy calculus for managed APIs.",
+      "impact_level": "watch",
+      "technical_detail": "KV sharing reduces KV cache memory by reusing key-value pairs across layers; mHC (multi-head compression) compresses attention heads to reduce memory footprint; both are deployed in Gemma 4 and DeepSeek V4 to lower long-context inference costs at 128k+ token windows."
+    },
+    {
+      "title": "The last six months in LLMs in five minutes",
+      "url": "https://simonwillison.net/2026/May/19/5-minute-llms/#atom-everything",
+      "source": "Simon Willison",
+      "hn_score": 1341,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Enabler",
+        "Platform Shift"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Simon Willison's PyCon US 2026 lightning talk condenses the most significant LLM developments of the past six months into an annotated slide deck \u2014 the highest-scored article in this set by a wide margin (1341 HN). The outsized engagement signals this is the clearest synthesis the technical community has found of a genuinely chaotic six months of model releases, capability jumps, and infrastructure shifts. It functions as a reliable signal map for what the builder community believes actually mattered.",
+      "builders_lens": "Read this before your next planning session \u2014 it's the closest thing to community consensus on which developments are real versus hype. Willison's curation has a strong track record of identifying what becomes product-relevant; the specific capabilities he flags in the last six months are likely your 6-12 month product roadmap inputs. High HN score on a synthesis piece means the community is hungry for clarity \u2014 there's a content and tooling opportunity in helping teams navigate LLM capability changes systematically.",
+      "impact_level": "act",
+      "technical_detail": null
+    },
+    {
+      "title": "Gemini 3.5: frontier intelligence with action",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5/",
+      "source": "Google AI Blog",
+      "hn_score": 181,
+      "section": "Foundation Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Enabler"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Google announced Gemini 3.5 at its developer conference, positioning it as a frontier model explicitly designed for agentic action \u2014 not just generation. The 'with action' framing signals Google's intent to make Gemini the reasoning core of autonomous task execution pipelines, competing directly with GPT-4o and Claude 3.5 Sonnet in the agent orchestration layer. This is Google's clearest statement yet that the model layer and the agent execution layer are converging.",
+      "builders_lens": "Gemini 3.5's agentic framing means Google is building toward owning the full stack: model + orchestration + tool use + Search grounding. If you're building agent infrastructure on top of Google's APIs, watch how Gemini 3.5's native tool-calling and task execution competes with your middleware. The immediate opportunity: Gemini 3.5 Flash's coding capabilities make it worth benchmarking for code generation workloads where cost-per-token matters.",
+      "impact_level": "act",
+      "technical_detail": "Gemini 3.5 Flash is described as Google's most capable coding and agentic model to date, with autonomous task execution and software-building capabilities; specific benchmark numbers not provided in summary but available via Google AI Blog."
+    },
+    {
+      "title": "With Gemini 3.5 Flash, Google bets its next AI wave on agents, not chatbots",
+      "url": "https://techcrunch.com/2026/05/19/with-gemini-3-5-flash-google-bets-its-next-ai-wave-on-agents-not-chatbots/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Platform Shift",
+        "Opportunity"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "Gemini 3.5 Flash is Google's sharpest signal that the product paradigm has shifted from conversational AI to autonomous agents capable of executing complex, multi-step tasks and writing production software. Launching at Google I/O, it targets developers who need a capable, cost-efficient model for agentic pipelines rather than a chatbot interface. This is the Flash line's clearest positioning as infrastructure for builders, not an end-user product.",
+      "builders_lens": "Flash models are the workhorse tier \u2014 high capability, lower cost, optimized for high-volume agentic calls. If you're running agent loops with many LLM calls per task (coding assistants, workflow automation, data pipelines), Gemini 3.5 Flash is an immediate candidate to benchmark against GPT-4o Mini and Claude Haiku. Google's ecosystem integration (Search, Workspace, Cloud) gives Flash a grounding advantage that pure API competitors lack.",
+      "impact_level": "act",
+      "technical_detail": "Gemini 3.5 Flash supports autonomous execution of complex multi-step tasks and end-to-end software construction; positioned as the high-throughput, cost-optimized tier of the Gemini 3.5 family for agentic API workloads."
+    },
+    {
+      "title": "Elon Musk said Sam Altman 'stole' a non-profit \u2014 but the trial showed he had similar aims",
+      "url": "https://techcrunch.com/2026/05/19/elon-musk-said-sam-altman-stole-a-non-profit-but-the-trial-showed-he-had-similar-aims/",
+      "source": "TechCrunch AI",
+      "hn_score": 0,
+      "section": "Application Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Production-Ready",
+      "summary": "The jury quickly rejected Elon Musk's lawsuit against Sam Altman, OpenAI, and Microsoft, closing the highest-profile legal challenge to OpenAI's corporate structure and mission. The verdict removes a meaningful governance overhang from OpenAI and clears the path for its ongoing conversion from nonprofit to for-profit. For the broader AI industry, this confirms that the legal system is not going to adjudicate AI lab governance \u2014 market and regulatory forces remain the primary constraints.",
+      "builders_lens": "The resolved lawsuit removes uncertainty for companies building on OpenAI's API \u2014 there's no longer a litigation risk that could have forced structural changes or distracted OpenAI's leadership. If you were holding back on deeper OpenAI API dependency due to this overhang, that specific concern is now resolved. The for-profit conversion proceeding smoothly also signals OpenAI can access the capital it needs to stay competitive in the model race.",
+      "impact_level": "context",
+      "technical_detail": null
+    },
+    {
+      "title": "Zero-day exploit completely defeats default Windows 11 BitLocker protections",
+      "url": "https://arstechnica.com/security/2026/05/zero-day-exploit-completely-defeats-default-windows-11-bitlocker-protections/",
+      "source": "Ars Technica",
+      "hn_score": 6,
+      "section": "Infrastructure Layer",
+      "signal_tags": [
+        "Disruption"
+      ],
+      "maturity_tag": "Emerging",
+      "summary": "A zero-day exploit has been disclosed that completely bypasses Windows 11's default BitLocker encryption, with Microsoft still investigating the mechanism. BitLocker is the primary at-rest encryption layer for Windows enterprise deployments, making this a critical exposure for any organization storing sensitive data on Windows endpoints. No patch is available yet.",
+      "builders_lens": "If your product or infrastructure relies on Windows endpoints with BitLocker as a compliance control (SOC 2, HIPAA, FedRAMP), you have an active gap in your security posture until Microsoft patches this. Immediately audit whether any sensitive customer data, model weights, or API keys reside on BitLocker-protected Windows machines and consider compensating controls (network segmentation, additional encryption layers). This is also a reminder that hardware-level security assumptions in AI infrastructure need regular adversarial review.",
+      "impact_level": "watch",
+      "technical_detail": "The exploit defeats BitLocker's default configuration on Windows 11 endpoints; the attack vector and mechanism are not yet publicly confirmed as Microsoft's investigation is ongoing \u2014 suggesting possible TPM or boot chain vulnerability."
+    }
+  ]
+}
